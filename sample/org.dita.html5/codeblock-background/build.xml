@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="unit-test">
+	<import file="../../bootstrap.xml"/>
+	<target description="Expect that a codeblock usually has a background except when processing within tables" name="unit-test">
+		<exec-html5/>
+		<get-html-article from="topics/codeblock-background.html" />
+		<compare-output suffix=".html"/>
+	</target>
+</project>

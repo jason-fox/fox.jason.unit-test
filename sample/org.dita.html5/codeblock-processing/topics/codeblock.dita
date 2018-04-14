@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="codeblock">
+  <title>codeblock</title>
+  <body>
+    <p>
+      A codeblock should be displayed in a monospace font.
+      Each tab in codeblock text is replaced with four spaces
+    </p>
+     <section id="good">
+      <title>Codeblock</title>
+      <codeblock scale="80" outputclass="language-none">
+  Morbi nec aliquet libero, ac condimentum tortor. Ut ultrices orci placerat elit rutrum
+  ullamcorper. Etiam vulputate ante eget turpis iaculis, vel fermentum diam porttitor. Morbi 
+  pretium tempor nisi, at convallis sem tincidunt ut. Maecenas vitae purus malesuada, elementum 
+      </codeblock>
+
+    </section>
+    
+  </body>
+</topic>

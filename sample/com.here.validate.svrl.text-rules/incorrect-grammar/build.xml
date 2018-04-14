@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="unit-test">
+	<import file="../../bootstrap.xml"/>
+	<target description="Expect that incorrect grammar is a validation error" name="unit-test">
+		<exec-svrl transtype="text-rules"/>
+		<compare-output suffix=".svrl" os="unix"/>
+		<compare-output suffix=".svrl" expectation="expected.svrl.win" os="windows"/>
+	</target>
+</project>

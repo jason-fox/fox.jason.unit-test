@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<testsuite id="org.dita.html5">
+	<element id="codeblock">pre class=" codeblock "</element>	
+	<element id="codeph">pre</element>
+	<element id="p">p</element>
+	<element id="section">section</element>
+	<element id="table">table</element>
+	<element id="xref-internal">a href=".*"</element>
+	<element id="xref-external">a target="_blank"</element>
+</testsuite>

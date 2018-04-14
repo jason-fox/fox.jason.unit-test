@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="duplicated-punctuation">
+  <title>duplicated-punctuation</title>
+  <body>
+    <p>
+    Duplicated punctuation marks should not occur in the running text
+    </p>
+     <section id="good">
+      <title>Good text</title>
+      <p>
+         This is an example sentence, it has a subordinate clause.
+      </p>
+      <p>
+         This is an ellipsis ...
+      </p>
+    </section>
+    <section id="bad">
+      <title>Bad text</title>
+      <p>
+        This is an example sentence,, it has a subordinate clause with duplicated punctuation.
+      </p>
+    </section>
+  </body>
+</topic>

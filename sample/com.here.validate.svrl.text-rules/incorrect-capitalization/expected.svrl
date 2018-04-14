@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl">
+  <active-pattern name="common-rules" role="grammar">
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <failed-assert location="/incorrect-capitalization.dita" role="error">
+      <diagnostic-reference diagnostic="incorrect-capitalization">Line 23: p - [incorrect-capitalization] 
+The word 'JSON' is incorrectly capitalized in the following text: 
+
+
+        The acronym, json stands for "Javascript Object Notation".  Files frequently use the suffix 
+      .</diagnostic-reference>
+    </failed-assert>
+    <failed-assert location="/incorrect-capitalization.dita" role="error">
+      <diagnostic-reference diagnostic="incorrect-capitalization">Line 23: p - [incorrect-capitalization] 
+The word 'JavaScript' is incorrectly capitalized in the following text: 
+
+
+        The acronym, json stands for "Javascript Object Notation".  Files frequently use the suffix 
+      .</diagnostic-reference>
+    </failed-assert>
+    <fired-rule context="p"></fired-rule>
+    <failed-assert location="/incorrect-capitalization.dita" role="error">
+      <diagnostic-reference diagnostic="incorrect-capitalization">Line 26: p - [incorrect-capitalization] 
+The word 'Bluetooth' is incorrectly capitalized in the following text: 
+
+
+        The bluetooth id is app_id when using xml or JAVA.
+      .</diagnostic-reference>
+    </failed-assert>
+    <failed-assert location="/incorrect-capitalization.dita" role="error">
+      <diagnostic-reference diagnostic="incorrect-capitalization">Line 26: p - [incorrect-capitalization] 
+The word 'ID' is incorrectly capitalized in the following text: 
+
+
+        The bluetooth id is app_id when using xml or JAVA.
+      .</diagnostic-reference>
+    </failed-assert>
+    <failed-assert location="/incorrect-capitalization.dita" role="error">
+      <diagnostic-reference diagnostic="incorrect-capitalization">Line 26: p - [incorrect-capitalization] 
+The word 'Java' is incorrectly capitalized in the following text: 
+
+
+        The bluetooth id is app_id when using xml or JAVA.
+      .</diagnostic-reference>
+    </failed-assert>
+    <failed-assert location="/incorrect-capitalization.dita" role="error">
+      <diagnostic-reference diagnostic="incorrect-capitalization">Line 26: p - [incorrect-capitalization] 
+The word 'XML' is incorrectly capitalized in the following text: 
+
+
+        The bluetooth id is app_id when using xml or JAVA.
+      .</diagnostic-reference>
+    </failed-assert>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+  </active-pattern>
+  <active-pattern name="english-grammar" role="grammar">
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+  </active-pattern>
+</svrl:schematron-output>
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<testsuite id="com.here.validate.svrl.text-rules">
+	<text id="duplicated-punctuation">duplicated-punctuation</text>
+	<text id="duplicated-words">duplicated-words</text>
+	<text id="incorrect-capitalization">incorrect-capitalization</text>
+	<text id="incorrect-grammar">incorrect-grammar</text>
+	<text id="incorrect-punctuation">incorrect-punctuation</text>
+	<text id="incorrect-spelling">incorrect-spelling</text>
+	<text id="a-followed-by-vowel">a-followed-by-vowel</text>
+	<text id="an-followed-by-consonant">an-followed-by-consonant</text>
+	<text id="latin-abbreviation">latin-abbreviation</text>
+	<text id="sentence-capitalization">sentence-capitalization</text>
+	<text id="split-infinitive">split-infinitive</text>
+	<text id="where-not-were">where-not-were</text>
+</testsuite>

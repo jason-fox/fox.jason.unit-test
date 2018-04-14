@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl">
+  <active-pattern name="common-rules" role="grammar">
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <failed-assert location="//incorrect-spelling.dita" role="error">
+      <diagnostic-reference diagnostic="duplicated-punctuation">Line 17: p - [duplicated-punctuation] 
+The following text contains a duplicated punctuation mark. 
+
+Seperate acommodation can be found wihtin the main building...</diagnostic-reference>
+    </failed-assert>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <failed-assert location="//incorrect-spelling.dita" role="fatal">
+      <diagnostic-reference diagnostic="blacklisted-word">Line 17: p - [blacklisted-word] 
+The word 'seperate' is a spelling mistake in the following text: 
+
+
+         Seperate acommodation can be found wihtin the main building..
+      .</diagnostic-reference>
+    </failed-assert>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <failed-assert location="//incorrect-spelling.dita" role="error">
+      <diagnostic-reference diagnostic="incorrect-spelling">Line 17: p - [incorrect-spelling] 
+The word 'separate' is spelt incorrectly ('seperate') in the following text: 
+
+Seperate acommodation can be found wihtin the main building...</diagnostic-reference>
+    </failed-assert>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <failed-assert location="//incorrect-spelling.dita" role="error">
+      <diagnostic-reference diagnostic="incorrect-grammar">Line 17: p - [incorrect-grammar] 
+The phrase 'separate' is written incorrectly ('seperate') in the following text: 
+
+Seperate acommodation can be found wihtin the main building...</diagnostic-reference>
+    </failed-assert>
+  </active-pattern>
+  <active-pattern name="english-grammar" role="grammar">
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+  </active-pattern>
+</svrl:schematron-output>
+

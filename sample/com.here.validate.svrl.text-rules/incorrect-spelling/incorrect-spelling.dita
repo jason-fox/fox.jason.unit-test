@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="incorrect-spelling">
+  <title>incorrect-spelling</title>
+  <body>
+    <p>
+     Incorrect spellings (as found in the blacklisting dictionary) should not appear in the running text
+    </p>
+     <section id="good">
+      <title>Good text</title>
+      <p>
+        Separate accommodation can be found wihtin the main building.
+      </p>
+    </section>
+    <section id="bad">
+      <title>Bad text</title>
+      <p>
+         Seperate acommodation can be found wihtin the main building..
+      </p>
+    </section>
+  </body>
+</topic>

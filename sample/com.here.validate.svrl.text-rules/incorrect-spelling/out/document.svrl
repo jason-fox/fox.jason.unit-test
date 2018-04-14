@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<svrl:schematron-output xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                        xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        xmlns:saxon="http://saxon.sf.net/">
+   <active-pattern name="common-rules" role="grammar">
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+      <failed-assert location="/incorrect-spelling.dita" role="error">
+         <diagnostic-reference diagnostic="duplicated-punctuation">Line 17: p - [duplicated-punctuation] 
+The following text contains a duplicated punctuation mark. 
+
+Seperate acommodation can be found wihtin the main building...</diagnostic-reference>
+      </failed-assert>
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+      <failed-assert location="/incorrect-spelling.dita" role="fatal">
+         <diagnostic-reference diagnostic="blacklisted-word">Line 17: p - [blacklisted-word] 
+The word 'seperate' is a spelling mistake in the following text: 
+
+
+         Seperate acommodation can be found wihtin the main building..
+      .</diagnostic-reference>
+      </failed-assert>
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+      <failed-assert location="/incorrect-spelling.dita" role="error">
+         <diagnostic-reference diagnostic="incorrect-spelling">Line 17: p - [incorrect-spelling] 
+The word 'separate' is spelt incorrectly ('seperate') in the following text: 
+
+Seperate acommodation can be found wihtin the main building...</diagnostic-reference>
+      </failed-assert>
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+      <failed-assert location="/incorrect-spelling.dita" role="error">
+         <diagnostic-reference diagnostic="incorrect-grammar">Line 17: p - [incorrect-grammar] 
+The phrase 'separate' is written incorrectly ('seperate') in the following text: 
+
+Seperate acommodation can be found wihtin the main building...</diagnostic-reference>
+      </failed-assert>
+   </active-pattern>
+   <active-pattern name="english-grammar" role="grammar">
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+      <fired-rule context="p"/>
+   </active-pattern>
+</svrl:schematron-output>

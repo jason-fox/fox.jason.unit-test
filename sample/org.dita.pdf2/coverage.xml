@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<testsuite id="org.dita.pdf2">
+	<text id="body-text">font-family="STANDARD"</text>
+	<text id="bold-text">font-family="STANDARD" font-weight="bold"</text>
+	<element id="block">fo:block</element>
+    <element id="bold-block">fo:block font-weight="bold"</element>
+    <element id="table-column">fo:table-column</element>
+    <element id="table-column-width">fo:table-column column-width</element>
+    <element id="table-cell">fo:table-cell</element>
+</testsuite>

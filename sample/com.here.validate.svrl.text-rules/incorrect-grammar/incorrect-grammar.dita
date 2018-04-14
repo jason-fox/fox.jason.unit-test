@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="incorrect-grammar">
+  <title>incorrect-grammar</title>
+  <body>
+    <p>
+    Incorrect grammar should not appear in the running text.
+    </p>
+     <section id="good">
+      <title>Good text</title>
+      <p>
+         It is the case to some extent that something something...
+      </p>
+    </section>
+    <section id="bad">
+      <title>Bad text</title>
+      <p>
+        It is the case to some extend that something something...
+      </p>
+    </section>
+  </body>
+</topic>

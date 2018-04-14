@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl">
+  <active-pattern name="common-rules" role="grammar">
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <failed-assert location="/incorrect-grammar.dita" role="error">
+      <diagnostic-reference diagnostic="incorrect-grammar">Line 17: p - [incorrect-grammar] 
+The phrase 'to some extent' is written incorrectly ('to some extend') in the following text: 
+
+It is the case to some extend that something something....</diagnostic-reference>
+    </failed-assert>
+  </active-pattern>
+  <active-pattern name="english-grammar" role="grammar">
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+    <fired-rule context="p"></fired-rule>
+  </active-pattern>
+</svrl:schematron-output>
+

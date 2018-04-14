@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bookmap PUBLIC "-//OASIS//DTD DITA BookMap//EN" "bookmap.dtd">
+<bookmap>
+	<booktitle>
+		<mainbooktitle>monospace</mainbooktitle>
+		<booktitlealt>Test Document</booktitlealt>
+		<booktitlealt>
+			<ph>Version 1.0</ph>
+		</booktitlealt>
+	</booktitle>
+	<bookmeta>
+		<data>FINAL</data>
+		<data>&#xA0;</data>
+	</bookmeta>
+	<frontmatter>
+		<booklists>
+			<toc linking="targetonly"/>
+		</booklists>
+	</frontmatter>
+	
+	<chapter navtitle="customizations">		
+		<topicref format="dita" type="topic" href="topics/monospace.dita"/>	
+	</chapter>			
+</bookmap>

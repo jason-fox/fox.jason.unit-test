@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="unit-test">
+	<import file="../../bootstrap.xml"/>
+	<target description="Expect that a codeblock displays in a monospace font in the PDF" name="unit-test">
+		<exec-pdf/>
+		<get-pdf-article/>
+		<compare-output/>
+	</target>
+</project>

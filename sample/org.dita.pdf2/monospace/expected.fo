@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<fo:flow flow-name="xsl-region-body" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+  <fo:block>
+    <fo:marker marker-class-name="current-topic-number">1</fo:marker>
+    <fo:marker marker-class-name="current-header">customizations</fo:marker>
+    <fo:block>
+      <fo:block font-weight="bold">Chapter
+        <fo:block font-weight="bold">1</fo:block>
+      </fo:block>
+    </fo:block>
+    <fo:block border-after-color="black" font-family="STANDARD" font-weight="bold">customizations</fo:block>
+    <fo:table page-break-after="always" table-layout="fixed" width="100%">
+      <fo:table-column column-number="1" column-width="35%"></fo:table-column>
+      <fo:table-column column-number="2" column-width="65%"></fo:table-column>
+      <fo:table-body>
+        <fo:table-row>
+          <fo:table-cell>
+            <fo:block font-family="STANDARD">
+              <fo:block font-family="STANDARD" font-weight="bold">Topics:</fo:block>
+              <fo:list-block provisional-distance-between-starts="18pt" provisional-label-separation="12pt">
+                <fo:list-item relative-align="baseline">
+                  <fo:list-item-label keep-together.within-line="always">
+                    <fo:block text-align="start">&#8226;</fo:block>
+                  </fo:list-item-label>
+                  <fo:list-item-body>
+                    <fo:block>
+                      <fo:basic-link color="blue" internal-destination="unique_1">monospace</fo:basic-link>
+                    </fo:block>
+                  </fo:list-item-body>
+                </fo:list-item>
+              </fo:list-block>
+            </fo:block>
+          </fo:table-cell>
+          <fo:table-cell padding-start="10pt">
+            <fo:block></fo:block>
+          </fo:table-cell>
+        </fo:table-row>
+      </fo:table-body>
+    </fo:table>
+    <fo:block>
+      <fo:block>
+        <fo:block border-after-color="black" font-family="STANDARD" font-weight="bold">
+          <fo:block border-end-width="0pt">
+            <fo:marker marker-class-name="current-h2">monospace</fo:marker>
+            <fo:wrapper></fo:wrapper>
+            <fo:wrapper></fo:wrapper>monospace</fo:block>
+        </fo:block>
+        <fo:block>
+          <fo:block>A codeblock should be displayed in a monospace font</fo:block>
+          <fo:block>
+            <fo:block font-family="STANDARD" font-weight="bold">Codeblock</fo:block>
+            <fo:block background-color="ALICEBLUE" font-family="MONOSPACE" hyphenation-character="&#9658;" keep-with-previous.within-page="always" linefeed-treatment="preserve" padding="6pt" white-space-collapse="false" white-space-treatment="preserve" wrap-option="wrap">Morbi nec aliquet libero, ac condimentum tortor. Ut ultrices orci placerat elit rutrum
+ullamcorper. Etiam vulputate ante eget turpis iaculis, vel fermentum diam porttitor. Morbi 
+pretium tempor nisi, at convallis sem tincidunt ut. Maecenas vitae purus malesuada, elementum 
+dolor ac, porta nisi. Fusce ut dolor in nunc imperdiet lobortis a quis purus. Aliquam nec nibh 
+in ex gravida venenatis vitae in ex. Duis non dui at est aliquam pretium. Sed et egestas 
+tellus. Cras quis condimentum est. Cum sociis natoque penatibus et magnis dis parturient 
+montes, nascetur ridiculus mus. Morbi gravida vel dolor ac posuere. Nam vel posuere orci. Nunc 
+eros velit, mattis a ligula nec, finibus aliquam enim. Pellentesque habitant morbi tristique 
+senectus et netus et malesuada fames ac turpis egestas.</fo:block>
+          </fo:block>
+        </fo:block>
+      </fo:block>
+    </fo:block>
+  </fo:block>
+</fo:flow>
+

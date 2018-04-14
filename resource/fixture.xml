@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+<project basedir="." name="unit-test.fixture">
+
+	<description/>
+	<basename property="test-suite" file="${ant.file.unit-test.fixture}/.."/>
+
+	<!--
+		Macro to run a unit-test for a given document
+
+		@param name	- Name of the test to run
+	-->
+	<macrodef name="unit-test">
+		<attribute name="name"/>
+		<sequential>
+			
+			<exec executable="ant" failonerror="false" outputproperty="output" resultproperty="result" osfamily="unix">
+				<arg value="-f"/>
+				<arg value="${basedir}/@{name}/build.xml"/>
+				<arg value="-S"/>
+				<arg value="-q"/>
+				<arg value="-Dtest.root.dir=${basedir}"/>
+				<arg value="-Dtest.copy.dir=${test.copy.dir}/${test-suite}"/>
+				<arg value="-Dtest.copy=${test.copy}"/>
+				<arg value="-Ddita.dir=${dita.dir}"/>
+				<arg value="-Dtest.colorize=false"/>
+			</exec>
+
+			<exec executable="cmd" dir="${repo.dir}" failonerror="false" outputproperty="output" resultproperty="result" osfamily="windows">
+				<arg value="/C"/>
+				<arg value="ant -f ${basedir}/@{name}/build.xml -S -q -Dtest.root.dir=${basedir} -Dtest.copy.dir=${test.copy.dir}/${test-suite} -Dtest.copy=${test.copy} -Ddita.dir=${dita.dir} -Dtest.colorize=false"/>
+			</exec>
+			<assert-successful result="${result}" message="${output}"/>
+		</sequential>
+	</macrodef>
+
+	<!--
+		Custom <scriptdef> to invoke a conditional <fail> since AntUnit overrides the fail task. 
+	-->
+	<scriptdef name="assert-successful" language="javascript">
+		<attribute name="result"/>
+		<attribute name="message"/>
+		<![CDATA[
+			
+			var result = attributes.get("result");
+			var message = attributes.get("message");
+
+			if(!"0".equals(result)){
+				var task = project.createTask("fail"); 
+				task.setMessage(message);
+				task.perform();
+			} 
+		]]>
+	</scriptdef>
+
+	<!-- TESTS -->
+</project>
