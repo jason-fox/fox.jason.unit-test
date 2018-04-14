@@ -1,1 +1,0 @@
-This test suite is disabled. To enable it delete this file.

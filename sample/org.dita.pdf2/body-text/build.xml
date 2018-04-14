@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="unit-test">
-	<import file="../../bootstrap.xml"/>
-	<target description="Expect that PDF body text should be displayed in the standard font" name="unit-test">
-		<exec-pdf/>
-		<get-pdf-article/>
-		<compare-output/>
-	</target>
-</project>
