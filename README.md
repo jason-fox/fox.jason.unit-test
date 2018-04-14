@@ -66,7 +66,11 @@ To run, use the `unit-test` transform.
 PATH_TO_DITA_OT/bin/dita -f unit-test  -o out -i PATH_TO_UNIT_TESTS
 ```
 
-Once the command has run, a test report file is created. Additionally, if any error occurs, the command will fail
+Once the command has run, a test report file is created. Additionally, if any error occurs, the command will fail.
+
+**Sample Test Report**
+This is the test report from the example tests found within the plug-in `sample` directory. Nine tests are run over two test suites (PDF and HTML processing) - a third test suite has been disabled.
+![enter image description here](https://jason-fox.github.io/fox.jason.unit-test/results.png)
 
 
 #### Obtaining coverage information
@@ -77,49 +81,43 @@ Each test suite should contain a `coverage.xml` file which holds a series of tok
 PATH_TO_DITA_OT/bin/dita -f test-coverage -i PATH_TO_UNIT_TESTS
 ```
 
+Once the command has run,  a coverage report is created
+ 
+ **Sample Test Report**
+This is the test report from the example tests found within the plug-in `sample` directory. 
 
-Once the command has run, coverage information is echoed to the command line
+* Coverage for the Spell-checker is looking to ensure that all rules have been run. Uncovered rules are highlighted in RED.
+* Coverage for HTML processing is looking for the presence of `<codeph>`,  `<codeblock>` and `<p>` tags being rendered in the tests. 
 
-```bash
-org.dita.html5
-a href=".*"  - Test cases: 1
-a target="_blank"  - Test cases: 1
-p  - Test cases: 4
-pre  - Test cases: 3
-pre class=" codeblock "  - Test cases: 3
-section  - Test cases: 4
-table  - Test cases: 1
-Coverage: 100.0%  
-
-org.dita.pdf2
-fo:block  - Test cases: 5
-fo:block font-weight="bold"  - Test cases: 5
-fo:table-column  - Test cases: 5
-fo:table-column column-width  - Test cases: 5
-fo:table-cell  - Test cases: 5
-font-family="STANDARD"  - Test cases: 5
-font-family="STANDARD" font-weight="bold"  - Test cases: 5
-incorrect-xxx  - NO TESTS 
-Coverage: 87.5%  
-
-```
+![enter image description here](https://jason-fox.github.io/fox.jason.unit-test/coverage.png)
 
 #### Obtaining ANT script profile information
 
-To obtain profile information, use the `antro` transform and supply an additional transtype
+**Antro** is a hierarchical and line-level profiler for Ant build scripts. It can be run to check which ANT scripts have been invoked and how long they took.
+
+To obtain profile information, use the `antro` transform and supply an additional test transtype
 
 ```bash
 PATH_TO_DITA_OT/bin/dita -f antro --test.transform=TRANSFORM_TO_PROFILE -i document.ditamap
 ```
+A profiler JSON file will be generated.
 
-#### Obtaining coverage information
+#### Viewing profiler information
 
-To run the UI for the ANT script profiler, use the `antro-ui` transform. The `-i` parameter is mandatory for all DITA-OT plug-ins, and should point to a real file, but is not used for this transform.
+To run the UI for the  Antro profiler, use the `antro-ui` transform. The `-i` parameter is mandatory for all DITA-OT plug-ins, and should point to a real file, but is not used for this transform.
 
 ```bash
 PATH_TO_DITA_OT/bin/dita -f antro-ui -i document.ditamap
 ```
+The Antro UI  is the displayed, load the profiler json file from to display a bar graph showing how long each ANT target took:
 
+**Sample Antro Display**
+The Profiler was run against the `pdf` transform, FOP processing took 16s
+![](https://jason-fox.github.io/fox.jason.unit-test/profiler-bar.png)
+
+
+You can drill down to an individual line to see if it has been invoked and how long it took:
+![](https://jason-fox.github.io/fox.jason.unit-test/profiler.png)
 
 ### Parameter Reference
 
