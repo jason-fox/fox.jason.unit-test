@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
-<project basedir="." name="unit-test.fixture">
+<project xmlns:if="ant:if" xmlns:unless="ant:unless"  basedir="." name="unit-test.fixture">
 
 	<description/>
 	<basename property="test-suite" file="${ant.file.unit-test.fixture}/.."/>
@@ -30,28 +30,13 @@
 				<arg value="/C"/>
 				<arg value="ant -f ${basedir}/@{name}/build.xml -S -q -Dtest.root.dir=${basedir} -Dtest.copy.dir=${test.copy.dir}/${test-suite} -Dtest.copy=${test.copy} -Ddita.dir=${dita.dir} -Dtest.colorize=false"/>
 			</exec>
-			<assert-successful result="${result}" message="${output}"/>
+			<condition property="test.failed" >
+        		<not>
+        			<equals arg1="${result}" arg2="0"/>
+        		</not>
+    		</condition>
+			<fail if:set="test.failed" message="${output}"/>
 		</sequential>
 	</macrodef>
-
-	<!--
-		Custom <scriptdef> to invoke a conditional <fail> since AntUnit overrides the fail task. 
-	-->
-	<scriptdef name="assert-successful" language="javascript">
-		<attribute name="result"/>
-		<attribute name="message"/>
-		<![CDATA[
-			
-			var result = attributes.get("result");
-			var message = attributes.get("message");
-
-			if(!"0".equals(result)){
-				var task = project.createTask("fail"); 
-				task.setMessage(message);
-				task.perform();
-			} 
-		]]>
-	</scriptdef>
-
 	<!-- TESTS -->
 </project>
