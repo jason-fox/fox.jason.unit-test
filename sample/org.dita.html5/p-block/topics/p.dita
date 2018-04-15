@@ -9,5 +9,8 @@
       <p>This is written in subscript <sub>text</sub>.</p>
       <p>This is written in <tt>monospace</tt> text.</p>
       <p>This is written in <u>underline</u> text.</p> 
+
+      <p>This is written in <codeph>code</codeph> text.</p> 
+      <p>This is written in <ph outputclass="blue">blue</ph> text.</p>
   </body>
 </topic>

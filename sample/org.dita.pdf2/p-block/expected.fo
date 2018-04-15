@@ -59,6 +59,10 @@
             <fo:inline font-family="MONOSPACE">monospace</fo:inline>text.</fo:block>
           <fo:block>This is written in
             <fo:inline text-decoration="underline">underline</fo:inline>text.</fo:block>
+          <fo:block>This is written in
+            <fo:inline font-family="MONOSPACE">code</fo:inline>text.</fo:block>
+          <fo:block>This is written in
+            <fo:inline border-end-width="0pt">blue</fo:inline>text.</fo:block>
         </fo:block>
       </fo:block>
     </fo:block>

@@ -59,6 +59,9 @@
       .Error {
         font-weight:bold; color:red;
       }
+      .Success {
+        font-weight:bold; color:green;
+      }
       .Failure {
         font-weight:bold; color:purple;
       }
@@ -91,6 +94,7 @@
 <xsl:template name="testsuite.coverage.header">
       <tr valign="top">
       <th style="text-align:left">Title</th>
+      <th width="30%" ></th>
       <th width="5em" >Tokens</th>
       <th width="5em">Covered</th>
       <th width="5em">Percent</th>
@@ -105,11 +109,25 @@
   <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
      <xsl:call-template name="testsuite.coverage.header"/>
     <xsl:for-each select="testsuites/testsuite">
+
+
+
     <tr>
-      <xsl:if test="@percent &lt; 1">
-        <xsl:attribute name="class">Error</xsl:attribute>
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="@percent &gt; 0.9"><xsl:attribute name="class">Success</xsl:attribute></xsl:when>
+        <xsl:when test="@percent &gt; 0.7"/>
+        <xsl:otherwise><xsl:attribute name="class">Error</xsl:attribute></xsl:otherwise>
+      </xsl:choose>
       <td><xsl:value-of select="@id"/></td>
+      <td>
+         <div>
+            <xsl:attribute name="style">background-color:coral;width:100%</xsl:attribute>
+            <div>
+               <xsl:attribute name="style">background-color:lightgreen;width:<xsl:value-of select="format-number(@percent,'0.00%')"/></xsl:attribute>
+               &#160;
+             </div>
+        </div> 
+      </td>
       <td><xsl:value-of select="@tokens"/></td>
       <td><xsl:value-of select="@covered"/></td>
       <td>
@@ -139,9 +157,10 @@
       </tr>
       <xsl:for-each select="*">
         <tr>
-          <xsl:if test="@count=0">
-            <xsl:attribute name="class">Error</xsl:attribute>
-          </xsl:if>
+          <xsl:choose>
+            <xsl:when test="@count=0"><xsl:attribute name="class">Error</xsl:attribute></xsl:when>
+            <xsl:otherwise><xsl:attribute name="class">Success</xsl:attribute></xsl:otherwise>
+          </xsl:choose>
           <td><xsl:value-of select="@id"/></td>
           <td>
             <pre><code><xsl:value-of select="."/></code></pre>
