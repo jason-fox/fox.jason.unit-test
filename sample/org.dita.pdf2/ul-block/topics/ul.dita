@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="p">
+  <title>p</title>
+  <body>
+	<ul>
+		<li>This is written in <b>bold text</b>.</li>
+		<li>This is written in <i>italic text</i>.</li>
+		<li>This is written in superscript <sup>text</sup>.</li> 
+		<li>This is written in subscript <sub>text</sub>.</li>
+		<li>This is written in <tt>monospace</tt> text.</li>
+		<li>This is written in <u>underline</u> text.</li>
+	</ul>
+  </body>
+</topic>

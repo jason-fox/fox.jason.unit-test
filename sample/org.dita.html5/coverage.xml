@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
 <testsuite id="org.dita.html5">
-	<element id="codeblock">pre class=" codeblock "</element>	
+	<element id="codeblock">pre class="pre codeblock"</element>	
 	<element id="codeph">pre</element>
+	<element id="em">em</element>
+	<element id="div">div</element>
+	<element id="li">li</element>
+	<element id="ol">ol</element>
 	<element id="p">p</element>
 	<element id="section">section</element>
+	<element id="strong">strong</element>
+	<element id="sub">sub</element>
+	<element id="sup">sup</element>
+	<element id="span">span</element>
 	<element id="table">table</element>
+	<element id="tt">span style="font-family: monospace"</element>
+	<element id="ul">ul</element>
 	<element id="xref-internal">a href=".*"</element>
 	<element id="xref-external">a target="_blank"</element>
 </testsuite>
