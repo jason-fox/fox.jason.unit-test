@@ -165,6 +165,9 @@
 					</condition>
 
 					<xmltask source="@{doc-type-path}/build.xml">
+						<copy path="//project/description/text()" property="test.description"/>
+					</xmltask>
+					<xmltask source="@{doc-type-path}/build.xml">
 						<copy path="//project/target/@description" property="test.description"/>
 					</xmltask>
 					<property name="test.description" value="${test.name}"/>

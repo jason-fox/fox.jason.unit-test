@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project basedir="." default="unit-test">
 	<import file="../../bootstrap.xml"/>
-	<target description="Expect that a codeblock displays in a monospace font" name="unit-test">
+	<description>
+		Expect that a codeblock displays in a monospace font
+	</description>
+	<target name="unit-test">
 		<exec-html5/>
 		<get-html-article from="topics/codeblock.html"/>
 		<compare-output suffix=".html"/>
+	</target>
+	<target name="meta-data">
+		<element id="codeblock">pre class=" codeblock "</element>
 	</target>
 </project>

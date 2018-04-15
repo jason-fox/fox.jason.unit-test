@@ -66,7 +66,8 @@ To run, use the `unit-test` transform.
 PATH_TO_DITA_OT/bin/dita -f unit-test  -o out -i PATH_TO_UNIT_TESTS
 ```
 
-Once the command has run, a test report file is created. Additionally, if any error occurs, the command will fail.
+Once the command has run, a test report file is created. 
+Additionally, if any error occurs, the command will fail.
 
 **Sample Test Report**
 This is the test report from the example tests found within the plug-in `sample` directory. Nine tests are run over two test suites (PDF and HTML processing) - a third test suite has been disabled.
@@ -226,8 +227,10 @@ The `build.xml` must consist of a single default target, and `import` the `boots
 ```xml
 <project basedir="." default="unit-test">
 	<import file="../../bootstrap.xml"/>
-	<target name="unit-test"
-		description="body text should be displayed in the standard font">
+	<description>
+		Body text should be displayed in the standard font
+	</description>
+	<target name="unit-test">
     	<exec-html5/>
     	<get-html-article from="topics/body-text.html"/>
     	<compare-output suffix=".html"/>

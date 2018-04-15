@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project basedir="." default="unit-test">
 	<import file="../../bootstrap.xml"/>
-	<target description="Expect that HTML body text should be displayed in the standard font" name="unit-test">
+	<description>
+		Expect that HTML body text should be displayed in the standard font
+	</description>
+	<target name="unit-test">
     	<exec-html5/>
     	<get-html-article from="topics/body-text.html"/>
     	<compare-output suffix=".html"/>
+	</target>
+	<target name="meta-data">
+		<element id="p">p</element>
 	</target>
 </project>

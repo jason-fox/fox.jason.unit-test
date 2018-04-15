@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project basedir="." default="unit-test">
 	<import file="../../bootstrap.xml"/>
-	<target description="Expect that PDF body text should be displayed in the standard font" name="unit-test">
+	<description>
+		Expect that PDF body text should be displayed in the standard font
+	</description>
+	<target name="unit-test">
 		<exec-pdf/>
 		<get-pdf-article/>
 		<compare-output/>
+	</target>
+	<target name="meta-data">
+		<text id="plain-text">font-family="STANDARD"</text>
+		<text id="plain-text-bold">font-family="STANDARD" font-weight="bold"</text>
 	</target>
 </project>
