@@ -45,6 +45,42 @@
 		</sequential>
 	</macrodef>
 
+
+
+	<!--
+		Macro to throw an error message if the text is not found
+
+		@param actual 	   - The text actually output by the test
+		@param os          - Only make the comparison if the current operating system 
+		                     is of a given type 
+		@param expected    - The expected fragment of text
+	-->
+	<macrodef name="contains-text">
+		<attribute name="actual" default="${dita.ot.output}"/>
+		<attribute name="expected" />
+		<attribute name="os" default="any"/>
+		<sequential>
+		
+			<local name="test.contatins"/>
+			<local name="test.os.matches"/>
+
+			<condition property="test.os.matches" value="true" else="false">
+        		<or>
+        			<equals arg1="@{os}" arg2="any"/>
+        			<os family="@{os}"/>
+        		</or>
+    		</condition>
+
+    		<condition property="test.contains" value="true" else="false">
+        		<contains string="@{actual}" substring="@{expected}"/>
+    		</condition>
+			
+			<assert-equal arg1="${test.contains}" arg2="true" message="[FAILED] Expected text not found." body="&quot;@{text}&quot; missing from log output."/>
+			<unit-test-success-echo/>
+
+		</sequential>
+	</macrodef>
+
 	<!--
 		Macro to execute the HTML5 DITA-OT plugin
 
@@ -125,6 +161,28 @@
 
 			<xmltask outputter="simple" source="${ordered-document}" dest="${output.dir}/fragment.svrl"/>
 			<delete quiet="true" failonerror="false" dir="${dita.temp.dir}"/>
+		</sequential>
+	</macrodef>
+
+	<!--
+		Macro to execute a random transtype
+
+		@param ditamap    - The .ditamap file specifying which topics and other resources to use to create a document
+		@param expectedresult The expected result when invoking the transform 
+		@param maxwait        The maximum time to create a document
+		@param propertyfile   The name of a file holding additional properties
+		@param transtype  - The transtype to when creating the document.
+	-->
+	<macrodef name="exec-transtype">
+		<attribute default="${basedir}/document.ditamap" name="ditamap"/>
+		<attribute name="transtype"/>
+		<attribute default="0" name="expectedresult"/>
+		<attribute default="100" name="maxwait"/>
+		<attribute name="propertyfile" default="test.properties"/>
+
+		<sequential>
+			<init-test/>
+			<run-test ditamap="@{ditamap}" transtype="@{transtype}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" clean="yes" />
 		</sequential>
 	</macrodef>
 
@@ -456,6 +514,7 @@
 		<attribute name="output" default="${output.dir}"/>
 		<attribute name="propertyfile" default="test.properties"/>
 		<attribute name="maxwait"/>
+		<attribute name="clean" default="no"/>
 		<sequential>
 			<local name="test.properties"/>
 			<get-test-resource file="@{propertyfile}" property="test.properties" default="${test.propertyfile}" />
@@ -473,7 +532,7 @@
 				<arg value="@{transtype}"/>
 				<arg value="-temp"/>
 				<arg value="${dita.temp.dir}"/>
-				<arg value="--clean.temp=no"/>
+				<arg value="--clean.temp=@{clean}"/>
 				<arg value="--propertyfile"/>
 				<arg value="${test.properties}"/>
 				<!-- Add to obtain verbose output. -->
@@ -483,7 +542,7 @@
 			<!-- For Windows run from a DOS command -->
 			<exec executable="cmd" dir="${dita.dir}/bin" osfamily="windows" outputproperty="dita.ot.output" resultproperty="dita.ot.result">
 				<arg value="/C"/>
-				<arg value="dita -input @{ditamap} -output @{output}-format @{transtype} -temp ${dita.temp.dir} --clean.temp=no -v"/>
+				<arg value="dita -input @{ditamap} -output @{output}-format @{transtype} -temp ${dita.temp.dir} --clean.temp=@{clean} -v"/>
 			</exec>
 			<unix-timestamp property="stop"/>
 			<echo taskname="dita-ot" level="info" message="${dita.ot.output}"/>

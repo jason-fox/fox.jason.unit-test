@@ -159,9 +159,9 @@ At the root of the tests lies a `bootstrap.xml` file which references the `antli
 
 ```xml
 <project name="bootstrap.unit-test">
-	<dirname property="test.root.dir" file="${ant.file.bootstrap.unit-test}" />
-	<property name="dita.dir" location="PATH_TO_DITA_OT"/> 
-	<typedef file="${dita.dir}/plugins/fox.jason.unit-test/resource/antlib.xml"/>
+  <dirname property="test.root.dir" file="${ant.file.bootstrap.unit-test}" />
+  <property name="dita.dir" location="PATH_TO_DITA_OT"/> 
+  <typedef file="${dita.dir}/plugins/fox.jason.unit-test/resource/antlib.xml"/>
 </project>
 ```
 
@@ -178,10 +178,10 @@ A coverage file consists of a list of XML elements or string literals which shou
 
 ```xml
 <coverage>
-	<text>font-family="STANDARD"</text>
-	<text>font-family="STANDARD" font-weight="bold"</text>
-	<text>incorrect-xxx</text>
-	<element>fo:block</element>
+  <text>font-family="STANDARD"</text>
+  <text>font-family="STANDARD" font-weight="bold"</text>
+  <text>incorrect-xxx</text>
+  <element>fo:block</element>
     <element>fo:block font-weight="bold"</element>
     <element>fo:table-column</element>
     <element>fo:table-column column-width</element>
@@ -226,15 +226,15 @@ The `build.xml` must consist of a single default target, and `import` the `boots
 
 ```xml
 <project basedir="." default="unit-test">
-	<import file="../../bootstrap.xml"/>
-	<description>
-		Body text should be displayed in the standard font
-	</description>
-	<target name="unit-test">
-    	<exec-html5/>
-    	<get-html-article from="topics/body-text.html"/>
-    	<compare-output suffix=".html"/>
-	</target>
+  <import file="../../bootstrap.xml"/>
+  <description>
+    Body text should be displayed in the standard font
+  </description>
+  <target name="unit-test">
+      <exec-html5/>
+      <get-html-article from="topics/body-text.html"/>
+      <compare-output suffix=".html"/>
+  </target>
 </project>
 ```
 
@@ -279,7 +279,36 @@ if running on a Windows system, compares the file `out/fragment.svrl` with `expe
 
 if running on a UNIX system, no comparison is made.
 
-### Exec-Html5
+
+### Contains-Text 
+
+#### Description
+Fail the test if the log from the test does not contain the given string
+
+#### Parameters
+| Attribute   | Description                                       | Required                            |
+|-------------|---------------------------------------------------|-------------------------------------|
+| actual      | The text actually output by the test              | No; defaults to output from DITA-OT |
+| expected    | The expected fragment of text                     | Yes                                 |
+| os          | Only make the comparison if the current operating system is of a given type             | No; defaults to `any`             |
+
+
+#### Examples
+
+```xml
+<contains-text expected="Lorem Ipsum"/>
+```
+compares the output of DITA-OT and fails if the text "Lorem Ipsum" cannot be found
+
+```xml
+<contains-text expected="This is running on Windows" os="windows"/>
+```
+if running on a Windows system, compares the output of DITA-OT and fails if the text "This is running on Windows" cannot be found
+
+if running on a UNIX system, no comparison is made.
+
+
+### Exec-HTML5
 
 #### Description
 Execute the HTML5 DITA-OT transform in verbose mode 
@@ -302,7 +331,7 @@ The test will fail if the result was not as expected or took too long
 ```
 runs DITA-OT using the `custom-html` HTML transtype. the output will be placed in the `/out/html` directory
 
-### Exec-Pdf
+### Exec-PDF
 
 #### Description
 Execute the PDF DITA-OT transform in verbose mode 
@@ -323,7 +352,7 @@ Execute the PDF DITA-OT transform in verbose mode
 ```
 runs DITA-OT using the `custom-pdf` PDF transtype. `topic.fo` and `document.pdf` will be placed in the `/out` directory
 
-### Exec-Svrl
+### Exec-SVRL
 
 #### Description
 Execute the HERE Validator SVRL DITA-OT transform in verbose mode.
@@ -350,7 +379,7 @@ runs DITA-OT using the `text-rules` SVRL transtype
 ```
 runs DITA-OT using the `svrl-echo` SVRL transtype - the invocation is expected to fail with validation errors.
 
-### Get-Html-Article
+### Get-HTML-Article
 
 #### Description
 Loads a given HTML file and extracts the first `<article>` element  (which corresponds to a DITA topic) for further examination.
@@ -370,7 +399,7 @@ Loads a given HTML file and extracts the first `<article>` element  (which corre
 ```
 creates a file called `fragment.html` holding the `<article>` element from the `topics/body-text.html` file.
 
-### Get-Pdf-Article
+### Get-PDF-Article
 
 #### Description
 Loads a given `topic.fo` file and extracts the last `fo.flow` element (which corresponds to a DITA topic) for further examination. Also remove colors, fonts and excess attributes
