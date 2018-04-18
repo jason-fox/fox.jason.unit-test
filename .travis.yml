@@ -1,0 +1,12 @@
+language: java
+jdk:
+  - oraclejdk8
+before_script:
+  - zip -r fox.jason.unit-test.zip . -x *.zip* *.git/* *temp/* *out/*
+  - curl -LO 'https://github.com/dita-ot/dita-ot/releases/download/3.0/dita-ot-3.0.zip'
+  - unzip -q dita-ot-3.0.zip
+  - mv dita-ot*/ dita-ot/
+  - chmod +x dita-ot/bin/dita
+  - dita-ot/bin/dita --install fox.jason.unit-test.zip 
+script:
+  - dita-ot/bin/dita --input dita-ot/plugins/fox.jason.unit-test/sample -f unit-test -v
