@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="unit-test">
+	<import file="../bootstrap.xml"/>
+	<description>
+		Expect that incorrectly spelt text is a validation error
+	</description>
+	<target name="unit-test">
+		<exec-svrl transtype="text-rules"/>
+		<compare-output suffix=".svrl" os="unix"/>
+		<compare-output suffix=".svrl" expectation="expected.svrl.win" os="windows"/>
+	</target>
+	<target name="data">
+		<text id="incorrect-spelling">incorrect-spelling</text>
+		<xslfile plugin="com.here.validate.svrl.text-rules" path="/Customization/xsl/common-rules.xsl" />
+		<template match="*[not(self::codeblock or ancestor::codeblock)]" mode="default-lang-spelling-rules"/>
+	</target>
+</project>

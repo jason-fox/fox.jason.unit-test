@@ -3,7 +3,7 @@
 	This file is part of the DITA-OT Unit Test Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
 -->
-<project name="fox.jason.unit-test.coverage">
+<project name="fox.jason.unit-test.coverage" xmlns:if="ant:if" xmlns:unless="ant:unless">
 
 	
 	<!--
@@ -21,16 +21,20 @@
 
 		<for param="test-suite.dir">
 			<path>
-				<dirset dir="${args.input}" includes="*">
+				<dirset dir="${test.root.dir}" includes="*">
 					<depth max="1"/>
 				</dirset>
 			</path>
 			<sequential>
 				<propertyregex property="test-suite" override="true" input="@{test-suite.dir}" regexp="([^/]*)$" select="\1" casesensitive="false"/>
-				<xmltask source="${test.coverage.xml}" dest="${test.coverage.xml}">
-					<insert path="testsuites" file="@{test-suite.dir}/coverage.xml"/>
+
+				<local name="test-suite.coverage"/>
+				<available file="@{test-suite.dir}/test/coverage.xml" property="test-suite.coverage"/>
+
+				<xmltask if:set="test-suite.coverage" source="${test.coverage.xml}" dest="${test.coverage.xml}">
+					<insert path="testsuites" file="@{test-suite.dir}/test/coverage.xml"/>
 				</xmltask> 
-				<coverage-runner dir="@{test-suite.dir}" />
+				<coverage-runner if:set="test-suite.coverage" dir="@{test-suite.dir}" />
 			</sequential>
 		</for>
 

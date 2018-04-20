@@ -16,7 +16,7 @@
 			
 			<exec executable="ant" failonerror="false" outputproperty="output" resultproperty="result" osfamily="unix">
 				<arg value="-f"/>
-				<arg value="${basedir}/@{name}/build.xml"/>
+				<arg value="${basedir}/test/@{name}/build.xml"/>
 				<arg value="-S"/>
 				<arg value="-q"/>
 				<arg value="-Dtest.root.dir=${basedir}"/>

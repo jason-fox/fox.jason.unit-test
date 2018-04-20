@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="unit-test">
+	<import file="../bootstrap.xml"/>
+	<description>
+		Expect that incorrect grammar is a validation error
+	</description>
+	<target name="unit-test">
+		<exec-svrl transtype="text-rules"/>
+		<compare-output suffix=".svrl" os="unix"/>
+		<compare-output suffix=".svrl" expectation="expected.svrl.win" os="windows"/>
+	</target>
+	<target name="data">
+		<text id="incorrect-grammar">incorrect-grammar</text>
+		<xslfile plugin="com.here.validate.svrl.text-rules" path="/Customization/xsl/common-rules.xsl" />
+		<template match="*[not((.//p) or (.//entry) or (.//codeph) or (.//li))]" mode="default-lang-grammar-rules"/>
+	</target>
+</project>

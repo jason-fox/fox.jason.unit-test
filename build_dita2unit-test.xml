@@ -8,13 +8,8 @@
 		Target to create a unit-test fixture for each suite.
 	-->
 	<target name="generate-fixtures" description="Generate a fixture file for each test suite">
-		<property name="test.root.dir" value="${dita.temp.dir}/unit-test/fixtures"/>
-	
-		<mkdir dir="${test.root.dir}"/>
-		<copy todir="${test.root.dir}">
-			<fileset dir="${args.input}"/>
-		</copy>
-
+		
+		<!-- Now iterate across each test suite and generate the fixtures -->
 		<for param="test-suite.dir" trim="true">
 			<path>
 				<dirset dir="${test.root.dir}">
@@ -25,7 +20,7 @@
 				<propertyregex property="test-suite" override="true" input="@{test-suite.dir}" regexp="([^/]*)$" select="\1" casesensitive="false"/>
 				<local name="test-suite.disabled"/>
 
-				<available file="@{test-suite.dir}/disabled.txt" property="test-suite.disabled"/>
+				<available file="@{test-suite.dir}/test/disabled.txt" property="test-suite.disabled"/>
 
 				<dita-ot-echo id="UNIT004W" if:set="test-suite.disabled">
 					<param name="1" value="${test-suite}"/>
