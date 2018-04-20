@@ -177,7 +177,7 @@ Unit tests will be run whenever a commit occurs.
 The output will appear within the log as follows:
 
 ```console
-[UNIT002I][INFO] Running tests for 'fox.jason.splash'
+[UNIT002I][INFO] Running tests for 'PLUGIN-NAME'
   [antunit] Build File: /tmp/temp20180420185923919/unit-test/fixtures/PLUGIN-NAME/fixture.xml
   [antunit] Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 31.063 sec
   [antunit] Target: test:    Expect that ...  took 7.202 sec
@@ -187,7 +187,7 @@ The output will appear within the log as follows:
 [SUCCESS] All tests have passed
 dita2unit-test:
 clean-temp:
-The command "dita-ot/bin/dita --input dita-ot/plugins/fox.jason.splash -f unit-test -v" exited with 0.
+The command "dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -v" exited with 0.
 ```
 
 Unit test structure
