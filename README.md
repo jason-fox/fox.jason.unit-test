@@ -34,21 +34,21 @@ The required dependencies are installed to a local Maven repository in your home
 
 -  Run the Gradle distribution task to generate the plug-in distribution package:
 
-```bash
+```console
 ./gradlew dist
 ```
 
 The distribution ZIP file is generated under `build/distributions`.
 
 Installation
------------
+------------
 
 ### Installing the Plug-in
 
 -  Run the plug-in installation command:
 
-```bash
-dita -install https://github.com/jason-fox/fox.jason.unit-test/archive/v1.0.0.zip
+```console
+dita -install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
 ```
 
 The `dita` command line tool requires no additional configuration.
@@ -65,7 +65,7 @@ A series of test suites can be found within the plug-in at `PATH_TO_DITA_OT/plug
 
 To run, use the `unit-test` transform.
 
-```bash
+```console
 PATH_TO_DITA_OT/bin/dita -f unit-test  -o out -i PATH_TO_UNIT_TESTS
 ```
 
@@ -76,12 +76,15 @@ Additionally, if any error occurs, the command will fail.
 This is the test report from the example tests found within the plug-in `sample` directory. Nine tests are run over two test suites (PDF and HTML processing) - a third test suite has been disabled.
 ![enter image description here](https://jason-fox.github.io/fox.jason.unit-test/results.png)
 
+* If the `-i` input directory is a test suite, all tests within the suite will be run.
+* If the `-i` input directory is not a test suite, all test suites directly beneath that directory will be run.
+
 
 #### Obtaining coverage information
 
 Each test suite should contain a `coverage.xml` file which holds a series of tokens representing all potential output values. To obtain coverage information, use the `test-coverage` transform.
 
-```bash
+```console
 PATH_TO_DITA_OT/bin/dita -f test-coverage -i PATH_TO_UNIT_TESTS
 ```
 
@@ -95,13 +98,17 @@ This is the test report from the example tests found within the plug-in `sample`
 
 ![enter image description here](https://jason-fox.github.io/fox.jason.unit-test/coverage.png)
 
+* If the `-i` input directory is a test suite, coverage for that test suite will be reported.
+* If the `-i` input directory is not a test suite, coverage for all test suites directly beneath that directory will be reported.
+
+
 #### Obtaining ANT script profile information
 
 **Antro** is a hierarchical and line-level profiler for Ant build scripts. It can be run to check which ANT scripts have been invoked and how long they took.
 
 To obtain profile information, use the `antro` transform and supply an additional test transtype
 
-```bash
+```console
 PATH_TO_DITA_OT/bin/dita -f antro --test.transform=TRANSFORM_TO_PROFILE -i document.ditamap
 ```
 A profiler JSON file will be generated.
@@ -110,7 +117,7 @@ A profiler JSON file will be generated.
 
 To run the UI for the  Antro profiler, use the `antro-ui` transform. The `-i` parameter is mandatory for all DITA-OT plug-ins, and should point to a real file, but is not used for this transform.
 
-```bash
+```console
 PATH_TO_DITA_OT/bin/dita -f antro-ui -i document.ditamap
 ```
 The Antro UI  is the displayed, load the profiler json file from to display a bar graph showing how long each ANT target took:
@@ -131,30 +138,92 @@ You can drill down to an individual line to see if it has been invoked and how l
 - `test.propertyfile` - A properties file to use when running the unit tests or antro profiler
 
 
+### Integration with Travis CI
+
+**Travis CI** is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. More information about how to set up travis integration can be found on the [travis website](https://docs.travis-ci.com/).
+
+For automated testing of DITA-OT plug-ins, place your tests under a `test` directory under the root
+of the repository along with the `.travis.yml` in the root itself.
+
+
+For example to test against DITA-OT 3.0, use the following `.travis.yml`:
+
+```yml
+language: java
+jdk:
+  - oraclejdk8
+before_script:
+  - zip -r PLUGIN-NAME.zip . -x *.zip* *.git/* *temp/* *out/*
+  - curl -LO 'https://github.com/dita-ot/dita-ot/releases/download/3.0/dita-ot-3.0.zip'
+  - unzip -q dita-ot-3.0.zip
+  - mv dita-ot*/ dita-ot/
+  - chmod +x dita-ot/bin/dita
+  - dita-ot/bin/dita --install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
+  - dita-ot/bin/dita --install PLUGIN-NAME.zip 
+script:
+  - dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -v
+```
+
+This will do the following:
+
+* Zip up the files in the plugin under test
+* install the specified DITA-OT version
+* install the unit-testing framework (repeat this for other dependencies)
+* install the plugin under test
+* Run the tests
+
+Unit tests will be run whenever a commit occurs.
+
+The output will appear within the log as follows:
+
+```console
+[UNIT002I][INFO] Running tests for 'fox.jason.splash'
+  [antunit] Build File: /tmp/temp20180420185923919/unit-test/fixtures/PLUGIN-NAME/fixture.xml
+  [antunit] Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 31.063 sec
+  [antunit] Target: test:    Expect that ...  took 7.202 sec
+  [antunit] Target: test:    Expect that ...  took 17.596 sec
+...etc
+
+[SUCCESS] All tests have passed
+dita2unit-test:
+clean-temp:
+The command "dita-ot/bin/dita --input dita-ot/plugins/fox.jason.splash -f unit-test -v" exited with 0.
+```
+
 Unit test structure
 -------------------
 
 The unit tests are organized in the following manner:
 
-```bash
+```
 ├── test-suite-A
-│   ├── unit-test-1
-│   ├── unit-test-2
-│   ├── ... etc
-│   └── coverage.xml
+│   └── test
+│       ├── unit-test-1
+│       ├── unit-test-2
+│       ├── ... etc
+│       ├── bootstrap.xml
+│       └── coverage.xml
 │ 
 ├── test-suite-B
-│   ├── unit-test-1
-│   ├── unit-test-2
-│   ├── ... etc
-│   └── coverage.xml
-│   
-└── bootstrap.xml
+│   └── test
+│       ├── unit-test-1
+│       ├── unit-test-2
+│       ├── ... etc
+│       ├── bootstrap.xml
+│       └── coverage.xml
+
 ```
 
-Each suite of tests can be found in a separate directory. Each test within the suite can be found in a separate sub-directory. A `coverage.xml` file should be added to each test suite to enable the framework to calculate coverage.
+Each suite of tests (identified by a directory called `test`) can be found in a separate directory. Each test within the suite can be found in a separate sub-directory. A `coverage.xml` file should be added to each test suite to enable the framework to calculate coverage.
 
-### Test root directory files
+This structure means that an integration test of multiple plug-ins can be run by adding a `test` directory to each plug-in and invoking the tests as shown:
+
+```console
+PATH_TO_DITA_OT/bin/dita --input ./plugins -f unit-test
+```
+
+
+### Test suite files
 
 #### `bootstrap.xml` file
 
@@ -162,7 +231,7 @@ At the root of the tests lies a `bootstrap.xml` file which references the `antli
 
 ```xml
 <project name="bootstrap.unit-test">
-  <dirname property="test.root.dir" file="${ant.file.bootstrap.unit-test}" />
+  <dirname property="test.root.dir" file="${ant.file.bootstrap.unit-test}/.." />
   <property name="dita.dir" location="PATH_TO_DITA_OT"/> 
   <typedef file="${dita.dir}/plugins/fox.jason.unit-test/resource/antlib.xml"/>
 </project>
@@ -173,7 +242,6 @@ At the root of the tests lies a `bootstrap.xml` file which references the `antli
 - The functions from the unit-test `antlib.xml` must be loaded using the `<typedef>` task.
 
 
-### Test suite files
 
 #### `coverage.xml` file
 
@@ -370,6 +438,7 @@ The test will fail if the result was not as expected or took too long.
 | propertyfile   | The name of a file holding additional properties   | No; defaults to `test.properties` |
 | transtype      | The transtype to invoke when creating the document | No; this can be `svrl` or any DITA-OT transform that extends `svrl`; defaults to `svrl`       |
 
+
 #### Examples
 
 ```xml
@@ -381,6 +450,34 @@ runs DITA-OT using the `text-rules` SVRL transtype
 <exec-svrl transtype="svrl-echo" expectedresult="1"/>
 ```
 runs DITA-OT using the `svrl-echo` SVRL transtype - the invocation is expected to fail with validation errors.
+
+### Exec-Transtype
+
+#### Description
+Execute an arbitrary DITA-OT transform in verbose mode.
+The test will fail if the result was not as expected or took too long.
+
+#### Parameters
+| Attribute      | Description                                        | Required                          |
+|----------------|----------------------------------------------------|-----------------------------------|
+| ditamap        | The `*.ditamap` file specifying which topics and other resources to use to create a document  | No; defaults to `document.ditamap`|
+| expectedresult | The expected result when invoking the transform    | No; defaults to `0` = success     |
+| maxwait        | The maximum time to create a document              | No; defaults to 100 seconds       |
+| propertyfile   | The name of a file holding additional properties   | No; defaults to `test.properties` |
+| transtype      | The transtype to invoke when creating the document | No; this can be `svrl` or any DITA-OT transform that extends `svrl`; defaults to `svrl`       |
+
+#### Examples
+
+```xml
+<exec-svrl transtype="custom"/>
+```
+runs DITA-OT using the `custom` transtype
+
+```xml
+<exec-svrl transtype="custom" expectedresult="1"/>
+```
+runs DITA-OT using the `custom` SVRL transtype - the invocation is expected to fail.
+
 
 ### Get-HTML-Article
 
