@@ -477,7 +477,7 @@ under the License.
 
 <xsl:template name="JS-escape">
     <xsl:param name="string"/>
-    <xsl:param name="tmp1" select="replace(string($string),'\\','\\\\')"/>
+    <xsl:param name="tmp1" select="replace(string($string),'\','\\')"/>
     <xsl:param name="tmp2" select="replace(string($tmp1),&quot;'&quot;,&quot;\&apos;&quot;)"/>
     <xsl:value-of select="$tmp2"/>
 </xsl:template>
