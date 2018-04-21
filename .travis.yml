@@ -9,6 +9,7 @@ before_script:
   - curl -LO https://github.com/dita-ot/dita-ot/releases/download/$DITA_OT/dita-ot-$DITA_OT.zip
   - unzip -q dita-ot-$DITA_OT.zip
   - chmod +x dita-ot-$DITA_OT/bin/dita
-  - dita-ot-$DITA_OT/bin/dita --install fox.jason.unit-test.zip 
+  - dita-ot-$DITA_OT/bin/dita --install fox.jason.unit-test.zip
+  - dita-ot-$DITA_OT/bin/dita --install
 script:
   - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/fox.jason.unit-test/sample -f unit-test -v
