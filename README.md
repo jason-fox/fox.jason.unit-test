@@ -146,16 +146,18 @@ For automated testing of DITA-OT plug-ins, place your tests under a `test` direc
 of the repository along with the `.travis.yml` in the root itself.
 
 
-For example to test against DITA-OT 3.0, use the following `.travis.yml`:
+For example to test against DITA-OT 3.0.3, use the following `.travis.yml`:
 
 ```yml
 language: java
 jdk:
   - oraclejdk8
+env:
+  - DITA_OT=3.0.3
 before_script:
   - zip -r PLUGIN-NAME.zip . -x *.zip* *.git/* *temp/* *out/*
-  - curl -LO 'https://github.com/dita-ot/dita-ot/releases/download/3.0/dita-ot-3.0.zip'
-  - unzip -q dita-ot-3.0.zip
+  - curl -LO https://github.com/dita-ot/dita-ot/releases/download/$DITA_OT/dita-ot-$DITA_OT.zip
+  - unzip -q dita-ot-$DITA_OT.zip
   - mv dita-ot*/ dita-ot/
   - chmod +x dita-ot/bin/dita
   - dita-ot/bin/dita --install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
