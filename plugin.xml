@@ -42,10 +42,13 @@
 
 	<feature extension="dita.xsl.messages" file="resource/messages.xml"/>
 
+	<!--
 	<feature extension="ant.import" file="build_general.xml"/>
 	<feature extension="ant.import" file="build_dita2unit-test.xml"/>
 	<feature extension="ant.import" file="build_dita2test-coverage.xml"/>
 	<template file="build_general_template.xml"/>
   	<template file="build_dita2unit-test_template.xml"/>
   	<template file="build_dita2test-coverage_template.xml"/>
+  -->
+  	<feature extension="dita.conductor.target.relative" file="conductor.xml"/>
 </plugin>
