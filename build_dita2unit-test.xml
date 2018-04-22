@@ -2,7 +2,6 @@
 	This file is part of the DITA-OT Unit Test Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
 --><project xmlns:if="ant:if" xmlns:unless="ant:unless" name="fox.jason.unit-test">
-
 	
 	<!--
 		Target to create a unit-test fixture for each suite.
@@ -21,14 +20,8 @@
 				<local name="test-suite.disabled"/>
 
 				<available file="@{test-suite.dir}/test/disabled.txt" property="test-suite.disabled"/>
-
-				<dita-ot-echo id="UNIT004W" if:set="test-suite.disabled">
-					<param name="1" value="${test-suite}"/>
-  				</dita-ot-echo>
-
-				<dita-ot-echo id="UNIT002I" unless:set="test-suite.disabled">
-					<param name="1" value="Generating fixtures for '${test-suite}'"/>
-  				</dita-ot-echo>
+				<diagnostic-message id="UNIT004W" if:set="test-suite.disabled" message="The test suite '${test-suite}' is disabled" level="warning"/>
+				<diagnostic-message id="UNIT002I" unless:set="test-suite.disabled" message="Generating fixtures for '${test-suite}'" level="warning"/>
 				<create-fixture dir="@{test-suite.dir}" suite="${test-suite}" unless:set="test-suite.disabled"/>
 			</sequential>
 		</for>
@@ -40,7 +33,6 @@
 		Iterate across each test suite in turn and run the unit tests using ant-unit.
 	-->
 	<target name="unit-test">
-
 		<property name="test.copy.dir" value="${args.input}"/>
 		<property name="test.copy" value="false"/>
 		<condition property="test.suite.run.message" value="Updating test expectations">
@@ -76,9 +68,7 @@
 					<call path="//project/description">
 						<param name="description" path="text()" default=""/>
 						<actions>
-							 <dita-ot-echo id="UNIT002I">
-								<param name="1" value="${test.suite.run.message} for '@{description}'"/>
-  							</dita-ot-echo>
+							<diagnostic-message id="UNIT002I" level="info" message="${test.suite.run.message} for '@{description}'"/>
 							<antunit failOnError="false" errorproperty="test-failure">
 								<file file="@{test-suite.dir}/fixture.xml"/>
 								<xmllistener toDir="${dita.temp.dir}/unit-test/report" logLevel="warning"/>
@@ -101,11 +91,7 @@
 			<report format="noframes" styledir="${dita.plugin.fox.jason.unit-test.dir}/xsl" todir="${output.dir}"/>
 		</junitreport>
 		<move file="${output.dir}/junit-noframes.html" tofile="${output.dir}/test-results.html"/>
-		<dita-ot-fail id="UNIT001F" unless:true="test.copy">
-			<condition>
-				<isset property="test-failure"/>
-			</condition>
-		</dita-ot-fail>
+		<check-failure unless:true="test.copy" if:set="test-failure"/>
 		<unit-test-success-echo/>
 	</target>
 

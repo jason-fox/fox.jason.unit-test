@@ -31,6 +31,10 @@
 			<os family="unix"/>
 		</condition>
 
+		<condition property="test.legacy">
+  			<matches pattern="^[1|2].*" string="${otversion}"/>
+		</condition>
+
 
 		<property name="test.root.dir" value="${dita.temp.dir}/unit-test/fixtures"/>
 		<basename property="args.input.dirname" file="${args.input}"/>
@@ -73,6 +77,26 @@
 		</for>
 
 	</target>
+
+
+	<macrodef name="diagnostic-message">
+		<attribute name="id"/>
+		<attribute name="message"/>
+		<attribute name="level"/>
+		<sequential>
+			<dita-ot-echo id="@{id}" unless:set="test.legacy">
+				<param name="1" value="@{message}"/>
+	  		</dita-ot-echo>
+  			<echo taskname="@{id}" level="@{level}" message="@{message}" if:set="test.legacy"/>
+  		</sequential>
+	</macrodef>
+
+	<macrodef name="check-failure">
+		<sequential>
+			<dita-ot-fail id="UNIT001F" unless:set="test.legacy"/>
+			<fail message="One or more tests have failed" if:set="test.legacy"/>
+		</sequential>
+	</macrodef>
 	
 	<!--
 		Macro to and check how often a coverage token is found
@@ -214,9 +238,7 @@
 					</xmltask>
 					<property name="test.description" value="${test.name}"/>
 
-					<dita-ot-echo id="UNIT005W" if:set="test.disabled">
-						<param name="1" value="@{suite}/${test.name}"/>
-  					</dita-ot-echo>
+  					<diagnostic-message id="UNIT005W" if:set="test.disabled" message="The test '@{suite}/${test.name}' is disabled." level="warning"/>
 					<xmltask unless:set="test.disabled" source="@{dir}/fixture.xml" dest="@{dir}/fixture.xml">
 						<insert path="/project">
 

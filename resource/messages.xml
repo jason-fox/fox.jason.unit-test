@@ -17,11 +17,11 @@
     <response>Add --test.transtype=&lt;transtype&gt;.</response>
   </message>
   <message id="UNIT004W" type="WARN">
-    <reason>The '%1' test suite is disabled.</reason>
+    <reason>%1</reason>
     <response>Delete or rename the disabled.txt file to re-enable the test-suite</response>
   </message>
   <message id="UNIT005W" type="WARN">
-    <reason>The '%1' test is disabled.</reason>
+    <reason>%1</reason>
     <response>Remove the comment @disabled from the build.xml file to re-enable the test</response>
   </message>
 </messages>
