@@ -8,23 +8,54 @@ Copyright (c) 2018 Jason Fox
 
 See the [LICENSE](LICENSE) file in the root of this project for license details.
 
-Introduction
-------------
 
-This DITA-OT plug-in consists of four DITA-OT transforms and an ANT library:
+This is a Unit Testing framework for the DITA Open Toolkit. This plug-in consists of four DITA-OT transforms and an ANT library:
 - The `unit-test` transform allows a user to runs a sequence of `dita` commands and checks that the documents created match the expected output. This is useful for regresssion testing, and confirming that any custom plug-ins do not conflict when upgrading the base DITA-OT engine.
 - The `test-coverage` transform checks to see if a series of tokens representing all potential output values are covered by unit tests
 - The `antro` transform runs an ANT script profiler against a specified transform and outputs a profiler JSON file 
 - The `antro.ui` transform starts up the UI for the ANT script profiler, allowing a user to load a JSON file and interpret the results. 
 - The `resource/antlib.xml` library offers a series of convenience methods for creating DITA-OT unit tests.
 
+Contents
+========
+
+- [Prerequisites](#prerequisites)
+  * [Installing DITA-OT](#installing-dita-ot)
+  * [Installing the Plug-in](#installing-the-plug-in)
+- [Usage](#usage)
+  * [Invoking the unit tests from the Command line](#invoking-the-unit-tests-from-the-command-line)
+    + [Obtaining a unit test report](#obtaining-a-unit-test-report)
+    + [Obtaining coverage information](#obtaining-coverage-information)
+    + [Obtaining ANT script profile information](#obtaining-ant-script-profile-information)
+    + [Viewing profiler information](#viewing-profiler-information)
+    + [Parameter Reference](#parameter-reference)
+  * [Integration with Travis CI](#integration-with-travis-ci)
+- [Unit Test File Structure](#unit-test-file-structure)
+  * [Test suite files](#test-suite-files)
+    + [`bootstrap.xml` file](#bootstrapxml-file)
+    + [`coverage.xml` file](#coveragexml-file)
+    + [`disabled.txt` file](#disabledtxt-file)
+    + [Overrides for `attributes.xml` `colors.xml` and `fonts.xml`](#overrides-for-attributesxml--colorsxml--and-fontsxml)
+    + [Overrides for `test.properties`](#overrides-for-testproperties)
+  * [Individual test files](#individual-test-files)
+- [ANT tasks for Unit Tests](#ant-tasks-for-unit-tests)
+  * [Compare-Output](#compare-output)
+  * [Contains-Text](#contains-text)
+  * [Exec-HTML5](#exec-html5)
+  * [Exec-PDF](#exec-pdf)
+  * [Exec-SVRL](#exec-svrl)
+  * [Exec-Transtype](#exec-transtype)
+  * [Get-HTML-Article](#get-html-article)
+  * [Get-PDF-Article](#get-pdf-article)
+
 
 Prerequisites
--------------
+=============
 
-The unit test framework plug-in has been tested against [DITA-OT 3.0.x](http://www.dita-ot.org/download). It is recommended that you upgrade to the latest version. The unit test framework plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/) 1.3 to run tests and ANT junit to create a test report. ANT 1.9+ is recommended.
+The unit test framework plug-in has been tested against [DITA-OT 3.0.x](http://www.dita-ot.org/download). It is also compatible with DITA-OT 2.x. but it is still recommended that you upgrade to the latest version. The unit test framework plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/) 1.3 to run tests and ANT junit to create a test report. ANT 1.9+ is recommended.
 
-### Installing DITA-OT
+Installing DITA-OT
+------------------
 
 The DITA-OT Unit Test Framework is a plug-in for the DITA Open Toolkit.
 
@@ -40,10 +71,8 @@ The required dependencies are installed to a local Maven repository in your home
 
 The distribution ZIP file is generated under `build/distributions`.
 
-Installation
-------------
-
-### Installing the Plug-in
+ Installing the Plug-in
+-------------------------
 
 -  Run the plug-in installation command:
 
@@ -53,15 +82,17 @@ dita -install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zi
 
 The `dita` command line tool requires no additional configuration.
 
+
+
 Usage
------
+=====
 
-
-### Invoking the unit tests from the Command line
+Invoking the unit tests from the Command line
+---------------------------------------------
 
 A series of test suites can be found within the plug-in at `PATH_TO_DITA_OT/plugins/fox.jason.unit-test/sample`
 
-#### Obtaining a unit test report
+### Obtaining a unit test report
 
 To run, use the `unit-test` transform.
 
@@ -80,7 +111,7 @@ This is the test report from the example tests found within the plug-in `sample`
 * If the `-i` input directory is not a test suite, all test suites directly beneath that directory will be run.
 
 
-#### Obtaining coverage information
+### Obtaining coverage information
 
 Each test suite should contain a `coverage.xml` file which holds a series of tokens representing all potential output values. To obtain coverage information, use the `test-coverage` transform.
 
@@ -102,7 +133,7 @@ This is the test report from the example tests found within the plug-in `sample`
 * If the `-i` input directory is not a test suite, coverage for all test suites directly beneath that directory will be reported.
 
 
-#### Obtaining ANT script profile information
+### Obtaining ANT script profile information
 
 **Antro** is a hierarchical and line-level profiler for Ant build scripts. It can be run to check which ANT scripts have been invoked and how long they took.
 
@@ -113,7 +144,7 @@ PATH_TO_DITA_OT/bin/dita -f antro --test.transform=TRANSFORM_TO_PROFILE -i docum
 ```
 A profiler JSON file will be generated.
 
-#### Viewing profiler information
+### Viewing profiler information
 
 To run the UI for the  Antro profiler, use the `antro-ui` transform. The `-i` parameter is mandatory for all DITA-OT plug-ins, and should point to a real file, but is not used for this transform.
 
@@ -138,7 +169,8 @@ You can drill down to an individual line to see if it has been invoked and how l
 - `test.propertyfile` - A properties file to use when running the unit tests or antro profiler
 
 
-### Integration with Travis CI
+Integration with Travis CI
+--------------------------
 
 **Travis CI** is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. More information about how to set up travis integration can be found on the [travis website](https://docs.travis-ci.com/).
 
@@ -193,8 +225,9 @@ clean-temp:
 The command "dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -v" exited with 0.
 ```
 
-Unit test structure
--------------------
+
+Unit Test File Structure
+========================
 
 The unit tests are organized in the following manner:
 
@@ -225,10 +258,10 @@ This structure means that an integration test of multiple plug-ins can be run by
 PATH_TO_DITA_OT/bin/dita --input ./plugins -f unit-test
 ```
 
+Test suite files
+----------------
 
-### Test suite files
-
-#### `bootstrap.xml` file
+### `bootstrap.xml` file
 
 At the root of the tests lies a `bootstrap.xml` file which references the `antlib.xml` library as shown:
 
@@ -246,7 +279,7 @@ At the root of the tests lies a `bootstrap.xml` file which references the `antli
 
 
 
-#### `coverage.xml` file
+### `coverage.xml` file
 
 A coverage file consists of a list of XML elements or string literals which should be present in a test-suite's outputs. For example, PDF tests should cover all possible fop element and attributes.
 
@@ -263,20 +296,21 @@ A coverage file consists of a list of XML elements or string literals which shou
 </coverage>
 ```
 
-#### `disabled.txt` file
+### `disabled.txt` file
 
 If a `disabled.txt` file is present within a test suite directory, none of the tests within the directory will be run.
 
-#### Overrides for `attributes.xml`  `colors.xml`  and `fonts.xml`
+### Overrides for `attributes.xml`  `colors.xml`  and `fonts.xml`
 
 The `cfg` directory of the plug-in holds standard lists of fonts, colors and attributes to replace when running PDF tests - this can be overridden by individuals test or test suites if necessary by placing an equivalent override file in the test directory or test-suite directory.
 
-#### Overrides for `test.properties`
+### Overrides for `test.properties`
 
 Additional test properties can be passed to DITA-OT when each test is run if a `test.properties` file is present in the test directory or test-suite directory. The name of the file to search for can also be altered.
 See [Setting build parameters with `.properties` files](http://www.dita-ot.org/3.0/topics/using-dita-properties-file.html) for more details.
 
-### Individual test files
+Individual test files
+---------------------
 
 Each unit test is organized in the following manner:
 
@@ -316,12 +350,13 @@ The `build.xml` must consist of a single default target, and `import` the `boots
 - Adding the comment `<!-- @disabled -->` within the `build.xml` file will disable a test 
 
 
-Unit Test ANT tasks
--------------------
+ANT tasks for Unit Tests
+========================
+
 The following ANT tasks are available from the DITA-OT Unit Test Framework
 
-
-### Compare-Output 
+Compare-Output
+--------------
 
 #### Description
 Fail the test if the test output file does not match the expectation file
@@ -354,7 +389,8 @@ if running on a Windows system, compares the file `out/fragment.svrl` with `expe
 if running on a UNIX system, no comparison is made.
 
 
-### Contains-Text 
+Contains-Text
+------------- 
 
 #### Description
 Fail the test if the log from the test does not contain the given string
@@ -382,7 +418,8 @@ if running on a Windows system, compares the output of DITA-OT and fails if the 
 if running on a UNIX system, no comparison is made.
 
 
-### Exec-HTML5
+Exec-HTML5
+----------
 
 #### Description
 Execute the HTML5 DITA-OT transform in verbose mode 
@@ -405,7 +442,9 @@ The test will fail if the result was not as expected or took too long
 ```
 runs DITA-OT using the `custom-html` HTML transtype. the output will be placed in the `/out/html` directory
 
-### Exec-PDF
+
+Exec-PDF
+--------
 
 #### Description
 Execute the PDF DITA-OT transform in verbose mode 
@@ -426,7 +465,8 @@ Execute the PDF DITA-OT transform in verbose mode
 ```
 runs DITA-OT using the `custom-pdf` PDF transtype. `topic.fo` and `document.pdf` will be placed in the `/out` directory
 
-### Exec-SVRL
+Exec-SVRL
+---------
 
 #### Description
 Execute the HERE Validator SVRL DITA-OT transform in verbose mode.
@@ -454,7 +494,8 @@ runs DITA-OT using the `text-rules` SVRL transtype
 ```
 runs DITA-OT using the `svrl-echo` SVRL transtype - the invocation is expected to fail with validation errors.
 
-### Exec-Transtype
+Exec-Transtype
+--------------
 
 #### Description
 Execute an arbitrary DITA-OT transform in verbose mode.
@@ -482,7 +523,8 @@ runs DITA-OT using the `custom` transtype
 runs DITA-OT using the `custom` SVRL transtype - the invocation is expected to fail.
 
 
-### Get-HTML-Article
+Get-HTML-Article
+----------------
 
 #### Description
 Loads a given HTML file and extracts the first `<article>` element  (which corresponds to a DITA topic) for further examination.
@@ -502,7 +544,8 @@ Loads a given HTML file and extracts the first `<article>` element  (which corre
 ```
 creates a file called `fragment.html` holding the `<article>` element from the `topics/body-text.html` file.
 
-### Get-PDF-Article
+Get-PDF-Article
+---------------
 
 #### Description
 Loads a given `topic.fo` file and extracts the last `fo.flow` element (which corresponds to a DITA topic) for further examination. Also remove colors, fonts and excess attributes
@@ -519,3 +562,4 @@ Loads a given `topic.fo` file and extracts the last `fo.flow` element (which cor
 <get-pdf-article/>
 ```
 creates a file called `fragment.fo` holding the final `<fo.flow>` element from the `topics.fo` file.
+
