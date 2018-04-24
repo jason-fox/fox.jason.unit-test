@@ -75,7 +75,7 @@
         		<contains string="@{actual}" substring="@{expected}"/>
     		</condition>
 			
-			<assert-equal arg1="${test.contains}" arg2="true" message="[FAILED] Expected text not found." body="&quot;@{text}&quot; missing from log output."/>
+			<assert-equal arg1="${test.contains}" arg2="true" message="[FAILED] Expected text not found." body="&quot;@{expected}&quot; missing from log output."/>
 			<unit-test-success-echo/>
 
 		</sequential>

@@ -33,10 +33,21 @@
 			<os family="unix"/>
 		</condition>
 
-		<condition property="test.legacy">
-  			<matches pattern="^[1|2].*" string="${otversion}"/>
+		<condition property="otversion.legacy">
+			<matches pattern="^[1|2].*" string="${otversion}"/>
 		</condition>
 
+		<macrodef name="diagnostic-message">
+			<attribute name="id"/>
+			<attribute name="message"/>
+			<attribute name="level"/>
+			<sequential>
+				<dita-ot-echo id="@{id}" unless:set="otversion.legacy">
+					<param name="1" value="@{message}"/>
+				</dita-ot-echo>
+				<echo taskname="@{id}" level="@{level}" message="@{message}" if:set="otversion.legacy"/>
+			</sequential>
+		</macrodef>
 
 		<property name="test.root.dir" value="${dita.temp.dir}/unit-test/fixtures"/>
 		<basename property="args.input.dirname" file="${args.input}"/>
@@ -79,26 +90,6 @@
 		</for>
 
 	</target>
-
-
-	<macrodef name="diagnostic-message">
-		<attribute name="id"/>
-		<attribute name="message"/>
-		<attribute name="level"/>
-		<sequential>
-			<dita-ot-echo id="@{id}" unless:set="test.legacy">
-				<param name="1" value="@{message}"/>
-	  		</dita-ot-echo>
-  			<echo taskname="@{id}" level="@{level}" message="@{message}" if:set="test.legacy"/>
-  		</sequential>
-	</macrodef>
-
-	<macrodef name="check-failure">
-		<sequential>
-			<dita-ot-fail id="UNIT001F" unless:set="test.legacy"/>
-			<fail message="One or more tests have failed" if:set="test.legacy"/>
-		</sequential>
-	</macrodef>
 	
 	<!--
 		Macro to and check how often a coverage token is found
@@ -276,6 +267,13 @@
 			project.log(input, 1);
 		]]>
 	</scriptdef>
+
+	<macrodef name="unit-test-failure">
+		<sequential>
+			<dita-ot-fail id="UNIT001F" unless:set="otversion.legacy"/>
+			<fail message="One or more tests have failed" if:set="otversion.legacy"/>
+		</sequential>
+	</macrodef>
 
 
 </project>
