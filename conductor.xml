@@ -1,5 +1,4 @@
 <project>
-  <import file="build_general.xml"/>
   <import file="build_dita2test-coverage.xml"/>
   <import file="build_dita2unit-test.xml"/>
 </project>

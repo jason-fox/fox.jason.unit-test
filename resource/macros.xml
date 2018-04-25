@@ -1,95 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
 	This file is part of the DITA-OT Unit Test Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
 -->
-<project name="fox.jason.unit-test_general" xmlns:if="ant:if" xmlns:unless="ant:unless">
-	<!--
-		Setting up common testing pre-processing. Sets up ant variable defaults 
-		Checks that mandatory parameters are present and loads dependent libaries
-	-->
-	<target name="unit-test.init">
-		<dita-ot-fail id="DOTA069F">
-			<condition>
-				<not>
-					<available file="${args.input}" type="dir"/>
-				</not>
-			</condition>
-			<param name="1" value="${args.input}"/>
-		</dita-ot-fail>
-
-		<taskdef resource="net/sf/antcontrib/antlib.xml">
-			<classpath>
-				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"/>
-			</classpath>
-		</taskdef>
-		<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
-			<classpath>
-				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/xmltask.jar"/>
-			</classpath>
-		</taskdef>
-
-		<condition property="test.colorize" value="true">
-			<os family="unix"/>
-		</condition>
-
-		<condition property="otversion.legacy">
-			<matches pattern="^[1|2].*" string="${otversion}"/>
-		</condition>
-
-		<macrodef name="diagnostic-message">
-			<attribute name="id"/>
-			<attribute name="message"/>
-			<attribute name="level"/>
-			<sequential>
-				<dita-ot-echo id="@{id}" unless:set="otversion.legacy">
-					<param name="1" value="@{message}"/>
-				</dita-ot-echo>
-				<echo taskname="@{id}" level="@{level}" message="@{message}" if:set="otversion.legacy"/>
-			</sequential>
-		</macrodef>
-
-		<property name="test.root.dir" value="${dita.temp.dir}/unit-test/fixtures"/>
-		<basename property="args.input.dirname" file="${args.input}"/>
-
-		<condition property="testsuite.found" >
-        	<available file="${args.input}/test" type="dir"/>
-    	</condition>
-		
-		<!-- If args.input is a test suite, copy over the test suite to temp -->
-		<mkdir if:set="testsuite.found" dir="${test.root.dir}/${args.input.dirname}/test"/>
-		<copy if:set="testsuite.found" todir="${test.root.dir}/${args.input.dirname}/test">
-			<fileset dir="${args.input}/test"/>
-		</copy>
-
-
-		<!-- 
-			If args.input was a directory, copy over a every test suite found underneath
-		 	it to temp.
-		  -->
-		<mkdir unless:set="testsuite.found" dir="${test.root.dir}"/>
-		<for param="test-suite.dir"  unless:set="testsuite.found" trim="true">
-			<path>
-				<dirset dir="${args.input}" >
-					<include name="*"/>
-				</dirset>
-			</path>
-			<sequential>
-				<local  name="testsuite.found" />
-				<condition property="testsuite.found" >
-        			<available file="@{test-suite.dir}/test" type="dir"/>
-    			</condition>
-    			<propertyregex property="test-suite" override="true" input="@{test-suite.dir}" regexp="([^/]*)$" select="\1" casesensitive="false"/>
-
-				<mkdir if:set="testsuite.found" dir="${test.root.dir}/${test-suite}/test"/>
-				<copy if:set="testsuite.found" todir="${test.root.dir}/${test-suite}/test">
-					<fileset dir="@{test-suite.dir}/test"/>
-				</copy>
-			</sequential>
-
-		</for>
-
-	</target>
+<antlib xmlns:if="ant:if" xmlns:unless="ant:unless">
 	
 	<!--
 		Macro to and check how often a coverage token is found
@@ -159,7 +73,7 @@
 					<param name="id" path="@id"/>
 					<actions>
 						
-						<coverage-check  id="@{id}" dir="@{dir}">
+						<coverage-check id="@{id}" dir="@{dir}">
 							<test-condition>
 								<contains text="@{token}" casesensitive="yes"/>
 							</test-condition>
@@ -196,7 +110,7 @@
 		<attribute name="dir"/>
 		<attribute name="suite"/>
 		<sequential>
-			<xmltask source="${dita.plugin.fox.jason.unit-test.dir}/resource/fixture.xml" dest="@{dir}/fixture.xml" />
+			<xmltask source="${dita.plugin.fox.jason.unit-test.dir}/resource/fixture.xml" dest="@{dir}/fixture.xml"/>
 			<xmltask source="@{dir}/fixture.xml" dest="@{dir}/fixture.xml">
 				<replace path="/project/description" withXml="&lt;description&gt;@{suite}&lt;/description&gt;"/>
 			</xmltask>
@@ -207,7 +121,7 @@
 						<exclude name="*/out"/>
 						<exclude name="*/temp"/>
 						<present targetdir="@{dir}">
-							<mapper type="glob" from="*" to="*/build.xml" />
+							<mapper type="glob" from="*" to="*/build.xml"/>
 						</present>
 					</dirset>
 				</path>
@@ -217,8 +131,7 @@
 					<local name="test.description"/>
 					<local name="test.disabled"/>
 
-					<propertyregex property="test.name" override="true" input="@{doc-type-path}"
-						 regexp="([^/\\]*)$" select="\1" casesensitive="false"/>
+					<propertyregex property="test.name" override="true" input="@{doc-type-path}" regexp="([^/\\]*)$" select="\1" casesensitive="false"/>
 
 					<condition property="test.disabled" value="true">
 						<resourcecontains resource="@{doc-type-path}/build.xml" substring="@disabled"/>
@@ -230,16 +143,16 @@
 					<xmltask source="@{doc-type-path}/build.xml">
 						<copy path="//project/target/@description" property="test.description"/>
 					</xmltask>
-					<property name="test.description" value="${test.name}" />
+					<property name="test.description" value="${test.name}"/>
 
-  					<diagnostic-message id="UNIT005W" if:set="test.disabled" message="The test '@{suite}/${test.name}' is disabled." level="warning"/>
+  					<unit-test-log id="UNIT005W" if:set="test.disabled" message="The test '@{suite}/${test.name}' is disabled." level="warning"/>
 					<xmltask unless:set="test.disabled" source="@{dir}/fixture.xml" dest="@{dir}/fixture.xml">
-						<insert path="/project" >
-<![CDATA[
-	<target name="test: ${test.description}">
-		<unit-test name="${test.name}"/>
-	</target>
-]]>
+						<insert path="/project">
+
+	&lt;target name="test: ${test.description}"&gt;
+		&lt;unit-test name="${test.name}"/&gt;
+	&lt;/target&gt;
+
 						</insert>
 					</xmltask>
 				</sequential>
@@ -250,7 +163,7 @@
 		Console log the successful test result and colorize if necessary. 
 	-->
 	<scriptdef name="unit-test-success-echo" language="javascript">
-		<![CDATA[
+		
 			var escape = String.fromCharCode(27);
 			var colorize = "true".equals(project.getProperty("test.colorize"));
 			var testCopy = "true".equals(project.getProperty("test.copy"));
@@ -265,15 +178,26 @@
 
 			project.log('', 1);
 			project.log(input, 1);
-		]]>
+		
 	</scriptdef>
 
 	<macrodef name="unit-test-failure">
 		<sequential>
 			<dita-ot-fail id="UNIT001F" unless:set="otversion.legacy"/>
-			<fail message="One or more tests have failed" if:set="otversion.legacy"/>
+			<fail taskname="UNIT001F" message="One or more tests have failed" if:set="otversion.legacy"/>
 		</sequential>
 	</macrodef>
 
 
-</project>
+	<macrodef name="unit-test-log">
+		<attribute name="id"/>
+		<attribute name="message"/>
+		<attribute name="level"/>
+		<sequential>
+			<dita-ot-echo id="@{id}" unless:set="otversion.legacy">
+				<param name="1" value="@{message}"/>
+			</dita-ot-echo>
+			<echo taskname="@{id}" level="@{level}" message="@{message}" if:set="otversion.legacy"/>
+		</sequential>
+	</macrodef>
+</antlib>

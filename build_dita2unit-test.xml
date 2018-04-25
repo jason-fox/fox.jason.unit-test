@@ -2,6 +2,79 @@
 	This file is part of the DITA-OT Unit Test Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
 --><project xmlns:if="ant:if" xmlns:unless="ant:unless" name="fox.jason.unit-test">
+
+
+	<target name="unit-test.init">
+		<dita-ot-fail id="DOTA069F">
+			<condition>
+				<not>
+					<available file="${args.input}" type="dir"/>
+				</not>
+			</condition>
+			<param name="1" value="${args.input}"/>
+		</dita-ot-fail>
+
+
+		<condition property="otversion.legacy">
+			<matches pattern="^[1|2].*" string="${otversion}"/>
+		</condition>
+		<typedef file="${dita.plugin.fox.jason.unit-test.dir}/resource/macros.xml"/>
+	
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"/>
+			</classpath>
+		</taskdef>
+		<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
+			<classpath>
+				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/xmltask.jar"/>
+			</classpath>
+		</taskdef>
+
+		<condition property="test.colorize" value="true">
+			<os family="unix"/>
+		</condition>
+
+		<property name="test.root.dir" value="${dita.temp.dir}/unit-test/fixtures"/>
+		<basename property="args.input.dirname" file="${args.input}"/>
+
+		<condition property="testsuite.found">
+        	<available file="${args.input}/test" type="dir"/>
+    	</condition>
+		
+		<!-- If args.input is a test suite, copy over the test suite to temp -->
+		<mkdir if:set="testsuite.found" dir="${test.root.dir}/${args.input.dirname}/test"/>
+		<copy if:set="testsuite.found" todir="${test.root.dir}/${args.input.dirname}/test">
+			<fileset dir="${args.input}/test"/>
+		</copy>
+
+
+		<!-- 
+			If args.input was a directory, copy over a every test suite found underneath
+		 	it to temp.
+		  -->
+		<mkdir unless:set="testsuite.found" dir="${test.root.dir}"/>
+		<for param="test-suite.dir" unless:set="testsuite.found" trim="true">
+			<path>
+				<dirset dir="${args.input}">
+					<include name="*"/>
+				</dirset>
+			</path>
+			<sequential>
+				<local name="testsuite.found"/>
+				<condition property="testsuite.found">
+        			<available file="@{test-suite.dir}/test" type="dir"/>
+    			</condition>
+    			<propertyregex property="test-suite" override="true" input="@{test-suite.dir}" regexp="([^/]*)$" select="\1" casesensitive="false"/>
+
+				<mkdir if:set="testsuite.found" dir="${test.root.dir}/${test-suite}/test"/>
+				<copy if:set="testsuite.found" todir="${test.root.dir}/${test-suite}/test">
+					<fileset dir="@{test-suite.dir}/test"/>
+				</copy>
+			</sequential>
+
+		</for>
+	</target>
 	
 	<!--
 		Target to create a unit-test fixture for each suite.
@@ -20,8 +93,8 @@
 				<local name="test-suite.disabled"/>
 
 				<available file="@{test-suite.dir}/test/disabled.txt" property="test-suite.disabled"/>
-				<diagnostic-message id="UNIT004W" if:set="test-suite.disabled" message="The test suite '${test-suite}' is disabled" level="warning"/>
-				<diagnostic-message id="UNIT002I" unless:set="test-suite.disabled" message="Generating fixtures for '${test-suite}'" level="warning"/>
+				<unit-test-log id="UNIT004W" if:set="test-suite.disabled" message="The test suite '${test-suite}' is disabled" level="warning"/>
+				<unit-test-log id="UNIT002I" unless:set="test-suite.disabled" message="Generating fixtures for '${test-suite}'" level="warning"/>
 				<create-fixture dir="@{test-suite.dir}" suite="${test-suite}" unless:set="test-suite.disabled"/>
 			</sequential>
 		</for>
@@ -68,7 +141,7 @@
 					<call path="//project/description">
 						<param name="description" path="text()" default=""/>
 						<actions>
-							<diagnostic-message id="UNIT002I" level="info" message="${test.suite.run.message} for '@{description}'"/>
+							<unit-test-log id="UNIT002I" level="info" message="${test.suite.run.message} for '@{description}'"/>
 							<antunit failOnError="false" errorproperty="test-failure">
 								<file file="@{test-suite.dir}/fixture.xml"/>
 								<xmllistener toDir="${dita.temp.dir}/unit-test/report" logLevel="warning"/>
