@@ -3,6 +3,12 @@
 	See the accompanying LICENSE file for applicable licenses.
 --><project xmlns:if="ant:if" xmlns:unless="ant:unless" name="fox.jason.unit-test">
 
+	<target name="unit-test.log.init">
+		<condition property="otversion.legacy">
+			<matches pattern="^[1|2].*" string="${otversion}"/>
+		</condition>
+		<typedef file="${dita.plugin.fox.jason.unit-test.dir}/resource/macros.xml"/>
+	</target>
 
 	<target name="unit-test.init">
 		<dita-ot-fail id="DOTA069F">
@@ -12,14 +18,7 @@
 				</not>
 			</condition>
 			<param name="1" value="${args.input}"/>
-		</dita-ot-fail>
-
-
-		<condition property="otversion.legacy">
-			<matches pattern="^[1|2].*" string="${otversion}"/>
-		</condition>
-		<typedef file="${dita.plugin.fox.jason.unit-test.dir}/resource/macros.xml"/>
-	
+		</dita-ot-fail>	
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
 			<classpath>
 				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"/>
@@ -72,14 +71,13 @@
 					<fileset dir="@{test-suite.dir}/test"/>
 				</copy>
 			</sequential>
-
 		</for>
 	</target>
 	
 	<!--
 		Target to create a unit-test fixture for each suite.
 	-->
-	<target name="generate-fixtures" description="Generate a fixture file for each test suite">
+	<target name="generate-fixtures" depends="unit-test.log.init">
 		
 		<!-- Now iterate across each test suite and generate the fixtures -->
 		<for param="test-suite.dir" trim="true">
@@ -164,7 +162,7 @@
 			<report format="noframes" styledir="${dita.plugin.fox.jason.unit-test.dir}/xsl" todir="${output.dir}"/>
 		</junitreport>
 		<move file="${output.dir}/junit-noframes.html" tofile="${output.dir}/test-results.html"/>
-		<check-failure unless:true="test.copy" if:set="test-failure"/>
+		<unit-test-failure unless:true="test.copy" if:set="test-failure"/>
 		<unit-test-success-echo/>
 	</target>
 

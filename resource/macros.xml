@@ -14,9 +14,12 @@
 	<macrodef name="coverage-check">
 		<attribute name="id"/>
 		<attribute name="dir"/>
+		<attribute name="resultfile"/>
 		<element name="test-condition" optional="false"/>
 		<sequential>
 			
+
+
 			<local name="fileset.count"/>
 			<resourcecount property="fileset.count">
 				<path>
@@ -25,7 +28,8 @@
 					</fileset>
 				</path>
 			</resourcecount>
-			<xmltask source="${test.coverage.xml}" dest="${test.coverage.xml}">
+
+			<xmltask source="@{resultfile}" dest="@{resultfile}">
 				<attr path="testsuites/testsuite[@id='${test-suite}']/*[@id='@{id}']" attr="count" value="${fileset.count}"/>
 			</xmltask>
 
@@ -48,6 +52,7 @@
 	-->
 	<macrodef name="coverage-runner">
 		<attribute name="dir"/>
+		<attribute name="resultfile" default="${test.coverage.xml}"/>
 		<sequential>
 			<var name="token.count" value="0"/>
 			<var name="covered.count" value="0"/>
@@ -60,7 +65,7 @@
 					<actions>
 						<propertyregex property="regex" input="@{token}" regexp=" " replace=".+" global="true" defaultValue="@{token}" override="true"/>
                
-						<coverage-check id="@{id}" dir="@{dir}">
+						<coverage-check id="@{id}" dir="@{dir}" resultfile="@{resultfile}">
 							<test-condition>
 								<containsregexp expression="&lt;${regex}.*&gt;" casesensitive="yes"/>
 							</test-condition>
@@ -73,7 +78,7 @@
 					<param name="id" path="@id"/>
 					<actions>
 						
-						<coverage-check id="@{id}" dir="@{dir}">
+						<coverage-check id="@{id}" dir="@{dir}" resultfile="@{resultfile}">
 							<test-condition>
 								<contains text="@{token}" casesensitive="yes"/>
 							</test-condition>
@@ -85,7 +90,7 @@
 
 			<math result="percentage" operand1="${covered.count}" operation="/" operand2="${token.count}" datatype="double"/>
 			
-			<xmltask source="${test.coverage.xml}" dest="${test.coverage.xml}">
+			<xmltask source="@{resultfile}" dest="@{resultfile}">
 				<attr path="testsuites/testsuite[@id='${test-suite}']" attr="percent" value="${percentage}"/>
 				<attr path="testsuites/testsuite[@id='${test-suite}']" attr="tokens" value="${token.count}"/>
 				<attr path="testsuites/testsuite[@id='${test-suite}']" attr="covered" value="${covered.count}"/>
@@ -117,16 +122,17 @@
 
 			<for param="doc-type-path">
 				<path>
-					<dirset dir="@{dir}">
+					<dirset dir="@{dir}/test" includes="*">
 						<exclude name="*/out"/>
 						<exclude name="*/temp"/>
-						<present targetdir="@{dir}">
+						<present targetdir="@{dir}/test">
 							<mapper type="glob" from="*" to="*/build.xml"/>
 						</present>
 					</dirset>
 				</path>
 				<!-- Loop through all directories with a build/build.xml -->
 				<sequential>
+
 					<local name="test.name"/>
 					<local name="test.description"/>
 					<local name="test.disabled"/>
@@ -144,7 +150,6 @@
 						<copy path="//project/target/@description" property="test.description"/>
 					</xmltask>
 					<property name="test.description" value="${test.name}"/>
-
   					<unit-test-log id="UNIT005W" if:set="test.disabled" message="The test '@{suite}/${test.name}' is disabled." level="warning"/>
 					<xmltask unless:set="test.disabled" source="@{dir}/fixture.xml" dest="@{dir}/fixture.xml">
 						<insert path="/project">
@@ -184,7 +189,7 @@
 	<macrodef name="unit-test-failure">
 		<sequential>
 			<dita-ot-fail id="UNIT001F" unless:set="otversion.legacy"/>
-			<fail taskname="UNIT001F" message="One or more tests have failed" if:set="otversion.legacy"/>
+			<fail taskname="UNIT001F" message="At least one test has failed" if:set="otversion.legacy"/>
 		</sequential>
 	</macrodef>
 

@@ -9,10 +9,8 @@
 	<!--
 		Generate a coverage report.
 	-->
-	<target name="test-coverage">
-		<dita-ot-echo id="UNIT002I">
-			<param name="1" value="Running a test-coverage report"/>
-  		</dita-ot-echo>
+	<target name="test-coverage" depends="unit-test.log.init">
+		<unit-test-log id="UNIT002I" level="info" message="Running a test-coverage report"/>
   		<tempfile destdir="${dita.temp.dir}" property="test.coverage.xml" deleteonexit="true"/>
 	
   		<xmltask source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml" dest="${test.coverage.xml}" />
@@ -29,18 +27,18 @@
 				<propertyregex property="test-suite" override="true" input="@{test-suite.dir}" regexp="([^/]*)$" select="\1" casesensitive="false"/>
 
 				<local name="test-suite.coverage"/>
-				<available file="@{test-suite.dir}/test/coverage.xml" property="test-suite.coverage"/>
 
+
+				<available file="@{test-suite.dir}/test/coverage.xml" property="test-suite.coverage"/>
 				<xmltask if:set="test-suite.coverage" source="${test.coverage.xml}" dest="${test.coverage.xml}">
 					<insert path="testsuites" file="@{test-suite.dir}/test/coverage.xml"/>
 				</xmltask> 
-				<coverage-runner if:set="test-suite.coverage" dir="@{test-suite.dir}" />
+				<coverage-runner if:set="test-suite.coverage" dir="@{test-suite.dir}" resultfile="${test.coverage.xml}" />
 			</sequential>
 		</for>
 
 
 		<xslt style="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl" in="${test.coverage.xml}" out="${output.dir}/coverage.html" classpathref="dost.class.path"/>
-
 	</target>
 
 	<!--
@@ -74,10 +72,8 @@
 	<!--
 		Generate a profiler report. Run DITA-OT using the test.transtype
 	-->
-	<target name="antro">
-		<dita-ot-echo id="UNIT002I">
-			<param name="1" value="Generating an Antro profiling report"/>
-  		</dita-ot-echo>
+	<target name="antro" depends="unit-test.log.init">
+		<unit-test-log id="UNIT002I" level="info" message="Generating an Antro profiling report"/>
 		<var name="transtype" unset="true"/>
 		<property name="transtype" value="${test.transtype}"/>
 		<tempfile destdir="${dita.temp.dir}" property="test.propertyfile" deleteonexit="true" createfile="true"/>
@@ -105,11 +101,9 @@
 	<!--
 		Invoke the Antro UI from the command line
 	-->
-	<target name="antro.ui">
-		<dita-ot-echo id="UNIT002I">
-			<param name="1" value="Invoking Antro UI"/>
-  		</dita-ot-echo>
-		<java classname="ru.jkff.antro.ui.Main" fork="true" spawn="true">
+	<target name="antro.ui" depends="unit-test.log.init">
+		<unit-test-log id="UNIT002I" level="info" message="Invoking Antro UI"/>
+		<java classname="ru.jkff.antro.ui.Main" fork="true" spawn="true" unless:set="test.no-spawn">
          <classpath>
          	<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/antro.jar" />
            	<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/json.jar" />
