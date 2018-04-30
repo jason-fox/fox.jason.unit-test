@@ -6,11 +6,6 @@ Unit Test Framework for DITA-OT
 [![Build Status](https://travis-ci.org/jason-fox/fox.jason.unit-test.svg?branch=master)](https://travis-ci.org/jason-fox/fox.jason.unit-test)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-Copyright (c) 2018 Jason Fox
-
-See the [LICENSE](LICENSE) file in the root of this project for license details.
-
-
 This is a Unit Testing framework for the DITA Open Toolkit. This plug-in consists of four DITA-OT transforms and an ANT library:
 - The `unit-test` transform allows a user to runs a sequence of `dita` commands and checks that the documents created match the expected output. This is useful for regresssion testing, and confirming that any custom plug-ins do not conflict when upgrading the base DITA-OT engine.
 - The `test-coverage` transform checks to see if a series of tokens representing all potential output values are covered by unit tests
@@ -18,10 +13,10 @@ This is a Unit Testing framework for the DITA Open Toolkit. This plug-in consist
 - The `antro.ui` transform starts up the UI for the ANT script profiler, allowing a user to load a JSON file and interpret the results. 
 - The `resource/antlib.xml` library offers a series of convenience methods for creating DITA-OT unit tests.
 
-Contents
-========
+Table of Contents
+=================
 
-- [Prerequisites](#prerequisites)
+- [Install](#install)
   * [Installing DITA-OT](#installing-dita-ot)
   * [Installing the Plug-in](#installing-the-plug-in)
 - [Usage](#usage)
@@ -40,7 +35,7 @@ Contents
     + [Overrides for `attributes.xml` `colors.xml` and `fonts.xml`](#overrides-for-attributesxml--colorsxml--and-fontsxml)
     + [Overrides for `test.properties`](#overrides-for-testproperties)
   * [Individual test files](#individual-test-files)
-- [ANT tasks for Unit Tests](#ant-tasks-for-unit-tests)
+- [API](#api)
   * [Compare-Output](#compare-output)
   * [Contains-Text](#contains-text)
   * [Exec-HTML5](#exec-html5)
@@ -49,10 +44,12 @@ Contents
   * [Exec-Transtype](#exec-transtype)
   * [Get-HTML-Article](#get-html-article)
   * [Get-PDF-Article](#get-pdf-article)
+- [Contribute](#contribute)
+- [License](#license)
 
 
-Prerequisites
-=============
+Install
+=======
 
 The unit test framework plug-in has been tested against [DITA-OT 3.0.x](http://www.dita-ot.org/download). It is also compatible with DITA-OT 2.x. but it is still recommended that you upgrade to the latest version. The unit test framework plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/) 1.3 to run tests and ANT junit to create a test report. ANT 1.9+ is recommended.
 
@@ -352,8 +349,8 @@ The `build.xml` must consist of a single default target, and `import` the `boots
 - Adding the comment `<!-- @disabled -->` within the `build.xml` file will disable a test 
 
 
-ANT tasks for Unit Tests
-========================
+API
+===
 
 The following ANT tasks are available from the DITA-OT Unit Test Framework
 
@@ -565,3 +562,12 @@ Loads a given `topic.fo` file and extracts the last `fo.flow` element (which cor
 ```
 creates a file called `fragment.fo` holding the final `<fo.flow>` element from the `topics.fo` file.
 
+Contribute
+==========
+
+PRs accepted.
+
+License
+=======
+
+[Apache 2.0](LICENSE) © 2018 Jason Fox
