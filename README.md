@@ -571,3 +571,22 @@ License
 =======
 
 [Apache 2.0](LICENSE) © 2018 Jason Fox
+
+The Program includes the following additional software components which were obtained under license:
+
+#### Apache 2.0 license:
+
+* Ant-AntUnit.jar - https://ant.apache.org/antlibs/antunit/
+* Ant-Contrib.jar - http://ant-contrib.sourceforge.net/ 
+* Ant-Junit.jar - https://ant.apache.org/ 
+
+#### Apache 1.1 license:
+
+* Xmltask.jar - http://www.oopsconsultancy.com/software/xmltask/
+
+#### Gnu General Public License
+
+* antro.jar - https://github.com/jkff/antro/
+* swingx-2008_03_09.jar - http://swingx.dev.java.net/
+* json.jar-  http://www.json.org/
+
