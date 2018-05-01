@@ -2,19 +2,13 @@
 	This file is part of the DITA-OT Unit Test Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
 --><project xmlns:if="ant:if" xmlns:unless="ant:unless" name="fox.jason.unit-test.coverage">
-
-	
 	<!--
 		Generate a coverage report.
 	-->
-	<target name="test-coverage" depends="unit-test.log.init">
+	<target depends="unit-test.log.init" name="test-coverage">
 		<unit-test-log id="UNIT002I" level="info" message="Running a test-coverage report"/>
-  		<tempfile destdir="${dita.temp.dir}" property="test.coverage.xml" deleteonexit="true"/>
-	
-  		<xmltask source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml" dest="${test.coverage.xml}"/>
-
-
-
+		<tempfile deleteonexit="true" destdir="${dita.temp.dir}" property="test.coverage.xml"/>
+		<xmltask dest="${test.coverage.xml}" source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml"/>
 		<for param="test-suite.dir">
 			<path>
 				<dirset dir="${test.root.dir}" includes="*">
@@ -22,23 +16,17 @@
 				</dirset>
 			</path>
 			<sequential>
-				<propertyregex property="test-suite" override="true" input="@{test-suite.dir}" regexp="([^/]*)$" select="\1" casesensitive="false"/>
-
+				<propertyregex casesensitive="false" input="@{test-suite.dir}" override="true" property="test-suite" regexp="([^/]*)$" select="\1"/>
 				<local name="test-suite.coverage"/>
-
-
 				<available file="@{test-suite.dir}/test/coverage.xml" property="test-suite.coverage"/>
-				<xmltask if:set="test-suite.coverage" source="${test.coverage.xml}" dest="${test.coverage.xml}">
-					<insert path="testsuites" file="@{test-suite.dir}/test/coverage.xml"/>
-				</xmltask> 
-				<coverage-runner if:set="test-suite.coverage" dir="@{test-suite.dir}" resultfile="${test.coverage.xml}"/>
+				<xmltask dest="${test.coverage.xml}" if:set="test-suite.coverage" source="${test.coverage.xml}">
+					<insert file="@{test-suite.dir}/test/coverage.xml" path="testsuites"/>
+				</xmltask>
+				<coverage-runner dir="@{test-suite.dir}" if:set="test-suite.coverage" resultfile="${test.coverage.xml}"/>
 			</sequential>
 		</for>
-
-
-		<xslt style="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl" in="${test.coverage.xml}" out="${output.dir}/coverage.html" classpathref="dost.class.path"/>
+		<xslt classpathref="dost.class.path" in="${test.coverage.xml}" out="${output.dir}/coverage.html" style="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl"/>
 	</target>
-
 	<!--
 		Setting up pre-processing for Antro. Checks that mandatory parameters are present
 		and loads dependent libaries
@@ -59,23 +47,20 @@
 				</not>
 			</condition>
 		</dita-ot-fail>
-
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
 			<classpath>
 				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"/>
 			</classpath>
 		</taskdef>
 	</target>
-
 	<!--
 		Generate a profiler report. Run DITA-OT using the test.transtype
 	-->
-	<target name="antro" depends="unit-test.log.init">
+	<target depends="unit-test.log.init" name="antro">
 		<unit-test-log id="UNIT002I" level="info" message="Generating an Antro profiling report"/>
 		<var name="transtype" unset="true"/>
 		<property name="transtype" value="${test.transtype}"/>
-		<tempfile destdir="${dita.temp.dir}" property="test.propertyfile" deleteonexit="true" createfile="true"/>
-
+		<tempfile createfile="true" deleteonexit="true" destdir="${dita.temp.dir}" property="test.propertyfile"/>
 		<java classname="org.apache.tools.ant.launch.Launcher" fork="true">
 			<arg value="-buildfile"/>
 			<arg value="${dita.dir}/build.xml"/>
@@ -87,40 +72,37 @@
 			<arg value="-propertyfile"/>
 			<arg value="${test.propertyfile}"/>
 			<classpath>
-           		<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/antro.jar"/>
+				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/antro.jar"/>
 				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/json.jar"/>
-	    		<fileset dir="${dita.dir}/lib">
-	        		<include name="*.jar"/>
-	    		</fileset>
-         </classpath>
+				<fileset dir="${dita.dir}/lib">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
 		</java>
 	</target>
-
 	<!--
 		Invoke the Antro UI from the command line
 	-->
-	<target name="antro.ui" depends="unit-test.log.init">
+	<target depends="unit-test.log.init" name="antro.ui">
 		<unit-test-log id="UNIT002I" level="info" message="Invoking Antro UI"/>
 		<java classname="ru.jkff.antro.ui.Main" fork="true" spawn="true" unless:set="test.no-spawn">
-         <classpath>
-         	<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/antro.jar"/>
-           	<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/json.jar"/>
-			<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/swingx-2008_03_09.jar"/>
-         </classpath>
-       </java>
+			<classpath>
+				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/antro.jar"/>
+				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/json.jar"/>
+				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/swingx-2008_03_09.jar"/>
+			</classpath>
+		</java>
 	</target>
-
 	<!--
 		Ant target executed to run a unit test coverage report.
 	-->
-	<target name="dita2test-coverage" depends="build-init,unit-test.init,test-coverage"/>
+	<target depends="build-init,unit-test.init,test-coverage" name="dita2test-coverage"/>
 	<!--
 		Ant target executed when the running the Antro profiler
 	-->
-	<target name="dita2antro" depends="build-init,antro.init,antro"/>
+	<target depends="build-init,antro.init,antro" name="dita2antro"/>
 	<!--
 		Ant target executed to invoke the Antro UI
 	-->
-	<target name="dita2antro-ui" depends="antro.ui"/>
-
+	<target depends="antro.ui" name="dita2antro-ui"/>
 </project>

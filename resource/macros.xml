@@ -4,7 +4,6 @@
 	See the accompanying LICENSE file for applicable licenses.
 -->
 <antlib xmlns:if="ant:if" xmlns:unless="ant:unless">
-	
 	<!--
 		Macro to and check how often a coverage token is found
 
@@ -17,9 +16,6 @@
 		<attribute name="resultfile"/>
 		<element name="test-condition" optional="false"/>
 		<sequential>
-			
-
-
 			<local name="fileset.count"/>
 			<resourcecount property="fileset.count">
 				<path>
@@ -28,22 +24,19 @@
 					</fileset>
 				</path>
 			</resourcecount>
-
-			<xmltask source="@{resultfile}" dest="@{resultfile}">
-				<attr path="testsuites/testsuite[@id='${test-suite}']/*[@id='@{id}']" attr="count" value="${fileset.count}"/>
+			<xmltask dest="@{resultfile}" source="@{resultfile}">
+				<attr attr="count" path="testsuites/testsuite[@id='${test-suite}']/*[@id='@{id}']" value="${fileset.count}"/>
 			</xmltask>
-
 			<if>
 				<not>
 					<equals arg1="${fileset.count}" arg2="0"/>
 				</not>
 				<then>
-					<math result="covered.count" operand1="${covered.count}" operation="+" operand2="1" datatype="int"/>
+					<math datatype="int" operand1="${covered.count}" operand2="1" operation="+" result="covered.count"/>
 				</then>
 			</if>
 		</sequential>
 	</macrodef>
-
 	<!--
 		Macro to iterate across the expectation in a test suite and check how often
 		a coverage token is found
@@ -52,56 +45,46 @@
 	-->
 	<macrodef name="coverage-runner">
 		<attribute name="dir"/>
-		<attribute name="resultfile" default="${test.coverage.xml}"/>
+		<attribute default="${test.coverage.xml}" name="resultfile"/>
 		<sequential>
 			<var name="token.count" value="0"/>
 			<var name="covered.count" value="0"/>
 			<var name="percentage" value="0"/>
-
 			<xmltask source="@{dir}/test/coverage.xml">
 				<call path="//element">
-					<param name="token" path="text()" default=""/>
-					<param name="id" path="@id"/>
+					<param default="" name="token" path="text()"/>
+					<param default="" name="id" path="@id"/>
 					<actions>
-						<propertyregex property="regex" input="@{token}" regexp=" " replace=".+" global="true" defaultValue="@{token}" override="true"/>
-               
-						<coverage-check id="@{id}" dir="@{dir}" resultfile="@{resultfile}">
+						<propertyregex defaultValue="@{token}" global="true" input="@{token}" override="true" property="regex" regexp=" " replace=".+"/>
+						<coverage-check dir="@{dir}" id="@{id}" resultfile="@{resultfile}">
 							<test-condition>
-								<containsregexp expression="&lt;${regex}.*&gt;" casesensitive="yes"/>
+								<containsregexp casesensitive="yes" expression="&lt;${regex}.*&gt;"/>
 							</test-condition>
 						</coverage-check>
-						<math result="token.count" operand1="${token.count}" operation="+" operand2="1" datatype="int"/>
+						<math datatype="int" operand1="${token.count}" operand2="1" operation="+" result="token.count"/>
 					</actions>
 				</call>
 				<call path="//text">
-					<param name="token" path="text()" default=""/>
-					<param name="id" path="@id"/>
+					<param default="" name="token" path="text()"/>
+					<param default="" name="id" path="@id"/>
 					<actions>
-						
-						<coverage-check id="@{id}" dir="@{dir}" resultfile="@{resultfile}">
+						<coverage-check dir="@{dir}" id="@{id}" resultfile="@{resultfile}">
 							<test-condition>
-								<contains text="@{token}" casesensitive="yes"/>
+								<contains casesensitive="yes" text="@{token}"/>
 							</test-condition>
 						</coverage-check>
-						<math result="token.count" operand1="${token.count}" operation="+" operand2="1" datatype="int"/>
+						<math datatype="int" operand1="${token.count}" operand2="1" operation="+" result="token.count"/>
 					</actions>
 				</call>
 			</xmltask>
-
-			<math result="percentage" operand1="${covered.count}" operation="/" operand2="${token.count}" datatype="double"/>
-			
-			<xmltask source="@{resultfile}" dest="@{resultfile}">
-				<attr path="testsuites/testsuite[@id='${test-suite}']" attr="percent" value="${percentage}"/>
-				<attr path="testsuites/testsuite[@id='${test-suite}']" attr="tokens" value="${token.count}"/>
-				<attr path="testsuites/testsuite[@id='${test-suite}']" attr="covered" value="${covered.count}"/>
-			</xmltask> 
-
+			<math datatype="double" operand1="${covered.count}" operand2="${token.count}" operation="/" result="percentage"/>
+			<xmltask dest="@{resultfile}" source="@{resultfile}">
+				<attr attr="percent" path="testsuites/testsuite[@id='${test-suite}']" value="${percentage}"/>
+				<attr attr="tokens" path="testsuites/testsuite[@id='${test-suite}']" value="${token.count}"/>
+				<attr attr="covered" path="testsuites/testsuite[@id='${test-suite}']" value="${covered.count}"/>
+			</xmltask>
 		</sequential>
 	</macrodef>
-
-
-
-
 	<!--
 		Macro to create a series of ant targets to validate and build each document.
 
@@ -115,34 +98,29 @@
 		<attribute name="dir"/>
 		<attribute name="suite"/>
 		<sequential>
-			<xmltask source="${dita.plugin.fox.jason.unit-test.dir}/resource/fixture.xml" dest="@{dir}/fixture.xml"/>
-			<xmltask source="@{dir}/fixture.xml" dest="@{dir}/fixture.xml">
+			<xmltask dest="@{dir}/fixture.xml" source="${dita.plugin.fox.jason.unit-test.dir}/resource/fixture.xml"/>
+			<xmltask dest="@{dir}/fixture.xml" source="@{dir}/fixture.xml">
 				<replace path="/project/description" withXml="&lt;description&gt;@{suite}&lt;/description&gt;"/>
 			</xmltask>
-
 			<for param="doc-type-path">
 				<path>
 					<dirset dir="@{dir}/test" includes="*">
 						<exclude name="*/out"/>
 						<exclude name="*/temp"/>
 						<present targetdir="@{dir}/test">
-							<mapper type="glob" from="*" to="*/build.xml"/>
+							<mapper from="*" to="*/build.xml" type="glob"/>
 						</present>
 					</dirset>
 				</path>
 				<!-- Loop through all directories with a build/build.xml -->
 				<sequential>
-
 					<local name="test.name"/>
 					<local name="test.description"/>
 					<local name="test.disabled"/>
-
-					<propertyregex property="test.name" override="true" input="@{doc-type-path}" regexp="([^/\\]*)$" select="\1" casesensitive="false"/>
-
+					<propertyregex casesensitive="false" input="@{doc-type-path}" override="true" property="test.name" regexp="([^/\\]*)$" select="\1"/>
 					<condition property="test.disabled" value="true">
 						<resourcecontains resource="@{doc-type-path}/build.xml" substring="@disabled"/>
 					</condition>
-
 					<xmltask source="@{doc-type-path}/build.xml">
 						<copy path="//project/description/text()" property="test.description"/>
 					</xmltask>
@@ -150,12 +128,10 @@
 						<copy path="//project/target/@description" property="test.description"/>
 					</xmltask>
 					<property name="test.description" value="${test.name}"/>
-  					<unit-test-log id="UNIT005W" if:set="test.disabled" message="The test '@{suite}/${test.name}' is disabled." level="warning"/>
-					<xmltask unless:set="test.disabled" source="@{dir}/fixture.xml" dest="@{dir}/fixture.xml">
-						<insert path="/project">
-
-	&lt;target name="test: ${test.description}"&gt;
-		&lt;unit-test name="${test.name}"/&gt;
+					<unit-test-log id="UNIT005W" if:set="test.disabled" level="warning" message="The test '@{suite}/${test.name}' is disabled."/>
+					<xmltask dest="@{dir}/fixture.xml" source="@{dir}/fixture.xml" unless:set="test.disabled">
+						<insert path="/project">&lt;target name=&quot;test: ${test.description}&quot;&gt;
+		&lt;unit-test name=&quot;${test.name}&quot;/&gt;
 	&lt;/target&gt;
 
 						</insert>
@@ -167,33 +143,40 @@
 	<!--
 		Console log the successful test result and colorize if necessary. 
 	-->
-	<scriptdef name="unit-test-success-echo" language="javascript">
-		
-			var escape = String.fromCharCode(27);
-			var colorize = "true".equals(project.getProperty("test.colorize"));
-			var testCopy = "true".equals(project.getProperty("test.copy"));
+	<scriptdef language="javascript" name="unit-test-success-echo">var escape = String.fromCharCode(27);
+			var colorize = &quot;true&quot;.equals(project.getProperty(&quot;test.colorize&quot;));
+			var testCopy = &quot;true&quot;.equals(project.getProperty(&quot;test.copy&quot;));
 
-			var input = testCopy ?  "[WARN] Updated all test expectations" : "[SUCCESS] All tests have passed";
-			var ansiColor = testCopy ? "[33m" :  "[32m";
+			var input = testCopy ?  &quot;[WARN] Updated all test expectations&quot; : &quot;[SUCCESS] All tests have passed&quot;;
+			var ansiColor = testCopy ? &quot;[33m&quot; :  &quot;[32m&quot;;
 
 			if (colorize) {
 				input =  escape + ansiColor + input;
-				input += escape + "[0m";
+				input += escape + &quot;[0m&quot;;
 			}
 
 			project.log('', 1);
 			project.log(input, 1);
 		
 	</scriptdef>
-
+	<!--
+		Fail the test run. This has been extracted to ensure
+		messages can be displayed easily under DITA-OT 2.x
+	-->
 	<macrodef name="unit-test-failure">
 		<sequential>
 			<dita-ot-fail id="UNIT001F" unless:set="otversion.legacy"/>
-			<fail taskname="UNIT001F" message="At least one test has failed" if:set="otversion.legacy"/>
+			<fail if:set="otversion.legacy" message="At least one test has failed" taskname="UNIT001F"/>
 		</sequential>
 	</macrodef>
+	<!--
+		Write something to the message log. This has been extracted to ensure
+		messages can be displayed easily under DITA-OT 2.x
 
-
+		@param id - the ID of the resource string
+		@param message - the text of the message
+		@param level - the logging level (e.g. warning) 
+	-->
 	<macrodef name="unit-test-log">
 		<attribute name="id"/>
 		<attribute name="message"/>
@@ -202,7 +185,7 @@
 			<dita-ot-echo id="@{id}" unless:set="otversion.legacy">
 				<param name="1" value="@{message}"/>
 			</dita-ot-echo>
-			<echo taskname="@{id}" level="@{level}" message="@{message}" if:set="otversion.legacy"/>
+			<echo if:set="otversion.legacy" level="@{level}" message="@{message}" taskname="@{id}"/>
 		</sequential>
 	</macrodef>
 </antlib>

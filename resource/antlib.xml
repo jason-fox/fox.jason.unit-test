@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-
 <antlib>
-
-	<taskdef
-		name="xmltask"
-		classname="com.oopsconsultancy.xmltask.ant.XmlTask"
-		classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/xmltask.jar">
-	</taskdef>
-
+	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/xmltask.jar" name="xmltask"/>
 	<!--
 		Macro to throw an error message if the given files do not match
 
@@ -18,35 +11,28 @@
 		@suffix - File suffix for the result
 	-->
 	<macrodef name="compare-output">
-		<attribute name="suffix" default=".fo"/>
-		<attribute name="expectation" default="${basedir}/expected@{suffix}"/>
-		<attribute name="result" default="${output.dir}/fragment@{suffix}"/>
-		<attribute name="os" default="any"/>
+		<attribute default=".fo" name="suffix"/>
+		<attribute default="${basedir}/expected@{suffix}" name="expectation"/>
+		<attribute default="${output.dir}/fragment@{suffix}" name="result"/>
+		<attribute default="any" name="os"/>
 		<sequential>
-		
 			<local name="line"/>
 			<local name="test.os.matches"/>
-
-			<condition property="test.os.matches" value="true" else="false">
-        		<or>
-        			<equals arg1="@{os}" arg2="any"/>
-        			<os family="@{os}"/>
-        		</or>
-    		</condition>
+			<condition else="false" property="test.os.matches" value="true">
+				<or>
+					<equals arg1="@{os}" arg2="any"/>
+					<os family="@{os}"/>
+				</or>
+			</condition>
 			<property name="line" value="${line.separator}===================================================${line.separator}"/>
-
-			<fixcrlf file="@{result}"  eol="unix" eof="remove"/>
-			<copy-result src="@{result}" dest="@{expectation}"/>
-			<loadfile property="actual" srcfile="@{result}" failonerror="true"/>
-			<loadfile property="expected" srcfile="@{expectation}" failonerror="true"/>
-			<assert-equal arg1="${expected}" arg2="${actual}" message="[FAILED] Test Assertion Failed - Result does not match expectation${line.separator}" body="EXPECTED :${line}${expected}${line}ACTUAL :${line}${actual}"/>
+			<fixcrlf eof="remove" eol="unix" file="@{result}"/>
+			<copy-result dest="@{expectation}" src="@{result}"/>
+			<loadfile failonerror="true" property="actual" srcfile="@{result}"/>
+			<loadfile failonerror="true" property="expected" srcfile="@{expectation}"/>
+			<assert-equal arg1="${expected}" arg2="${actual}" body="EXPECTED :${line}${expected}${line}ACTUAL :${line}${actual}" message="[FAILED] Test Assertion Failed - Result does not match expectation${line.separator}"/>
 			<unit-test-success-echo/>
-
 		</sequential>
 	</macrodef>
-
-
-
 	<!--
 		Macro to throw an error message if the text is not found
 
@@ -56,31 +42,25 @@
 		@param expected    - The expected fragment of text
 	-->
 	<macrodef name="contains-text">
-		<attribute name="actual" default="${dita.ot.output}"/>
-		<attribute name="expected" />
-		<attribute name="os" default="any"/>
+		<attribute default="${dita.ot.output}" name="actual"/>
+		<attribute name="expected"/>
+		<attribute default="any" name="os"/>
 		<sequential>
-		
 			<local name="test.contatins"/>
 			<local name="test.os.matches"/>
-
-			<condition property="test.os.matches" value="true" else="false">
-        		<or>
-        			<equals arg1="@{os}" arg2="any"/>
-        			<os family="@{os}"/>
-        		</or>
-    		</condition>
-
-    		<condition property="test.contains" value="true" else="false">
-        		<contains string="@{actual}" substring="@{expected}"/>
-    		</condition>
-			
-			<assert-equal arg1="${test.contains}" arg2="true" message="[FAILED] Expected text not found." body="&quot;@{expected}&quot; missing from log output."/>
+			<condition else="false" property="test.os.matches" value="true">
+				<or>
+					<equals arg1="@{os}" arg2="any"/>
+					<os family="@{os}"/>
+				</or>
+			</condition>
+			<condition else="false" property="test.contains" value="true">
+				<contains string="@{actual}" substring="@{expected}"/>
+			</condition>
+			<assert-equal arg1="${test.contains}" arg2="true" body="&quot;@{expected}&quot; missing from log output." message="[FAILED] Expected text not found."/>
 			<unit-test-success-echo/>
-
 		</sequential>
 	</macrodef>
-
 	<!--
 		Macro to execute the HTML5 DITA-OT plugin
 
@@ -91,22 +71,18 @@
 		@param propertyfile   The name of a file holding additional properties
 		@param transtype - The transtype to use when creating the build 
 	-->
-
 	<macrodef name="exec-html5">
 		<attribute default="${basedir}/document.ditamap" name="ditamap"/>
 		<attribute default="html5" name="transtype"/>
 		<attribute default="0" name="expectedresult"/>
 		<attribute default="100" name="maxwait"/>
-		<attribute name="propertyfile" default="test.properties"/>
+		<attribute default="test.properties" name="propertyfile"/>
 		<sequential>
 			<init-test/>
-			<run-test ditamap="@{ditamap}" transtype="@{transtype}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" output="${output.dir}/html" propertyfile="@{propertyfile}"/>
-			<delete quiet="true" failonerror="false" dir="${dita.temp.dir}"/>
+			<run-test ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" output="${output.dir}/html" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
+			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
 		</sequential>
 	</macrodef>
-
-
-
 	<!--
 		Macro to execute the PDF DITA-OT plugin
 
@@ -121,18 +97,15 @@
 		<attribute default="pdf2" name="transtype"/>
 		<attribute default="0" name="expectedresult"/>
 		<attribute default="100" name="maxwait"/>
-		<attribute name="propertyfile" default="test.properties"/>
-
+		<attribute default="test.properties" name="propertyfile"/>
 		<sequential>
 			<init-test/>
-			<run-test ditamap="@{ditamap}" transtype="@{transtype}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}"/>
-
+			<run-test ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
 			<!-- Move topic.fo and then clean temp after invocation -->
-			<xmltask outputter="simple" source="${dita.temp.dir}/topic.fo" dest="${output.dir}/topic.fo" encoding="UTF-8"/>
-			<delete quiet="true" failonerror="false" dir="${dita.temp.dir}"/>
+			<xmltask dest="${output.dir}/topic.fo" encoding="UTF-8" outputter="simple" source="${dita.temp.dir}/topic.fo"/>
+			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
 		</sequential>
 	</macrodef>
-
 	<!--
 		Macro to execute the HERE Validation DITA-OT plugin
 
@@ -142,28 +115,23 @@
 		@param propertyfile   The name of a file holding additional properties
 		@param transtype  - The transtype to run when creating the document.
 	-->
-
-
 	<macrodef name="exec-svrl">
 		<attribute default="${basedir}/document.ditamap" name="ditamap"/>
 		<attribute default="100" name="maxwait"/>
 		<attribute default="svrl" name="transtype"/>
 		<attribute default="0" name="expectedresult"/>
-		<attribute name="propertyfile" default="test.properties"/>
+		<attribute default="test.properties" name="propertyfile"/>
 		<sequential>
-			<basename property="document" file="@{ditamap}" suffix=".ditamap"/>
+			<basename file="@{ditamap}" property="document" suffix=".ditamap"/>
 			<init-test/>
-			<run-test ditamap="@{ditamap}" transtype="@{transtype}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}"/>
+			<run-test ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
 			<!-- Clean up temp and svrl after invocation -->
-			<tempfile property="ordered-document" suffix=".svrl" deleteonexit="true"/>
-
-			<xslt in="${output.dir}/${document}.svrl" out="${ordered-document}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/order.xsl"  classpathref="xslt.class.path"/>
-
-			<xmltask outputter="simple" source="${ordered-document}" dest="${output.dir}/fragment.svrl"/>
-			<delete quiet="true" failonerror="false" dir="${dita.temp.dir}"/>
+			<tempfile deleteonexit="true" property="ordered-document" suffix=".svrl"/>
+			<xslt classpathref="xslt.class.path" in="${output.dir}/${document}.svrl" out="${ordered-document}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/order.xsl"/>
+			<xmltask dest="${output.dir}/fragment.svrl" outputter="simple" source="${ordered-document}"/>
+			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
 		</sequential>
 	</macrodef>
-
 	<!--
 		Macro to execute a random transtype
 
@@ -178,40 +146,37 @@
 		<attribute name="transtype"/>
 		<attribute default="0" name="expectedresult"/>
 		<attribute default="100" name="maxwait"/>
-		<attribute name="propertyfile" default="test.properties"/>
-
+		<attribute default="test.properties" name="propertyfile"/>
 		<sequential>
 			<init-test/>
-			<run-test ditamap="@{ditamap}" transtype="@{transtype}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" clean="yes" />
+			<run-test clean="yes" ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
 		</sequential>
 	</macrodef>
-
 	<!-- 
-		Extract the <article> from the input HTML.
+		Extract the <article>from the input HTML.
 	
 		@param dir - the source directory
 		@param from - the source file to extract a fragment from
 		@param to - the file to write to
 	-->
 	<macrodef name="get-html-article">
-		<attribute name="dir" default="${output.dir}/html"/>
+		<attribute default="${output.dir}/html" name="dir"/>
 		<attribute name="from"/>
-		<attribute name="to" default="${output.dir}/fragment.html"/>
+		<attribute default="${output.dir}/fragment.html" name="to"/>
 		<sequential>
 			<local name="htmlSource"/>
 			<local name="fragment"/>
-			<loadfile property="htmlSource" srcfile="@{dir}/@{from}" failonerror="true"/>
-			<script language="javascript">//<![CDATA[
+			<loadfile failonerror="true" property="htmlSource" srcfile="@{dir}/@{from}"/>
+			<script language="javascript">//
+				<![CDATA[
 		    	var input = project.getProperty("htmlSource");
 		       	var start =  input.indexOf("<article");
 		       	var end = input.indexOf("</article>") + 10;
 		      	project.setProperty("fragment", input.substring(start, end) );
 			// ]]></script>
-		    <echo file="@{to}" message="${fragment}"/>
+			<echo file="@{to}" message="${fragment}"/>
 		</sequential>
 	</macrodef>
-
-
 	<!-- 
 		Extract the equivalent to a topic file from topic.fo
 	
@@ -219,26 +184,21 @@
 		@param to - the file to write to
 	-->
 	<macrodef name="get-pdf-article">
-		<attribute name="from" default="${output.dir}/topic.fo"/>
-		<attribute name="to" default="${output.dir}/fragment.fo"/>
+		<attribute default="${output.dir}/topic.fo" name="from"/>
+		<attribute default="${output.dir}/fragment.fo" name="to"/>
 		<sequential>
 			<!-- 
 				For a FOP file, just extract the final topic 
-				<fo:flow flow-name="xsl-region-body"> element
+				<fo:flow flow-name="xsl-region-body">element
 			-->
-			<xslt in="@{from}" out="@{to}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/topic-fo.xsl"  classpathref="xslt.class.path"/>
-			
+			<xslt classpathref="xslt.class.path" in="@{from}" out="@{to}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/topic-fo.xsl"/>
 			<replace file="@{to}" token="${basedir}" value="."/>
 			<replace-pdf-font-family file="@{to}"/>
 			<replace-pdf-colors file="@{to}"/>
 			<replace-pdf-attributes file="@{to}"/>
-			<xmltask outputter="simple" source="@{to}" dest="@{to}"/>
-
+			<xmltask dest="@{to}" outputter="simple" source="@{to}"/>
 		</sequential>
-		
 	</macrodef>
-
-
 	<!-- 
 		Obtain a test resource from any of the following:
 
@@ -252,31 +212,24 @@
 	<macrodef name="get-test-resource">
 		<attribute name="property"/>
 		<attribute name="file"/>
-		<attribute name="default" default="${test.cfg.dir}/@{file}"/>
+		<attribute default="${test.cfg.dir}/@{file}" name="default"/>
 		<sequential>
-			<available file="${basedir}/@{file}" property="@{property}" 
-				value="${basedir}/@{file}"/>
-			<available file="${basedir}/../@{file}" property="@{property}" 
-				value="${basedir}/../@{file}"/>
-			<available file="${test.root.dir}/@{file}" property="@{property}" 
-				value="${test.root.dir}/@{file}"/>
+			<available file="${basedir}/@{file}" property="@{property}" value="${basedir}/@{file}"/>
+			<available file="${basedir}/../@{file}" property="@{property}" value="${basedir}/../@{file}"/>
+			<available file="${test.root.dir}/@{file}" property="@{property}" value="${test.root.dir}/@{file}"/>
 			<property name="@{property}" value="@{default}"/>
 		</sequential>
 	</macrodef>
-
-
 	<!-- Private macros start below: -->
-
-
 	<!--
-		Custom <scriptdef> to invoke a conditional <fail>.
+		Custom <scriptdef>to invoke a conditional <fail>.
 
 		@param arg1 - first argument for comparison
 		@param arg2 - second argument for comparison
 		@param body - detail of the error message
 		@param message - short text description of the error
 	-->
-	<scriptdef name="assert-equal" language="javascript">
+	<scriptdef language="javascript" name="assert-equal">
 		<attribute name="arg1"/>
 		<attribute name="arg2"/>
 		<attribute name="message"/>
@@ -309,9 +262,8 @@
 			} 
 		]]>
 	</scriptdef>
-
 	<!--
-		Macro to invoke a conditional <fail> if time taken exceeds a given limit
+		Macro to invoke a conditional <fail>if time taken exceeds a given limit
 
 		@param duration - the actual duration of a task in seconds
 		@param maxwait - time limit of the task in seconds
@@ -320,41 +272,36 @@
 		<attribute name="duration"/>
 		<attribute name="maxwait"/>
 		<sequential>
-			<calculate-value resultproperty="percentage" operand1="@{duration}" operation="%" operand2="@{maxwait}"/>
-			<condition property="limit-exceeded" >
+			<calculate-value operand1="@{duration}" operand2="@{maxwait}" operation="%" resultproperty="percentage"/>
+			<condition property="limit-exceeded">
 				<scriptcondition language="javascript" value="false">
 					<![CDATA[
 						var percent = parseInt(project.getProperty('percentage'));
-						if (percent > 100){
+						if (percent >100){
 							self.setValue(true);
 						}
 					]]>
-			 	</scriptcondition>
+				</scriptcondition>
 			</condition>
 			<property name="limit-exceeded" value="false"/>
-
-
-			<assert-equal arg1="${limit-exceeded}" arg2="false" message="[FAILED] Test Timeout." body="DITA-OT Operation Exceeded Limit - @{duration} seconds - ${percentage}% of limit"/>
-			<echo taskname="dita-ot" level="warning" message="Operation took @{duration} seconds - ${percentage}% of limit."/>
-
+			<assert-equal arg1="${limit-exceeded}" arg2="false" body="DITA-OT Operation Exceeded Limit - @{duration} seconds - ${percentage}% of limit" message="[FAILED] Test Timeout."/>
+			<echo level="warning" message="Operation took @{duration} seconds - ${percentage}% of limit." taskname="dita-ot"/>
 		</sequential>
 	</macrodef>
-
-
 	<!--
-		Custom <scriptdef> to apply some mathematical operations
-		This removes a dependency on the Ant Contrib <math> task.
+		Custom <scriptdef>to apply some mathematical operations
+		This removes a dependency on the Ant Contrib <math>task.
 
 		@param operand1 - first operand
 		@param operand2 - second operand
 		@param operation - Mathematical operation to invoke - either subtract or percentage
 		@param resultproperty - the property to set with the result
 	-->
-	<scriptdef name="calculate-value" language="javascript">
+	<scriptdef language="javascript" name="calculate-value">
 		<attribute name="resultproperty"/>
 		<attribute name="operand1"/>
 		<attribute name="operation"/>
-		<attribute name="operand2"/> 
+		<attribute name="operand2"/>
 		<![CDATA[
 			var property = attributes.get("resultproperty");
 			var operand1 = attributes.get("operand1");
@@ -369,8 +316,6 @@
 			}
 		]]>
 	</scriptdef>
-
-
 	<!--
 		if test.copy.dir is set, make a copy of the expectation file
 		This allows us to refresh the test expectations
@@ -378,7 +323,7 @@
 		@param dest - destination of the expecation
 		@param src -  source of the expecation
 	-->
-	<scriptdef name="copy-result" language="javascript">
+	<scriptdef language="javascript" name="copy-result">
 		<attribute name="src"/>
 		<attribute name="dest"/>
 		<![CDATA[
@@ -400,8 +345,6 @@
 			} 
 		]]>
 	</scriptdef>
-
-
 	<!--
 		Setting up common testing pre-processing. Sets up ANT variable defaults
 	-->
@@ -416,22 +359,17 @@
 			<condition property="test.colorize" value="true">
 				<os family="unix"/>
 			</condition>
-			
-
 			<path id="xslt.class.path">
-    			<fileset dir="${dita.dir}/lib">
-        			<include name="*.jar"/>
-    			</fileset>
+				<fileset dir="${dita.dir}/lib">
+					<include name="*.jar"/>
+				</fileset>
 			</path>
-
-			<delete quiet="true" failonerror="false" dir="${output.dir}"/>
-
-			<delete quiet="true" failonerror="false" dir="${dita.temp.dir}"/>
+			<delete dir="${output.dir}" failonerror="false" quiet="true"/>
+			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
 			<mkdir dir="${dita.temp.dir}"/>
-			<tempfile destdir="${dita.temp.dir}" property="test.propertyfile" deleteonexit="true" createfile="true"/>
+			<tempfile createfile="true" deleteonexit="true" destdir="${dita.temp.dir}" property="test.propertyfile"/>
 		</sequential>
 	</macrodef>
-
 	<!-- 
 		Remove untested attributes from fragment
 	
@@ -440,20 +378,19 @@
 	<macrodef name="replace-pdf-attributes">
 		<attribute name="file"/>
 		<sequential>
-			<get-test-resource file="attributes.xml" property="test.attributes.src" />
+			<get-test-resource file="attributes.xml" property="test.attributes.src"/>
 			<xmltask source="${test.attributes.src}">
 				<call path="//attribute">
 					<param name="name" path="@name"/>
 					<actions>
-						<xmltask source="@{file}" dest="@{file}">
-		    				<attr path="//*" attr="@{name}"  remove="true"/>
-		    			</xmltask>
+						<xmltask dest="@{file}" source="@{file}">
+							<attr attr="@{name}" path="//*" remove="true"/>
+						</xmltask>
 					</actions>
 				</call>
 			</xmltask>
-   		</sequential>
+		</sequential>
 	</macrodef>
-
 	<!-- 
 		Remove hex colors from the test results.
 	
@@ -468,13 +405,12 @@
 					<param name="name" path="@name"/>
 					<param name="hex" path="@hex"/>
 					<actions>
-						 <replaceregexp match="@{hex}" replace="@{name}" file="@{file}" flags="gi"/>
+						<replaceregexp file="@{file}" flags="gi" match="@{hex}" replace="@{name}"/>
 					</actions>
 				</call>
 			</xmltask>
-   		</sequential>
+		</sequential>
 	</macrodef>
-
 	<!-- 
 		Remove details of the expected fonts from the test results.
 	
@@ -483,19 +419,18 @@
 	<macrodef name="replace-pdf-font-family">
 		<attribute name="file"/>
 		<sequential>
-			<get-test-resource file="fonts.xml" property="test.fonts.src" />
+			<get-test-resource file="fonts.xml" property="test.fonts.src"/>
 			<xmltask source="${test.fonts.src}">
 				<call path="//font">
 					<param name="name" path="@name"/>
 					<param name="value" path="@value"/>
 					<actions>
-						 <replaceregexp match="@{value}" replace="@{name}" file="@{file}" flags="gi"/>
+						<replaceregexp file="@{file}" flags="gi" match="@{value}" replace="@{name}"/>
 					</actions>
 				</call>
 			</xmltask>
-   		</sequential>
+		</sequential>
 	</macrodef>
-
 	<!--
 		Macro to execute a DITA-OT transtype on a DITA document
 
@@ -511,19 +446,17 @@
 		<attribute name="ditamap"/>
 		<attribute name="transtype"/>
 		<attribute name="expectedresult"/>
-		<attribute name="output" default="${output.dir}"/>
-		<attribute name="propertyfile" default="test.properties"/>
+		<attribute default="${output.dir}" name="output"/>
+		<attribute default="test.properties" name="propertyfile"/>
 		<attribute name="maxwait"/>
-		<attribute name="clean" default="no"/>
+		<attribute default="no" name="clean"/>
 		<sequential>
 			<local name="test.properties"/>
-			<get-test-resource file="@{propertyfile}" property="test.properties" default="${test.propertyfile}" />
-			<echo taskname="dita-ot" level="warning" message="Running '@{transtype}' transform ..."/>
-			
+			<get-test-resource default="${test.propertyfile}" file="@{propertyfile}" property="test.properties"/>
+			<echo level="warning" message="Running '@{transtype}' transform ..." taskname="dita-ot"/>
 			<unix-timestamp property="start"/>
 			<!-- For Unix run the DITA executable-->
-			<exec executable="${dita.exec}" osfamily="unix" resultproperty="dita.ot.result" outputproperty="dita.ot.output">
-
+			<exec executable="${dita.exec}" osfamily="unix" outputproperty="dita.ot.output" resultproperty="dita.ot.result">
 				<arg value="-input"/>
 				<arg value="@{ditamap}"/>
 				<arg value="-output"/>
@@ -538,26 +471,22 @@
 				<!-- Add to obtain verbose output. -->
 				<arg value="-v"/>
 			</exec>
-
 			<!-- For Windows run from a DOS command -->
-			<exec executable="cmd" dir="${dita.dir}/bin" osfamily="windows" outputproperty="dita.ot.output" resultproperty="dita.ot.result">
+			<exec dir="${dita.dir}/bin" executable="cmd" osfamily="windows" outputproperty="dita.ot.output" resultproperty="dita.ot.result">
 				<arg value="/C"/>
 				<arg value="dita -input @{ditamap} -output @{output}-format @{transtype} -temp ${dita.temp.dir} --clean.temp=@{clean} -v"/>
 			</exec>
 			<unix-timestamp property="stop"/>
-			<echo taskname="dita-ot" level="info" message="${dita.ot.output}"/>
-			<assert-equal arg1="${dita.ot.result}" arg2="@{expectedresult}" message="[FAILED] Unexpected Result ${dita.ot.result} from DITA-OT"  body="Expected @{expectedresult} got ${dita.ot.result}"/>
-			
-			<calculate-value resultproperty="duration" operand1="${stop}" operation="-" operand2="${start}"/>
-			<assert-timeout maxwait="@{maxwait}" duration="${duration}"/>
+			<echo level="info" message="${dita.ot.output}" taskname="dita-ot"/>
+			<assert-equal arg1="${dita.ot.result}" arg2="@{expectedresult}" body="Expected @{expectedresult} got ${dita.ot.result}" message="[FAILED] Unexpected Result ${dita.ot.result} from DITA-OT"/>
+			<calculate-value operand1="${stop}" operand2="${start}" operation="-" resultproperty="duration"/>
+			<assert-timeout duration="${duration}" maxwait="@{maxwait}"/>
 		</sequential>
 	</macrodef>
-
-
 	<!--
 		Add ansi color tags to output if requested.
 	-->
-	<scriptdef name="unit-test-success-echo" language="javascript">
+	<scriptdef language="javascript" name="unit-test-success-echo">
 		<![CDATA[
 			var escape = String.fromCharCode(27);
 			var os = "true".equals(project.getProperty("test.os.matches"));
@@ -577,14 +506,13 @@
 			}
 		]]>
 	</scriptdef>
-
 	<!--
 		Script to set a given property to the current time of the local machine.
 		This allows us to run performance testing.
 
 		@param property  - The ant property to set
 	-->
-	<scriptdef name="unix-timestamp" language="javascript">
+	<scriptdef language="javascript" name="unix-timestamp">
 		<attribute name="property"/>
 		<![CDATA[
 			var property = attributes.get("property");
@@ -592,5 +520,4 @@
 			project.setProperty(property, nowSeconds);
 		]]>
 	</scriptdef>
-
 </antlib>

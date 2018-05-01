@@ -15,15 +15,15 @@
 	<attribute name="keep-with-next.within-column"/>
 	<attribute name="line-height"/>
 	<attribute name="line-height-shift-adjustment"/>
-	<attribute name="margin-bottom"/> 
-	<attribute name="margin-top"/> 
+	<attribute name="margin-bottom"/>
+	<attribute name="margin-top"/>
 	<attribute name="padding-left"/>
 	<attribute name="padding-top"/>
 	<attribute name="padding-bottom"/>
 	<attribute name="space-after"/>
 	<attribute name="space-after.optimum"/>
 	<attribute name="space-before"/>
-	<attribute name="space-before.optimum"/>  
+	<attribute name="space-before.optimum"/>
 	<attribute name="start-indent"/>
 	<attribute name="text-indent"/>
 </attributes>

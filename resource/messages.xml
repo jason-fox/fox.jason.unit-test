@@ -3,16 +3,16 @@
   This file is part of the DITA-OT Unit Test Plug-in project.
   See the accompanying LICENSE file for applicable licenses.
 -->
-<messages  xmlns:dita="http://dita-ot.sourceforge.net">
+<messages xmlns:dita="http://dita-ot.sourceforge.net">
   <message id="UNIT001F" type="FATAL">
     <reason>At least one test has failed.</reason>
     <response>Check the test report results and fix the tests</response>
   </message>
   <message id="UNIT002I" type="INFO">
     <reason>%1</reason>
-    <response></response>
+    <response/>
   </message>
-   <message id="UNIT003F" type="FATAL">
+  <message id="UNIT003F" type="FATAL">
     <reason>Override transtype is not specified, or is specified using the wrong parameter.</reason>
     <response>Add --test.transtype=&lt;transtype&gt;.</response>
   </message>

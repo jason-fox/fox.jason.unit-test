@@ -12,42 +12,33 @@
 	<feature extension="dita.conductor.transtype.check" value="test-coverage"/>
 	<feature extension="dita.conductor.transtype.check" value="antro"/>
 	<feature extension="dita.conductor.transtype.check" value="antro-ui"/>
-
 	<feature extension="dita.conductor.lib.import" file="lib/ant-junit.jar"/>
-
-	<transtype name="unit-test" desc="Runs the unit tests and creates a test report">
-		<param name="test.copy" desc="Whether regenerated expecations should be copied" type="enum">
+	<transtype desc="Runs the unit tests and creates a test report" name="unit-test">
+		<param desc="Whether regenerated expecations should be copied" name="test.copy" type="enum">
 			<val>true</val>
-      		<val default="true">false</val>
+			<val default="true">false</val>
 		</param>
-		<param name="test.colorize" desc="Whether to colorize the test output" type="enum">
-			<val desc="Output highlights errors and warnings using ANSI color codes" default="true">true</val>
+		<param desc="Whether to colorize the test output" name="test.colorize" type="enum">
+			<val default="true" desc="Output highlights errors and warnings using ANSI color codes">true</val>
 			<val desc="Output does not highlight errors and warnings">false</val>
 		</param>
-		<param name="test.propertyfile" desc="The properties file to run the profile against" type="file"/>
+		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
 	</transtype>
-	<transtype name="test-coverage" desc="Runs a test coverage report">
-		<param name="test.colorize" desc="Whether to colorize the test output" type="enum">
-			<val desc="Output highlights errors and warnings using ANSI color codes"  default="true">true</val>
+	<transtype desc="Runs a test coverage report" name="test-coverage">
+		<param desc="Whether to colorize the test output" name="test.colorize" type="enum">
+			<val default="true" desc="Output highlights errors and warnings using ANSI color codes">true</val>
 			<val desc="Output does not highlight errors and warnings">false</val>
 		</param>
 	</transtype>
-	<transtype name="antro" desc="Runs an antro ANT profiling report">
-		<param name="test.transtype" desc="The transtype to run the profile against" type="string"/>
-		<param name="test.propertyfile" desc="The properties file to run the profile against" type="file"/>
+	<transtype desc="Runs an antro ANT profiling report" name="antro">
+		<param desc="The transtype to run the profile against" name="test.transtype" type="string"/>
+		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
 	</transtype>
-	<transtype name="antro-ui" desc="Invokes the UI for the antro tool"/>
-
-
-
+	<transtype desc="Invokes the UI for the antro tool" name="antro-ui"/>
 	<feature extension="dita.xsl.messages" file="resource/messages.xml"/>
-
 	<!--
-	<feature extension="ant.import" file="build_dita2unit-test.xml"/>
-	<feature extension="ant.import" file="build_dita2test-coverage.xml"/>
-	-->
-  	<template file="build_dita2unit-test_template.xml"/>
-  	<template file="build_dita2test-coverage_template.xml"/>
- 
-  	<feature extension="dita.conductor.target.relative" file="conductor.xml"/>
+	<feature extension="ant.import" file="build_dita2unit-test.xml"/><feature extension="ant.import" file="build_dita2test-coverage.xml"/>-->
+	<template file="build_dita2unit-test_template.xml"/>
+	<template file="build_dita2test-coverage_template.xml"/>
+	<feature extension="dita.conductor.target.relative" file="conductor.xml"/>
 </plugin>

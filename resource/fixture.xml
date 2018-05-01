@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
-<project xmlns:if="ant:if" xmlns:unless="ant:unless"  basedir="." name="unit-test.fixture">
-
+<project basedir="." name="unit-test.fixture" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<description/>
-	<basename property="test-suite" file="${ant.file.unit-test.fixture}/.."/>
-
+	<basename file="${ant.file.unit-test.fixture}/.." property="test-suite"/>
 	<!--
 		Macro to run a unit-test for a given document
 
@@ -13,8 +11,7 @@
 	<macrodef name="unit-test">
 		<attribute name="name"/>
 		<sequential>
-			
-			<exec executable="ant" failonerror="false" outputproperty="output" resultproperty="result" osfamily="unix">
+			<exec executable="ant" failonerror="false" osfamily="unix" outputproperty="output" resultproperty="result">
 				<arg value="-f"/>
 				<arg value="${basedir}/test/@{name}/build.xml"/>
 				<arg value="-S"/>
@@ -25,16 +22,15 @@
 				<arg value="-Ddita.dir=${dita.dir}"/>
 				<arg value="-Dtest.colorize=false"/>
 			</exec>
-
-			<exec executable="cmd" dir="${repo.dir}" failonerror="false" outputproperty="output" resultproperty="result" osfamily="windows">
+			<exec dir="${repo.dir}" executable="cmd" failonerror="false" osfamily="windows" outputproperty="output" resultproperty="result">
 				<arg value="/C"/>
 				<arg value="ant -f ${basedir}/@{name}/build.xml -S -q -Dtest.root.dir=${basedir} -Dtest.copy.dir=${test.copy.dir}/${test-suite} -Dtest.copy=${test.copy} -Ddita.dir=${dita.dir} -Dtest.colorize=false"/>
 			</exec>
-			<condition property="test.failed" >
-        		<not>
-        			<equals arg1="${result}" arg2="0"/>
-        		</not>
-    		</condition>
+			<condition property="test.failed">
+				<not>
+					<equals arg1="${result}" arg2="0"/>
+				</not>
+			</condition>
 			<fail if:set="test.failed" message="${output}"/>
 		</sequential>
 	</macrodef>
