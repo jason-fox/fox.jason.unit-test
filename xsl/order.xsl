@@ -15,8 +15,8 @@
             xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
             xmlns:xhtml="http://www.w3.org/1999/xhtml">
             
-            <xsl:apply-templates select="//active-pattern">
-                <xsl:sort select="@name"/>
+            <xsl:apply-templates select="//failed-assert">
+                <xsl:sort select="@location"/>
                 <xsl:sort select="@role"/>
             </xsl:apply-templates>
         </svrl:schematron-output>
