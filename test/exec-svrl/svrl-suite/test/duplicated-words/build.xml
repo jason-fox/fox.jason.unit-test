@@ -6,8 +6,7 @@
 	</description>
 	<target name="unit-test">
 		<exec-svrl transtype="text-rules"/>
-		<compare-output suffix=".svrl" os="unix"/>
-		<compare-output suffix=".svrl" expectation="expected.svrl.win" os="windows"/>
+		<compare-output suffix=".svrl"/>
 	</target>
 	<target name="data">
 		<text id="duplicated-words">duplicated-words</text>
