@@ -21,7 +21,7 @@ version="2.0">
       <xsl:if test="not(contains(@match, '@*'))">
         <xsl:text>&#xA;</xsl:text>
         <xsl:element name="xsl:comment">
-          <xsl:value-of select="concat($document-uri, '-', @name, '-' , @mode, '-' , @match )"/>
+          <xsl:value-of select="concat($document-uri, '/', @name, '/' , @mode, '/' , @match )"/>
         </xsl:element>
         <xsl:text>&#xA;</xsl:text>
       </xsl:if>

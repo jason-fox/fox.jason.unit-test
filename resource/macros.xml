@@ -7,19 +7,22 @@
 	<!--
 		Macro to and check how often a coverage token is found
 
-		@param id       - The token to check
-		@param dir        - The location of the test-suite
+		@param id           - The token to check
+		@param dir          - The location of the test-suite
+		@param resultfile   - The result file to update
+		@param includes     - The mask of files to check
 	-->
 	<macrodef name="coverage-check">
 		<attribute name="id"/>
 		<attribute name="dir"/>
-		<attribute name="resultfile"/>
+		<attribute default="${test.coverage.xml}" name="resultfile"/>
+		<attribute name="includes"/>
 		<element name="test-condition" optional="false"/>
 		<sequential>
 			<local name="fileset.count"/>
 			<resourcecount property="fileset.count">
 				<path>
-					<fileset dir="@{dir}" includes="**/expected.*">
+					<fileset dir="@{dir}" includes="@{includes}">
 						<test-condition/>
 					</fileset>
 				</path>
@@ -42,21 +45,25 @@
 		a coverage token is found
 
 		@param dir        - The location of the test-suite
+		@param resultfile   - The result file to update
+		@param includes     - The mask of files to check
 	-->
 	<macrodef name="coverage-runner">
 		<attribute name="dir"/>
 		<attribute default="${test.coverage.xml}" name="resultfile"/>
+		<attribute name="includes"/>
+		<attribute name="file"/>
 		<sequential>
 			<var name="token.count" value="0"/>
 			<var name="covered.count" value="0"/>
 			<var name="percentage" value="0"/>
-			<xmltask source="@{dir}/test/coverage.xml">
+			<xmltask source="@{dir}/test/@{file}">
 				<call path="//element">
 					<param default="" name="token" path="text()"/>
 					<param default="" name="id" path="@id"/>
 					<actions>
 						<propertyregex defaultValue="@{token}" global="true" input="@{token}" override="true" property="regex" regexp=" " replace=".+"/>
-						<coverage-check dir="@{dir}" id="@{id}" resultfile="@{resultfile}">
+						<coverage-check dir="@{dir}" id="@{id}" resultfile="@{resultfile}" includes="@{includes}">
 							<test-condition>
 								<containsregexp casesensitive="yes" expression="&lt;${regex}.*&gt;"/>
 							</test-condition>
@@ -68,7 +75,7 @@
 					<param default="" name="token" path="text()"/>
 					<param default="" name="id" path="@id"/>
 					<actions>
-						<coverage-check dir="@{dir}" id="@{id}" resultfile="@{resultfile}">
+						<coverage-check dir="@{dir}" id="@{id}" resultfile="@{resultfile}" includes="@{includes}">
 							<test-condition>
 								<contains casesensitive="yes" text="@{token}"/>
 							</test-condition>

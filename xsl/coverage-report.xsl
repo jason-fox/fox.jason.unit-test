@@ -164,7 +164,7 @@
           </xsl:choose>
           <td><xsl:value-of select="@id"/></td>
           <td>
-            <pre><code><xsl:value-of select="."/></code></pre>
+            <pre><code><xsl:value-of select="replace(., '\.xsl/', '.xsl&#xA;')"/></code></pre>
           </td>
           <td>
             <xsl:value-of select="@count"/>

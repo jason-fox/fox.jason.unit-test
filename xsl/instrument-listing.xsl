@@ -22,7 +22,7 @@ version="2.0">
   </xsl:template>
 
   <xsl:template match="xsl:template">
-    <xsl:variable name="name" select="concat($document-uri, '-', @name, '-' , @mode, '-' , @match )"/>
+    <xsl:variable name="name" select="concat($document-uri, '/', @name, '/' , @mode, '/' , @match )"/>
     <xsl:if test="not(contains(@match, '@'))">
       <xsl:element name="text">
         <xsl:attribute name="id">

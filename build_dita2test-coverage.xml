@@ -5,10 +5,27 @@
 	<!--
 		Generate a coverage report.
 	-->
+	<target depends="unit-test.log.init" name="template-coverage">
+		<unit-test-log id="UNIT002I" level="info" message="Running a template-coverage report"/>
+		<property name="coverage.includes" value="**/out/templates-covered.txt"/>
+		<property name="coverage.file" value="template-coverage.xml"/>
+	</target>
+
+	<!--
+		Generate a coverage report.
+	-->
 	<target depends="unit-test.log.init" name="test-coverage">
 		<unit-test-log id="UNIT002I" level="info" message="Running a test-coverage report"/>
-		<tempfile deleteonexit="true" destdir="${dita.temp.dir}" property="test.coverage.xml"/>
-		<xmltask dest="${test.coverage.xml}" source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml"/>
+		<property name="coverage.includes" value="**/expected.*"/>
+		<property name="coverage.file" value="coverage.xml"/>
+	</target>
+
+	<!--
+		Generate a coverage report.
+	-->
+	<target name="coverage.report">
+		<tempfile deleteonexit="true" destdir="${dita.temp.dir}" property="coverage.report.xml"/>
+		<xmltask dest="${coverage.report.xml}" source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml"/>
 		<for param="test-suite.dir">
 			<path>
 				<dirset dir="${test.root.dir}" includes="*">
@@ -18,14 +35,14 @@
 			<sequential>
 				<propertyregex casesensitive="false" input="@{test-suite.dir}" override="true" property="test-suite" regexp="([^/]*)$" select="\1"/>
 				<local name="test-suite.coverage"/>
-				<available file="@{test-suite.dir}/test/coverage.xml" property="test-suite.coverage"/>
-				<xmltask dest="${test.coverage.xml}" if:set="test-suite.coverage" source="${test.coverage.xml}">
-					<insert file="@{test-suite.dir}/test/coverage.xml" path="testsuites"/>
+				<available file="@{test-suite.dir}/test/${coverage.file}" property="test-suite.coverage"/>
+				<xmltask dest="${coverage.report.xml}" if:set="test-suite.coverage" source="${coverage.report.xml}">
+					<insert file="@{test-suite.dir}/test/${coverage.file}" path="testsuites"/>
 				</xmltask>
-				<coverage-runner dir="@{test-suite.dir}" if:set="test-suite.coverage" resultfile="${test.coverage.xml}"/>
+				<coverage-runner dir="@{test-suite.dir}" if:set="test-suite.coverage" resultfile="${coverage.report.xml}" includes="${coverage.includes}" file="${coverage.file}"/>
 			</sequential>
 		</for>
-		<xslt classpathref="dost.class.path" in="${test.coverage.xml}" out="${output.dir}/coverage.html" style="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl"/>
+		<xslt classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.html" style="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl"/>
 	</target>
 	<!--
 		Setting up pre-processing for Antro. Checks that mandatory parameters are present
@@ -171,7 +188,8 @@
 	<!--
 		Ant target executed to run a unit test coverage report.
 	-->
-	<target depends="build-init,unit-test.init,test-coverage" name="dita2test-coverage"/>
+	<target depends="build-init,unit-test.init,test-coverage,coverage.report" name="dita2test-coverage"/>
+	<target depends="build-init,unit-test.init,template-coverage,coverage.report" name="dita2template-coverage"/>
 	<!--
 		Ant target executed to instrument a plug-in
 	-->

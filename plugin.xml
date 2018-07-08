@@ -4,12 +4,9 @@
 	See the accompanying LICENSE file for applicable licenses.
 -->
 <plugin id="fox.jason.unit-test">
-	<!--
-		This file is part of the DITA-OT Unit Test Plug-in project.
-		See the accompanying LICENSE file for applicable licenses.
-	-->
 	<feature extension="dita.conductor.transtype.check" value="unit-test"/>
 	<feature extension="dita.conductor.transtype.check" value="test-coverage"/>
+	<feature extension="dita.conductor.transtype.check" value="template-coverage"/>
 	<feature extension="dita.conductor.transtype.check" value="antro"/>
 	<feature extension="dita.conductor.transtype.check" value="antro-ui"/>
 	<feature extension="dita.conductor.transtype.check" value="instrument-templates"/>
@@ -26,12 +23,8 @@
 		</param>
 		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
 	</transtype>
-	<transtype desc="Runs a test coverage report" name="test-coverage">
-		<param desc="Whether to colorize the test output" name="test.colorize" type="enum">
-			<val default="true" desc="Output highlights errors and warnings using ANSI color codes">true</val>
-			<val desc="Output does not highlight errors and warnings">false</val>
-		</param>
-	</transtype>
+	<transtype desc="Runs a test coverage report" name="test-coverage"//>
+	<transtype desc="Runs a template coverage report" name="template-coverage"/>
 	<transtype desc="Runs an antro ANT profiling report" name="antro">
 		<param desc="The transtype to run the profile against" name="test.transtype" type="string"/>
 		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
