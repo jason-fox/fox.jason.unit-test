@@ -101,8 +101,13 @@
 		<sequential>
 			<init-test/>
 			<run-test ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
+			
+			<!-- strip out comments and save to a separate file -->
+			<tempfile deleteonexit="true" property="no-comments" suffix=".fo"/>
+			<xslt classpathref="xslt.class.path" in="${dita.temp.dir}/topic.fo" out="${no-comments}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/no-comments.xsl"/>
+			<xslt classpathref="xslt.class.path" in="${dita.temp.dir}/topic.fo" out="${output.dir}/coverage.xml" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/comments-only.xsl"/>
 			<!-- Move topic.fo and then clean temp after invocation -->
-			<xmltask dest="${output.dir}/topic.fo" encoding="UTF-8" outputter="simple" source="${dita.temp.dir}/topic.fo"/>
+			<xmltask dest="${output.dir}/topic.fo" encoding="UTF-8" outputter="simple" source="${no-comments}"/>
 			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
 		</sequential>
 	</macrodef>
@@ -126,8 +131,13 @@
 			<init-test/>
 			<run-test ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
 			<!-- Clean up temp and svrl after invocation -->
+			<tempfile deleteonexit="true" property="no-comments" suffix=".svrl"/>
 			<tempfile deleteonexit="true" property="ordered-document" suffix=".svrl"/>
-			<xslt classpathref="xslt.class.path" in="${output.dir}/${document}.svrl" out="${ordered-document}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/order.xsl"/>
+			<!-- strip out comments and save to a separate file -->
+			<xslt classpathref="xslt.class.path" in="${output.dir}/${document}.svrl" out="${no-comments}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/no-comments.xsl"/>
+			<xslt classpathref="xslt.class.path" in="${output.dir}/${document}.svrl" out="${output.dir}/coverage.xml" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/comments-only.xsl"/>
+
+			<xslt classpathref="xslt.class.path" in="${no-comments}" out="${ordered-document}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/order.xsl"/>
 			<xmltask dest="${output.dir}/fragment.svrl" outputter="simple" source="${ordered-document}"/>
 			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
 		</sequential>

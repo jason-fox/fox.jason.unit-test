@@ -93,10 +93,69 @@
 			</classpath>
 		</java>
 	</target>
+
+	<target name="instrument.init" depends="unit-test.log.init">
+		<dita-ot-fail id="DOTA069F">
+			<condition>
+				<not>
+					<available file="${args.input}" type="dir"/>
+				</not>
+			</condition>
+			<param name="1" value="${args.input}"/>
+		</dita-ot-fail>
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"/>
+			</classpath>
+		</taskdef>
+	</target>
+	<!--
+		Instrumentation of a DITA-OT plugin
+	-->
+	<target name="instrument">
+		<unit-test-log id="UNIT002I" level="info" message="Instrumenting XSL Templates"/>
+		<for param="plugin.xslfile" trim="true">
+			<path>
+				<fileset dir="${args.input}">
+					<include name="**/*.xsl"/>
+				</fileset>
+			</path>
+			<sequential>
+				<copy file="@{plugin.xslfile}" tofile="@{plugin.xslfile}.orig"/>
+				<xslt classpathref="dost.class.path" in="@{plugin.xslfile}.orig" out="@{plugin.xslfile}" style="${dita.plugin.fox.jason.unit-test.dir}/xsl/instrument-file.xsl"/>
+			</sequential>
+		</for>
+	</target>
+	<!--
+		Deinstrumentation of a DITA-OT plugin
+	-->
+	<target name="deinstrument">
+		<unit-test-log id="UNIT002I" level="info" message="Reverting instrumentation of XSL Templates"/>
+		<for param="plugin.xslfile" trim="true">
+			<path>
+				<fileset dir="${args.input}">
+					<include name="**/*.xsl"/>
+				</fileset>
+			</path>
+			<sequential>
+				<move file="@{plugin.xslfile}.orig" tofile="@{plugin.xslfile}"/>
+			</sequential>
+		</for>
+	</target>
+
+
 	<!--
 		Ant target executed to run a unit test coverage report.
 	-->
 	<target depends="build-init,unit-test.init,test-coverage" name="dita2test-coverage"/>
+	<!--
+		Ant target executed to instrument a plug-in
+	-->
+	<target depends="build-init,instrument.init,instrument" name="dita2instrument-templates"/>
+		<!--
+		Ant target executed to deinstrument a plugin
+	-->
+	<target depends="build-init,instrument.init,deinstrument" name="dita2deinstrument-templates"/>
 	<!--
 		Ant target executed when the running the Antro profiler
 	-->
