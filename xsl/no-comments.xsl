@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
         xmlns:lxslt="http://xml.apache.org/xslt">
-
+  <xsl:output omit-xml-declaration="yes" indent="yes"/>
   <xsl:template match="element()|text()|@*" name="identity">
         <xsl:copy>
             <xsl:apply-templates select="node()|@*"/>
