@@ -148,5 +148,5 @@
 	<!--
 		Ant target executed to run a unit test suite.
 	-->
-	<target depends="build-init,unit-test.init,generate-fixtures,unit-test,unit-test.report" name="dita2unit-test"/>
+	<target depends="build-init,unit-test.init,generate-fixtures,unit-test,coverage.report,unit-test.report" name="dita2unit-test"/>
 </project>

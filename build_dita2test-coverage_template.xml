@@ -9,8 +9,7 @@
 	-->
 	<target depends="unit-test.log.init" name="template-coverage">
 		<unit-test-log id="UNIT002I" level="info" message="Running a template-coverage report"/>
-		<property name="coverage.includes" value="**/out/templates-covered.txt"/>
-		<property name="coverage.file" value="template-coverage.xml"/>
+		<property name="test.coverage.report" value="true"/>
 	</target>
 
 	<!--
@@ -20,12 +19,17 @@
 		<unit-test-log id="UNIT002I" level="info" message="Running a test-coverage report"/>
 		<property name="coverage.includes" value="**/expected.*"/>
 		<property name="coverage.file" value="coverage.xml"/>
+		<property name="test.coverage.report" value="true"/>
 	</target>
 
 	<!--
 		Generate a coverage report.
 	-->
-	<target name="coverage.report">
+	<target if="test.coverage.report" name="coverage.report">
+		<!-- The default report is an instrumented report -->
+		<property name="coverage.includes" value="**/out/templates-covered.txt"/>
+		<property name="coverage.file" value="template-coverage.xml"/>
+
 		<tempfile deleteonexit="true" destdir="${dita.temp.dir}" property="coverage.report.xml"/>
 		<xmltask dest="${coverage.report.xml}" source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml"/>
 		<for param="test-suite.dir">
