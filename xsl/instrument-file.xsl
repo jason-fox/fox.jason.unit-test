@@ -1,6 +1,12 @@
 <xsl:stylesheet
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 version="2.0">
+
+  <xsl:param as="xs:string" name="SOURCE"/>
+  <xsl:variable name="SOURCEPATH" select="replace($SOURCE, '\\', '/')"/>
+  <xsl:variable name="document-uri">
+    <xsl:value-of select="replace(replace(replace(document-uri(/), $SOURCEPATH, ''), '.orig',''), 'file:/', '')"/>
+  </xsl:variable>
 
   <xsl:template match="@*|node()">
     <xsl:copy>
@@ -12,10 +18,10 @@ version="2.0">
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates select="xsl:param"/>
-      <xsl:if test="not(contains(@match, '@'))">
+      <xsl:if test="not(contains(@match, '@*'))">
         <xsl:text>&#xA;</xsl:text>
         <xsl:element name="xsl:comment">
-          <xsl:value-of select="concat(base-uri(), '-', @name, '-' , @mode, '-' , @match )"/>
+          <xsl:value-of select="concat($document-uri, '-', @name, '-' , @mode, '-' , @match )"/>
         </xsl:element>
         <xsl:text>&#xA;</xsl:text>
       </xsl:if>

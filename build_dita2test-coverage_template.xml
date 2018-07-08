@@ -116,33 +116,58 @@
 	-->
 	<target name="instrument">
 		<unit-test-log id="UNIT002I" level="info" message="Instrumenting XSL Templates"/>
-		<for param="plugin.xslfile" trim="true">
-			<path>
-				<fileset dir="${args.input}">
-					<include name="**/*.xsl"/>
-				</fileset>
-			</path>
-			<sequential>
-				<copy file="@{plugin.xslfile}" tofile="@{plugin.xslfile}.orig"/>
-				<xslt classpathref="dost.class.path" in="@{plugin.xslfile}.orig" out="@{plugin.xslfile}" style="${dita.plugin.fox.jason.unit-test.dir}/xsl/instrument-file.xsl"/>
-			</sequential>
-		</for>
+
+		<property name="test.instrument.xsl.dir" value="${dita.plugin.fox.jason.unit-test.dir}/xsl"/>
+		<property name="test.instrument.report.file" value="${args.input}/test/template-coverage.xml"/>
+
+		<pathconvert property="test.coverage.source" dirsep="/">
+		  <map from="${dita.dir}/plugins/" to=""/>
+		  <path location="${args.input}"/>
+		</pathconvert>
+
+
+		<xslt classpathref="dost.class.path" destdir="${dita.temp.dir}/coverage"  extension=".xml" style="${test.instrument.xsl.dir}/instrument-listing.xsl" basedir="${args.input}" includes="**/*.xsl">
+			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
+		</xslt>
+
+
+		<xslt classpathref="dost.class.path" force="true" in="${test.instrument.xsl.dir}/listing-merge.xsl" out="${test.instrument.report.file}" style="${test.instrument.xsl.dir}/listing-merge.xsl">
+			<param expression="${dita.temp.dir}/coverage" name="in"/>
+			<param expression="${test.coverage.source}" name="SOURCE"/>
+		</xslt>
+
+
+
+		<copy todir="${args.input}">
+		  <fileset dir="${args.input}">
+			<include name="**/*.xsl"/>
+		  </fileset>
+		  <globmapper from="*" to="*.orig"/>
+		</copy>
+
+
+		<xslt classpathref="dost.class.path"  style="${test.instrument.xsl.dir}/instrument-file.xsl" destdir="${dita.temp.dir}/plugins" basedir="${args.input}" includes="**/*.xsl"
+			 extension=".xsl" >
+			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
+		</xslt>
+
+		<move todir="${args.input}">
+		  <fileset dir="${dita.temp.dir}/plugins">
+			<include name="**/*.xsl"/>
+		  </fileset>
+		</move>
 	</target>
 	<!--
 		Deinstrumentation of a DITA-OT plugin
 	-->
 	<target name="deinstrument">
 		<unit-test-log id="UNIT002I" level="info" message="Reverting instrumentation of XSL Templates"/>
-		<for param="plugin.xslfile" trim="true">
-			<path>
-				<fileset dir="${args.input}">
-					<include name="**/*.xsl"/>
-				</fileset>
-			</path>
-			<sequential>
-				<move file="@{plugin.xslfile}.orig" tofile="@{plugin.xslfile}"/>
-			</sequential>
-		</for>
+		<move todir="${args.input}">
+		  <fileset dir="${args.input}">
+			<include name="**/*.xsl.orig"/>
+		  </fileset>
+		  <globmapper from="*.xsl.orig" to="*.xsl"/>
+		</move>
 	</target>
 
 

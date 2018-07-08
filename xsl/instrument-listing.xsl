@@ -1,8 +1,14 @@
 <xsl:stylesheet
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 version="2.0">
   <!-- Defining that this .xsl generates plain text file -->
 	<xsl:output indent="yes" method="xml" omit-xml-declaration="yes"/>
+
+   <xsl:param as="xs:string" name="SOURCE"/>
+  <xsl:variable name="SOURCEPATH" select="replace($SOURCE, '\\', '/')"/>
+  <xsl:variable name="document-uri">
+    <xsl:value-of select="replace(replace(replace(document-uri(/), $SOURCEPATH, ''), '.orig',''), 'file:/', '')"/>
+  </xsl:variable>
   
 
   <xsl:template match="/">
@@ -16,7 +22,7 @@ version="2.0">
   </xsl:template>
 
   <xsl:template match="xsl:template">
-    <xsl:variable name="name" select="concat(@name, '-' , @mode, '-' , @match )"/>
+    <xsl:variable name="name" select="concat($document-uri, '-', @name, '-' , @mode, '-' , @match )"/>
     <xsl:if test="not(contains(@match, '@'))">
       <xsl:element name="text">
         <xsl:attribute name="id">
