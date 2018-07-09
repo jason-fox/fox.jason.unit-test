@@ -102,7 +102,7 @@
 			<init-test/>
 			<run-test ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
 			
-			<!-- strip out comments and save to a separate file -->
+			<!-- strip out comments and save comments only to a separate file -->
 			<tempfile deleteonexit="true" property="no-comments" suffix=".fo"/>
 			<xslt classpathref="xslt.class.path" in="${dita.temp.dir}/topic.fo" out="${no-comments}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/no-comments.xsl"/>
 			<xslt classpathref="xslt.class.path" in="${dita.temp.dir}/topic.fo" out="${output.dir}/templates-covered.txt" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/comments-only.xsl"/>
@@ -133,10 +133,9 @@
 			<!-- Clean up temp and svrl after invocation -->
 			<tempfile deleteonexit="true" property="no-comments" suffix=".svrl"/>
 			<tempfile deleteonexit="true" property="ordered-document" suffix=".svrl"/>
-			<!-- strip out comments and save to a separate file -->
+			<!-- strip out comments and save comments only to a separate file -->
 			<xslt classpathref="xslt.class.path" in="${output.dir}/${document}.svrl" out="${no-comments}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/no-comments.xsl"/>
 			<xslt classpathref="xslt.class.path" in="${output.dir}/${document}.svrl" out="${output.dir}/templates-covered.txt" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/comments-only.xsl"/>
-
 			<xslt classpathref="xslt.class.path" in="${no-comments}" out="${ordered-document}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/order.xsl"/>
 			<xmltask dest="${output.dir}/fragment.svrl" outputter="simple" source="${ordered-document}"/>
 			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
@@ -185,13 +184,16 @@
 		      	project.setProperty("fragment", input.substring(start, end) );
 			// ]]></script>
 
-			<tempfile deleteonexit="true" property="temp-fragment" suffix=".html"/>
-			<echo file="${temp-fragment}" message="${fragment}"/>
-
-			<!-- strip out comments and save to a separate file -->
-			<xslt classpathref="xslt.class.path" in="${temp-fragment}" out="@{to}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/no-comments.xsl"/>
-			<xslt classpathref="xslt.class.path" in="${temp-fragment}" out="${output.dir}/templates-covered.txt" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/comments-only.xsl"/>
-			<!--echo file="@{to}" message="${fragment}"/-->
+			<!-- strip out comments and save comments only to a separate file -->
+			<echo file="@{to}" message="${fragment}"/>
+			<replaceregexp match="&lt;!--.*--&gt;" replace="" flags="g" byline="true">
+			    <fileset file="@{to}"/>
+			</replaceregexp>
+			
+			<echo file="${output.dir}/templates-covered.txt" message="${fragment}"/>
+			<replaceregexp match="\s*&lt;[a-z|/].*&gt;" replace="" flags="g" byline="true">
+			    <fileset file="${output.dir}/templates-covered.txt"/>
+			</replaceregexp>
 		</sequential>
 	</macrodef>
 	<!-- 
