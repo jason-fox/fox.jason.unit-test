@@ -4,6 +4,8 @@
 	See the accompanying LICENSE file for applicable licenses.
 -->
 <plugin id="fox.jason.unit-test">
+	<feature extension="package.version" value="1.0.3"/>
+	
 	<feature extension="dita.conductor.transtype.check" value="unit-test"/>
 	<feature extension="dita.conductor.transtype.check" value="test-coverage"/>
 	<feature extension="dita.conductor.transtype.check" value="template-coverage"/>
