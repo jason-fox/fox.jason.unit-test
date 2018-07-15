@@ -17,6 +17,7 @@
 		<unit-test-log id="UNIT002I" level="info" message="Running a test-coverage report"/>
 		<property name="coverage.includes" value="**/expected.*"/>
 		<property name="coverage.file" value="coverage.xml"/>
+		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl"/>
 		<property name="test.coverage.report" value="true"/>
 	</target>
 
@@ -27,6 +28,7 @@
 		<!-- The default report is an instrumented report -->
 		<property name="coverage.includes" value="**/out/templates-covered.txt"/>
 		<property name="coverage.file" value="template-coverage.xml"/>
+		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/template-report.xsl"/>
 
 		<tempfile deleteonexit="true" destdir="${dita.temp.dir}" property="coverage.report.xml"/>
 		<xmltask dest="${coverage.report.xml}" source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml"/>
@@ -46,7 +48,7 @@
 				<coverage-runner dir="@{test-suite.dir}" if:set="test-suite.coverage" resultfile="${coverage.report.xml}" includes="${coverage.includes}" file="${coverage.file}"/>
 			</sequential>
 		</for>
-		<xslt classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.html" style="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl"/>
+		<xslt classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.html" style="${coverage.xsl}"/>
 	</target>
 	<!--
 		Setting up pre-processing for Antro. Checks that mandatory parameters are present
@@ -124,16 +126,15 @@
 			</condition>
 			<param name="1" value="${args.input}"/>
 		</dita-ot-fail>
-		<taskdef resource="net/sf/antcontrib/antlib.xml">
-			<classpath>
-				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"/>
-			</classpath>
-		</taskdef>
+		<condition property="instrumented">
+			<available file="${args.input}/test/template-coverage.xml" type="file"/>
+		</condition>
+
 	</target>
 	<!--
 		Instrumentation of a DITA-OT plugin
 	-->
-	<target name="instrument">
+	<target name="instrument" unless="instrumented">
 		<unit-test-log id="UNIT002I" level="info" message="Instrumenting XSL Templates"/>
 
 		<property name="test.instrument.xsl.dir" value="${dita.plugin.fox.jason.unit-test.dir}/xsl"/>
@@ -186,6 +187,7 @@
 		  </fileset>
 		  <globmapper from="*.xsl.orig" to="*.xsl"/>
 		</move>
+		<delete file="${args.input}/test/template-coverage.xml" quiet="true" failonerror="false"/>
 	</target>
 
 

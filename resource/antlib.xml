@@ -186,7 +186,7 @@
 
 			<!-- strip out comments and save comments only to a separate file -->
 			<echo file="@{to}" message="${fragment}"/>
-			<replaceregexp match="&lt;!--.*--&gt;" replace="" flags="g" byline="true">
+			<replaceregexp match="&lt;!--[^&lt;]*--&gt;" replace="" flags="g" byline="true">
 			    <fileset file="@{to}"/>
 			</replaceregexp>
 			
