@@ -56,12 +56,15 @@ version="2.0">
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates select="xsl:param"/>
-      <xsl:if test="not(contains(@match, '@*'))">
+      <xsl:element name="xsl:if">
+       <xsl:attribute name="test">
+          <xsl:text>. instance of element()</xsl:text>
+        </xsl:attribute>
         <xsl:text>&#xA;</xsl:text>
         <xsl:element name="xsl:comment">
           <xsl:value-of select="instrument:compute(., 'template')"/>
         </xsl:element>
-      </xsl:if>
+      </xsl:element>
       <xsl:apply-templates select="node()[not(self::xsl:param)]" mode="template"/>
     </xsl:element>
   </xsl:template>
@@ -69,8 +72,14 @@ version="2.0">
   <xsl:template match="xsl:if" mode="template">
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
-      <xsl:element name="xsl:comment">
-        <xsl:value-of select="instrument:compute(., 'if')"/>
+      <xsl:element name="xsl:if">
+       <xsl:attribute name="test">
+          <xsl:text>. instance of element()</xsl:text>
+        </xsl:attribute>
+        <xsl:text>&#xA;</xsl:text>
+        <xsl:element name="xsl:comment">
+          <xsl:value-of select="instrument:compute(., 'if')"/>
+        </xsl:element>
       </xsl:element>
       <xsl:apply-templates mode="template"/>
     </xsl:element>
@@ -79,8 +88,14 @@ version="2.0">
   <xsl:template match="xsl:when" mode="template">
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
-      <xsl:element name="xsl:comment">
-        <xsl:value-of select="instrument:compute(., 'when')"/>
+      <xsl:element name="xsl:if">
+       <xsl:attribute name="test">
+          <xsl:text>. instance of element()</xsl:text>
+        </xsl:attribute>
+        <xsl:text>&#xA;</xsl:text>
+        <xsl:element name="xsl:comment">
+          <xsl:value-of select="instrument:compute(., 'when')"/>
+        </xsl:element>
       </xsl:element>
       <xsl:apply-templates mode="template"/>
     </xsl:element>
@@ -89,8 +104,14 @@ version="2.0">
   <xsl:template match="xsl:otherwise" mode="template">
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
-      <xsl:element name="xsl:comment">
-        <xsl:value-of select="instrument:compute(., 'otherwise')"/>
+      <xsl:element name="xsl:if">
+       <xsl:attribute name="test">
+          <xsl:text>. instance of element()</xsl:text>
+        </xsl:attribute>
+        <xsl:text>&#xA;</xsl:text>
+        <xsl:element name="xsl:comment">
+          <xsl:value-of select="instrument:compute(., 'otherwise')"/>
+        </xsl:element>
       </xsl:element>
       <xsl:apply-templates mode="template"/>
     </xsl:element>

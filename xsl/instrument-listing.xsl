@@ -50,7 +50,7 @@ version="2.0">
   </xsl:function>
 
   <xsl:template match="xsl:template">
-    <xsl:if test="not(contains(@match, '@'))">
+    <xsl:if test="not(comment()[contains(., 'ignore-instrument')]) and not(ancestor::*/comment()[contains(., 'ignore-instrument')])">
       <xsl:element name="text">
         <xsl:attribute name="id">
           <xsl:value-of select="concat('template-', generate-id(.))"/>
