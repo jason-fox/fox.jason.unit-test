@@ -4,7 +4,7 @@ xmlns:instrument="http://jason.fox/xslt/instrument/"
 exclude-result-prefixes="xs instrument"
 version="2.0">
   <!-- Defining that this .xsl generates plain text file -->
-	<xsl:output indent="yes" method="xml" omit-xml-declaration="yes"/>
+	<xsl:output indent="yes" method="xml" omit-xml-declaration="yes" cdata-section-elements="text" />
 
    <xsl:param as="xs:string" name="SOURCE"/>
   <xsl:variable name="SOURCEPATH" select="replace($SOURCE, '\\', '/')"/>
@@ -42,7 +42,7 @@ version="2.0">
       </xsl:if>
       <xsl:if test="$node/@test">
         <xsl:text> test=&quot;</xsl:text>
-        <xsl:value-of select="$node/@test"/>
+        <xsl:value-of select="$node/@test" disable-output-escaping="yes"/>
         <xsl:text>&quot;</xsl:text>
       </xsl:if>
      </xsl:variable>
@@ -66,7 +66,7 @@ version="2.0">
       <xsl:attribute name="id">
         <xsl:value-of select="concat('if-', generate-id(.))"/>
       </xsl:attribute>
-      <xsl:value-of select="instrument:compute(., 'if')"/>
+      <xsl:value-of select="instrument:compute(., 'if')" disable-output-escaping="yes"/>
     </xsl:element>
   </xsl:template>
 
@@ -75,7 +75,7 @@ version="2.0">
       <xsl:attribute name="id">
         <xsl:value-of select="concat('when-', generate-id(.))"/>
       </xsl:attribute>
-      <xsl:value-of select="instrument:compute(., 'when')"/>
+      <xsl:value-of select="instrument:compute(., 'when')" disable-output-escaping="yes"/>
     </xsl:element>
   </xsl:template>
 
