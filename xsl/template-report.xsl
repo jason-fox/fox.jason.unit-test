@@ -106,9 +106,14 @@
         font-weight:bold; color:#000000;
       }
 
-      pre code {padding-left: 4em; font-size : medium; line-height: 0.8em}
-      pre code.template {padding-left: 0px;}
-      pre code.if {padding-left: 2em}
+      pre {
+         white-space: pre-wrap;       /* css-3 */
+         white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+         white-space: -pre-wrap;      /* Opera 4-6 */
+         white-space: -o-pre-wrap;    /* Opera 7 */
+         word-wrap: break-word;       /* Internet Explorer 5.5+ */
+      }
+      pre code {padding-left: 2em; font-size : medium; line-height: 1em}
 
       </style>
     </head>
@@ -198,87 +203,63 @@
       </tr>
       <xsl:for-each select="*">
         <xsl:variable name="token" select="."/>
-          <xsl:variable name="xslfile" select="substring-after(substring-before($token, '.xsl/'),':')"/>
-          <xsl:variable name="previous" select="substring-after(substring-before(preceding-sibling::*[ 1], '.xsl/'),':')"/>
+          <xsl:variable name="xslfile" select="substring-after(.,':')"/>
+          <xsl:variable name="previousfile" select="substring-after(preceding-sibling::*[1],':')"/>
 
-          <xsl:variable name="type" select="instrument:getType(.)"/>
-          <xsl:variable name="previoustype" select="instrument:getType(preceding-sibling::*[1])"/>
-          <xsl:variable name="nexttype" select="instrument:getType(following-sibling::*[ 1])"/>
-        <tr>
-          <xsl:attribute name="class">
-            <xsl:if test="@count = 0">Error </xsl:if>
-            <xsl:if test="not(@count = 0)">Success </xsl:if>
-            <xsl:if test="$xslfile = $previous">Merge </xsl:if>
-          </xsl:attribute>
-          <td>
-            <xsl:attribute name="class">None</xsl:attribute>
-            <xsl:if test="not($xslfile = $previous)">
-              <xsl:value-of select="$xslfile"/>
-            </xsl:if>
-          </td>
-          <td>
-            <xsl:if test="$type = 'when' or $type = 'otherwise'">
-              <xsl:if test="not($previoustype = 'when') and not(substring-after(preceding-sibling::*[ 1], '.xsl/') = 'otherwise')">
-                <xsl:variable name="count" select="preceding-sibling::*[contains(@id, 'template')][1]/@count"/>
-                <pre>
-                  <code>
-                     <xsl:attribute name="class">
-                      <xsl:if test="$count = 0">Error if</xsl:if>
-                      <xsl:if test="not($count = 0)">Success if</xsl:if>
-                    </xsl:attribute>
-                    <xsl:text>&lt;xsl:choose&gt;</xsl:text>
-                  </code>
-                </pre>
+          <xsl:variable name="current" select="@element"/>
+          <xsl:variable name="attributes" select="normalize-space(@attributes)"/>
+          <xsl:variable name="previous" select="preceding-sibling::*[1]/@element"/>
+          <xsl:variable name="next" select="following-sibling::*[1]/@element"/>
+
+          <xsl:variable name="selfClosing" select="($current = $next) and @open and following-sibling::*[1]/@close"/>
+          <xsl:variable name="selfClosed" select="($current = $previous) and @close and preceding-sibling::*[1]/@open"/>
+
+
+        <xsl:if test="not($selfClosed)">
+          <tr>
+            <xsl:attribute name="class">
+              <xsl:if test="@count = 0">Error </xsl:if>
+              <xsl:if test="not(@count = 0)">Success </xsl:if>
+              <xsl:if test="$xslfile = $previousfile">Merge </xsl:if>
+            </xsl:attribute>
+            <td>
+              <xsl:attribute name="class">None</xsl:attribute>
+              <xsl:if test="not($xslfile = $previousfile)">
+                <xsl:value-of select="$xslfile"/>
               </xsl:if>
-            </xsl:if>
-            <pre>
-              <code>
-                <xsl:attribute name="class">
-                   <xsl:value-of select="substring-before(substring-after($token, '.xsl/'),' ')"/>
-                </xsl:attribute>
-                <xsl:text>&lt;xsl:</xsl:text>
-                <xsl:value-of select="substring-after($token, '.xsl/')"/>
-                <xsl:if test="not($type = 'template')">
-                  <xsl:text>/</xsl:text>
-                </xsl:if>
-                <xsl:if test="$type = 'template' and ($nexttype = 'template' or $nexttype = '') ">
-                  <xsl:text>/</xsl:text>
-                </xsl:if>
-                 <xsl:text>&gt;</xsl:text>
-              </code>
-            </pre>
-            <xsl:if test="$type = 'when' or $type = 'otherwise'">
-              <xsl:if test="not($nexttype = 'when') and not(substring-after(following-sibling::*[ 1], '.xsl/') = 'otherwise')">
-                <xsl:variable name="count" select="preceding-sibling::*[contains(@id, 'template')][1]/@count"/>
-                <pre>
-                  <code>
-                     <xsl:attribute name="class">
-                      <xsl:if test="$count = 0">Error if</xsl:if>
-                      <xsl:if test="not($count = 0)">Success if</xsl:if>
-                    </xsl:attribute>
-                    <xsl:text>&lt;/xsl:choose&gt;</xsl:text>
-                  </code>
-                </pre>
+            </td>
+            <td>
+              <pre>
+                <code>
+                  <xsl:attribute name="class">
+                     <xsl:value-of select="replace(substring-before(substring-after($token, '.xsl/'),' '),'/','')"/>
+
+                  </xsl:attribute>
+                  <xsl:value-of select="substring('                ', 0, @indent)"/>
+                  <xsl:value-of select="substring('                ', 0, @indent)"/>
+                  <xsl:text>&lt;</xsl:text>
+                  <xsl:if test="@close">
+                    <xsl:text>/</xsl:text>
+                  </xsl:if>
+                  <xsl:value-of select="@element"/>
+                  <xsl:if test="@open and not($attributes='')">
+                    <xsl:text> </xsl:text>
+                  </xsl:if>
+                  <xsl:value-of select="$attributes"/>  
+                  <xsl:if test="$selfClosing">
+                    <xsl:text>/</xsl:text>
+                  </xsl:if>
+                  <xsl:text>&gt;</xsl:text>
+                </code>
+              </pre>  
+            </td>
+            <td>
+              <xsl:if test="@open">
+                <xsl:value-of select="@count"/>
               </xsl:if>
-            </xsl:if>
-             <xsl:if test="not($type = 'template') and ($nexttype = 'template' or $nexttype = '')">
-                <xsl:variable name="count" select="preceding-sibling::*[contains(@id, 'template')][1]/@count"/>
-                <pre>
-                  <code>
-                     <xsl:attribute name="class">
-                      <xsl:if test="$count = 0">Error template</xsl:if>
-                      <xsl:if test="not($count = 0)">Success template</xsl:if>
-                    </xsl:attribute>
-                    <xsl:text>&lt;/xsl:template&gt;</xsl:text>
-                    
-                  </code>
-                </pre>
-            </xsl:if>
-          </td>
-          <td>
-            <xsl:value-of select="@count"/>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        </xsl:if>
       </xsl:for-each>
     </table>
   </xsl:for-each>

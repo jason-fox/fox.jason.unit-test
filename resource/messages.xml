@@ -24,4 +24,8 @@
     <reason>%1</reason>
     <response>Remove the comment @disabled from the build.xml file to re-enable the test</response>
   </message>
+  <message id="UNIT006F" type="FATAL">
+    <reason>The %1 plugin is already instrumented</reason>
+    <response>First run the xsl-deinstrument transform to reset the instrumentation</response>
+  </message>
 </messages>

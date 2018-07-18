@@ -2,7 +2,7 @@
 
 <xsl:stylesheet version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<!-- Defining that this .xsl generates an indented, UTF8-encoded XML file -->
-	<xsl:output encoding="utf-8" indent="yes" method="xml" omit-xml-declaration="yes" cdata-section-elements="text"/>
+	<xsl:output encoding="utf-8" indent="yes" method="xml" omit-xml-declaration="yes"/>
 	<xsl:param name="in">.</xsl:param>
 	<xsl:param name="extension">xml</xsl:param>
 	<xsl:param name="out">template-coverage.xml</xsl:param>

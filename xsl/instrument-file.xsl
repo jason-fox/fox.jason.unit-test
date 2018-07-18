@@ -1,7 +1,6 @@
 <xsl:stylesheet
 xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-xmlns:instrument="http://jason.fox/xslt/instrument/"
-exclude-result-prefixes="xs instrument"
+exclude-result-prefixes="xs"
 version="2.0">
 
   <xsl:param as="xs:string" name="SOURCE"/>
@@ -22,36 +21,6 @@ version="2.0">
     </xsl:copy>
   </xsl:template>
 
-  <xsl:function name="instrument:compute" as="xs:string">
-    <xsl:param name="node" as="element()"/>
-    <xsl:param name="type" as="xs:string"/>
-    <xsl:variable name="instumentation">
-      <xsl:value-of select="concat(generate-id($node), ':', $document-uri, '/')"/>
-      <xsl:value-of select="$type"/>
-      <xsl:if test="$node/@match">
-        <xsl:text> match=&quot;</xsl:text>
-        <xsl:value-of select="$node/@match"/>
-        <xsl:text>&quot;</xsl:text>
-      </xsl:if>
-      <xsl:if test="$node/@mode">
-        <xsl:text> mode=&quot;</xsl:text>
-        <xsl:value-of select="$node/@mode"/>
-        <xsl:text>&quot;</xsl:text>
-      </xsl:if>
-       <xsl:if test="$node/@name">
-        <xsl:text> name=&quot;</xsl:text>
-        <xsl:value-of select="$node/@name"/>
-        <xsl:text>&quot;</xsl:text>
-      </xsl:if>
-       <xsl:if test="$node/@test">
-        <xsl:text> test=&quot;</xsl:text>
-        <xsl:value-of select="$node/@test"/>
-        <xsl:text>&quot;</xsl:text>
-      </xsl:if>
-     </xsl:variable>
-      <xsl:value-of select="$instumentation"/>
-  </xsl:function>
-
  <xsl:template match="xsl:template">
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
@@ -60,10 +29,10 @@ version="2.0">
        <xsl:attribute name="test">
           <xsl:text>. instance of element()</xsl:text>
         </xsl:attribute>
-        <xsl:text>&#xA;</xsl:text>
         <xsl:element name="xsl:comment">
-          <xsl:value-of select="instrument:compute(., 'template')"/>
+          <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
         </xsl:element>
+        <xsl:element name="xsl:text" xml:space="preserve">&#xA;</xsl:element>
       </xsl:element>
       <xsl:apply-templates select="node()[not(self::xsl:param)]" mode="template"/>
     </xsl:element>
@@ -76,13 +45,31 @@ version="2.0">
        <xsl:attribute name="test">
           <xsl:text>. instance of element()</xsl:text>
         </xsl:attribute>
-        <xsl:text>&#xA;</xsl:text>
         <xsl:element name="xsl:comment">
-          <xsl:value-of select="instrument:compute(., 'if')"/>
+          <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
         </xsl:element>
       </xsl:element>
       <xsl:apply-templates mode="template"/>
     </xsl:element>
+  </xsl:template>
+
+   <xsl:template match="xsl:choose|xsl:for-each" mode="template">
+    <xsl:if test="not(ancestor::xsl:variable)">
+    <xsl:element name="xsl:if">
+     <xsl:attribute name="test">
+        <xsl:text>. instance of element()</xsl:text>
+      </xsl:attribute>
+      <xsl:text>&#xA;</xsl:text>
+      <xsl:element name="xsl:comment">
+        <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
+      </xsl:element>
+      <xsl:element name="xsl:text" xml:space="preserve">&#xA;</xsl:element>
+    </xsl:element>
+    <xsl:element name="{name()}">
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates mode="template"/>
+    </xsl:element>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="xsl:when" mode="template">
@@ -92,10 +79,10 @@ version="2.0">
        <xsl:attribute name="test">
           <xsl:text>. instance of element()</xsl:text>
         </xsl:attribute>
-        <xsl:text>&#xA;</xsl:text>
         <xsl:element name="xsl:comment">
-          <xsl:value-of select="instrument:compute(., 'when')"/>
+          <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
         </xsl:element>
+        <xsl:element name="xsl:text" xml:space="preserve">&#xA;</xsl:element>
       </xsl:element>
       <xsl:apply-templates mode="template"/>
     </xsl:element>
@@ -108,10 +95,10 @@ version="2.0">
        <xsl:attribute name="test">
           <xsl:text>. instance of element()</xsl:text>
         </xsl:attribute>
-        <xsl:text>&#xA;</xsl:text>
         <xsl:element name="xsl:comment">
-          <xsl:value-of select="instrument:compute(., 'otherwise')"/>
+          <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
         </xsl:element>
+        <xsl:element name="xsl:text" xml:space="preserve">&#xA;</xsl:element>
       </xsl:element>
       <xsl:apply-templates mode="template"/>
     </xsl:element>

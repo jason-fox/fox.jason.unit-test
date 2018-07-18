@@ -3,18 +3,18 @@
 	See the accompanying LICENSE file for applicable licenses.
 --><project xmlns:if="ant:if" xmlns:unless="ant:unless" name="fox.jason.unit-test.coverage">
 	<!--
-		Generate a coverage report.
+		Pre-process for generating an XSL template coverage report.
 	-->
-	<target depends="unit-test.log.init" name="template-coverage">
-		<unit-test-log id="UNIT002I" level="info" message="Running a template-coverage report"/>
+	<target depends="unit-test.log.init" name="xsl-coverage">
+		<unit-test-log id="UNIT002I" level="info" message="Running an XSL coverage report"/>
 		<property name="test.coverage.report" value="true"/>
 	</target>
 
 	<!--
-		Generate a coverage report.
+		Pre-process for generating a token coverage report.
 	-->
-	<target depends="unit-test.log.init" name="test-coverage">
-		<unit-test-log id="UNIT002I" level="info" message="Running a test-coverage report"/>
+	<target depends="unit-test.log.init" name="token-coverage">
+		<unit-test-log id="UNIT002I" level="info" message="Running a token coverage report"/>
 		<property name="coverage.includes" value="**/expected.*"/>
 		<property name="coverage.file" value="coverage.xml"/>
 		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl"/>
@@ -22,10 +22,11 @@
 	</target>
 
 	<!--
-		Generate a coverage report.
+		Generate coverage report. Take each element of the listing file
+		and see if it can be found in the outputs
 	-->
 	<target if="test.coverage.report" name="coverage.report">
-		<!-- The default report is an instrumented report -->
+		<!-- The default report is an instrumented XSLT report -->
 		<property name="coverage.includes" value="**/out/templates-covered.txt"/>
 		<property name="coverage.file" value="template-coverage.xml"/>
 		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/template-report.xsl"/>
@@ -77,7 +78,7 @@
 		</taskdef>
 	</target>
 	<!--
-		Generate a profiler report. Run DITA-OT using the test.transtype
+		Generate an Antro profiler report. Run DITA-OT using the test.transtype
 	-->
 	<target depends="unit-test.log.init" name="antro">
 		<unit-test-log id="UNIT002I" level="info" message="Generating an Antro profiling report"/>
@@ -116,7 +117,9 @@
 			</classpath>
 		</java>
 	</target>
-
+	<!--
+		XSL Template pre-processing - make sure that the plugin exists
+	-->
 	<target name="instrument.init" depends="unit-test.log.init">
 		<dita-ot-fail id="DOTA069F">
 			<condition>
@@ -126,15 +129,18 @@
 			</condition>
 			<param name="1" value="${args.input}"/>
 		</dita-ot-fail>
-		<condition property="instrumented">
-			<available file="${args.input}/test/template-coverage.xml" type="file"/>
-		</condition>
-
 	</target>
 	<!--
 		Instrumentation of a DITA-OT plugin
 	-->
-	<target name="instrument" unless="instrumented">
+	<target name="instrument">
+		<dita-ot-fail id="UNIT006F">
+			<condition>
+				<available file="${args.input}/test/template-coverage.xml" type="file"/>
+			</condition>
+			<param name="1" value="${args.input}"/>
+		</dita-ot-fail>
+
 		<unit-test-log id="UNIT002I" level="info" message="Instrumenting XSL Templates"/>
 
 		<property name="test.instrument.xsl.dir" value="${dita.plugin.fox.jason.unit-test.dir}/xsl"/>
@@ -145,19 +151,18 @@
 		  <path location="${args.input}"/>
 		</pathconvert>
 
-
+		<!-- Create a list of templates in the plugin -->
 		<xslt classpathref="dost.class.path" destdir="${dita.temp.dir}/coverage" extension=".xml" style="${test.instrument.xsl.dir}/instrument-listing.xsl" basedir="${args.input}" includes="**/*.xsl">
 			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
 		</xslt>
 
-
+		<!-- Merge the list of templates into a single file -->
 		<xslt classpathref="dost.class.path" force="true" in="${test.instrument.xsl.dir}/listing-merge.xsl" out="${test.instrument.report.file}" style="${test.instrument.xsl.dir}/listing-merge.xsl">
 			<param expression="${dita.temp.dir}/coverage" name="in"/>
 			<param expression="${test.coverage.source}" name="SOURCE"/>
 		</xslt>
 
-
-
+		<!-- Keep a copy of un-instrumented templates -->
 		<copy todir="${args.input}">
 		  <fileset dir="${args.input}">
 			<include name="**/*.xsl"/>
@@ -165,7 +170,7 @@
 		  <globmapper from="*" to="*.orig"/>
 		</copy>
 
-
+		<!-- instrument each XSLT file within the plugin -->
 		<xslt classpathref="dost.class.path" style="${test.instrument.xsl.dir}/instrument-file.xsl" destdir="${dita.temp.dir}/plugins" basedir="${args.input}" includes="**/*.xsl" extension=".xsl">
 			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
 		</xslt>
@@ -181,29 +186,32 @@
 	-->
 	<target name="deinstrument">
 		<unit-test-log id="UNIT002I" level="info" message="Reverting instrumentation of XSL Templates"/>
+		<!-- Move the copy of un-instrumented templates back to the original location -->
 		<move todir="${args.input}">
 		  <fileset dir="${args.input}">
 			<include name="**/*.xsl.orig"/>
 		  </fileset>
 		  <globmapper from="*.xsl.orig" to="*.xsl"/>
 		</move>
+		<!-- Delete the listing file -->
 		<delete file="${args.input}/test/template-coverage.xml" quiet="true" failonerror="false"/>
 	</target>
-
-
 	<!--
-		Ant target executed to run a unit test coverage report.
+		Ant target executed to run a token coverage report.
 	-->
-	<target depends="build-init,unit-test.init,test-coverage,coverage.report" name="dita2test-coverage"/>
-	<target depends="build-init,unit-test.init,template-coverage,coverage.report" name="dita2template-coverage"/>
+	<target depends="build-init,unit-test.init,token-coverage,coverage.report" name="dita2token-report"/>
+	<!--
+		Ant target executed to run an XSL coverage report.
+	-->
+	<target depends="build-init,unit-test.init,xsl-coverage,coverage.report" name="dita2xsl-report"/>
 	<!--
 		Ant target executed to instrument a plug-in
 	-->
-	<target depends="build-init,instrument.init,instrument" name="dita2instrument-templates"/>
+	<target depends="build-init,instrument.init,instrument" name="dita2xsl-instrument"/>
 		<!--
 		Ant target executed to deinstrument a plugin
 	-->
-	<target depends="build-init,instrument.init,deinstrument" name="dita2deinstrument-templates"/>
+	<target depends="build-init,instrument.init,deinstrument" name="dita2xsl-deinstrument"/>
 	<!--
 		Ant target executed when the running the Antro profiler
 	-->

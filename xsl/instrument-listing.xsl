@@ -18,13 +18,45 @@ version="2.0">
       <xsl:apply-templates select="xsl:template"/>
     </xsl:element>
   </xsl:template>
+
+   <xsl:template name="addElement">
+    <xsl:param name="open" />
+    <xsl:element name="text">
+      <xsl:attribute name="id">
+        <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
+      </xsl:attribute>
+      <xsl:attribute name="element">
+        <xsl:value-of select="name()"/>
+      </xsl:attribute>
+      <xsl:choose>
+        <xsl:when test="$open">
+          <xsl:attribute name="open">
+            <xsl:value-of select="true()"/>
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="close">
+            <xsl:value-of select="true()"/>
+          </xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:attribute name="indent">
+        <xsl:value-of select="count(ancestor::xsl:*)"/>
+      </xsl:attribute>
+      <xsl:if test="$open">
+        <xsl:attribute name="attributes">
+          <xsl:value-of select="normalize-space(instrument:compute(.))"/>
+        </xsl:attribute>
+       
+      </xsl:if>
+      <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
+    </xsl:element>
+   </xsl:template>
+
  
   <xsl:function name="instrument:compute" as="xs:string">
     <xsl:param name="node" as="element()"/>
-    <xsl:param name="type" as="xs:string"/>
     <xsl:variable name="instumentation">
-      <xsl:value-of select="concat(generate-id($node), ':', $document-uri, '/')"/>
-      <xsl:value-of select="$type"/>
       <xsl:if test="$node/@match">
         <xsl:text> match=&quot;</xsl:text>
         <xsl:value-of select="$node/@match"/>
@@ -40,9 +72,14 @@ version="2.0">
         <xsl:value-of select="$node/@name"/>
         <xsl:text>&quot;</xsl:text>
       </xsl:if>
-      <xsl:if test="$node/@test">
+      <xsl:if test="$node/@select">
+        <xsl:text> select=&quot;</xsl:text>
+        <xsl:value-of select="$node/@select"/>
+        <xsl:text>&quot;</xsl:text>
+      </xsl:if>
+       <xsl:if test="$node/@test">
         <xsl:text> test=&quot;</xsl:text>
-        <xsl:value-of select="$node/@test" disable-output-escaping="yes"/>
+        <xsl:value-of select="$node/@test"/>
         <xsl:text>&quot;</xsl:text>
       </xsl:if>
      </xsl:variable>
@@ -51,41 +88,62 @@ version="2.0">
 
   <xsl:template match="xsl:template">
     <xsl:if test="not(comment()[contains(., 'ignore-instrument')]) and not(ancestor::*/comment()[contains(., 'ignore-instrument')])">
-      <xsl:element name="text">
-        <xsl:attribute name="id">
-          <xsl:value-of select="concat('template-', generate-id(.))"/>
-        </xsl:attribute>
-        <xsl:value-of select="instrument:compute(., 'template')"/>
-      </xsl:element>
-      <xsl:apply-templates select=".//[xsl:if|xsl:when|xsl:otherwise]" mode="template"/>
+      <xsl:call-template name="addElement">
+        <xsl:with-param name="open" select="true()" />
+      </xsl:call-template>
+      <xsl:apply-templates mode="template"/>
+      <xsl:call-template name="addElement">
+        <xsl:with-param name="open" select="false()" />
+    </xsl:call-template>
     </xsl:if>
   </xsl:template>
 
-   <xsl:template match="xsl:if" mode="template">
-    <xsl:element name="text">
-      <xsl:attribute name="id">
-        <xsl:value-of select="concat('if-', generate-id(.))"/>
-      </xsl:attribute>
-      <xsl:value-of select="instrument:compute(., 'if')" disable-output-escaping="yes"/>
-    </xsl:element>
+ 
+
+  <xsl:template match="xsl:if" mode="template">
+    <xsl:call-template name="addElement">
+      <xsl:with-param name="open" select="true()" />
+    </xsl:call-template>
+    <xsl:apply-templates  mode="template"/>
+    <xsl:call-template name="addElement">
+      <xsl:with-param name="open" select="false()" />
+    </xsl:call-template>
+  </xsl:template>
+
+
+  <xsl:template match="xsl:choose|xsl:for-each" mode="template">
+    <xsl:call-template name="addElement">
+      <xsl:with-param name="open" select="true()" />
+    </xsl:call-template>
+    <xsl:apply-templates  mode="template"/>
+    <xsl:call-template name="addElement">
+      <xsl:with-param name="open" select="false()" />
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="xsl:when" mode="template">
-    <xsl:element name="text">
-      <xsl:attribute name="id">
-        <xsl:value-of select="concat('when-', generate-id(.))"/>
-      </xsl:attribute>
-      <xsl:value-of select="instrument:compute(., 'when')" disable-output-escaping="yes"/>
-    </xsl:element>
+    <xsl:call-template name="addElement">
+      <xsl:with-param name="open" select="true()" />
+    </xsl:call-template>
+    <xsl:apply-templates  mode="template"/>
+    <xsl:call-template name="addElement">
+      <xsl:with-param name="open" select="false()" />
+    </xsl:call-template>
   </xsl:template>
 
    <xsl:template match="xsl:otherwise" mode="template">
-    <xsl:variable name="id" select="concat($document-uri, '/', @test )"/>
-    <xsl:element name="text">
-      <xsl:attribute name="id">
-        <xsl:value-of select="concat('otherwise-', generate-id(.))"/>
-      </xsl:attribute>
-      <xsl:value-of select="instrument:compute(., 'otherwise')"/>
-    </xsl:element>
+    <xsl:call-template name="addElement">
+      <xsl:with-param name="open" select="true()" />
+    </xsl:call-template>
+    <xsl:apply-templates  mode="template"/>
+    <xsl:call-template name="addElement">
+      <xsl:with-param name="open" select="false()" />
+    </xsl:call-template>
   </xsl:template>
+
+   <xsl:template match="*" mode="template">
+    <xsl:apply-templates  mode="template"/>
+   </xsl:template>
+    <xsl:template match="text()" mode="template"/>
+
 </xsl:stylesheet>

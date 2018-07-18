@@ -11,7 +11,7 @@ A series of test suites can be found within the plug-in at `PATH_TO_DITA_OT/plug
 
 To run, use the `unit-test` transform.
 
-```console
+```bash
 PATH_TO_DITA_OT/bin/dita -f unit-test  -o out -i PATH_TO_UNIT_TESTS
 ```
 
@@ -26,12 +26,49 @@ This is the test report from the example tests found within the plug-in `sample`
 * If the `-i` input directory is not a test suite, all test suites directly beneath that directory will be run.
 
 
-### Obtaining coverage information
+### XSLT Coverage Report
 
+To run a XSLT Coverage Report, each DITA-OT Plug-In must be **instrumented** - this annotates the XSLT templates within the plugin to be able to generate coverage information. A copy of each `*.xsl` file is also saved with the `*.orig` suffix.
+
+```bash
+PATH_TO_DITA_OT/bin/dita -f xsl-instrument -i PATH_TO_PLUG_IN
+```
+
+To revert back to the original files just run the de-instrument transform as shown:
+
+```bash
+PATH_TO_DITA_OT/bin/dita -f xsl-instrument -i PATH_TO_PLUG_IN
+```
+
+Once a Plug-In has been **instrumented** the test suite should contain a `template-coverage.xml` file which holds a list of all template decision points. To obtain coverage information, use the `unit-test` transform as stated previously:
+
+```bash
+PATH_TO_DITA_OT/bin/dita -f unit-test -i PATH_TO_UNIT_TESTS
+```
+
+* If the `-i` input directory is a test suite, coverage for that test suite will be reported.
+* If the `-i` input directory is not a test suite, coverage for all test suites directly beneath that directory will be reported.
+
+Once the command has run, both a test report file and a coverage report file are created. 
+Additionally, if any error occurs, the command will fail.
+
+It is also possible to run coverage over a single file. An individual test can be run directly 
+from the command line by running the default target within that test. That can be followed by
+direct invocation of the coverage report
+
+```bash
+ant -f PATH_TO_PLUGIN/test/TEST_NAME/build.xml
+PATH_TO_DITA_OT/bin/dita -f xsl-report -i PATH_TO_PLUGIN
+```
+
+### Token Coverage Report
+
+This is a quicker alternative report to XSLT instrumentation and code coverage, but it requires the
+developer to create the token `coverage.xml` file manually.
 Each test suite should contain a `coverage.xml` file which holds a series of tokens representing all potential output values. To obtain coverage information, use the `test-coverage` transform.
 
-```console
-PATH_TO_DITA_OT/bin/dita -f test-coverage -i PATH_TO_UNIT_TESTS
+```bash
+PATH_TO_DITA_OT/bin/dita -f token-report -i PATH_TO_UNIT_TESTS
 ```
 
 Once the command has run,  a coverage report is created
@@ -54,16 +91,17 @@ This is the test report from the example tests found within the plug-in `sample`
 
 To obtain profile information, use the `antro` transform and supply an additional test transtype
 
-```console
+```bash
 PATH_TO_DITA_OT/bin/dita -f antro --test.transform=TRANSFORM_TO_PROFILE -i document.ditamap
 ```
+
 A profiler JSON file will be generated.
 
 ### Viewing profiler information
 
 To run the UI for the  Antro profiler, use the `antro-ui` transform. The `-i` parameter is mandatory for all DITA-OT plug-ins, and should point to a real file, but is not used for this transform.
 
-```console
+```
 PATH_TO_DITA_OT/bin/dita -f antro-ui -i document.ditamap
 ```
 The Antro UI  is the displayed, load the profiler json file from to display a bar graph showing how long each ANT target took:
@@ -126,7 +164,7 @@ Unit tests will be run whenever a commit occurs.
 
 The output will appear within the log as follows:
 
-```console
+```
 [UNIT002I][INFO] Running tests for 'PLUGIN-NAME'
   [antunit] Build File: /tmp/temp20180420185923919/unit-test/fixtures/PLUGIN-NAME/fixture.xml
   [antunit] Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 31.063 sec

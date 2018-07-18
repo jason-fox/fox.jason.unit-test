@@ -14,7 +14,7 @@ The required dependencies are installed to a local Maven repository in your home
 
 -  Run the Gradle distribution task to generate the plug-in distribution package:
 
-```console
+```bash
 ./gradlew dist
 ```
 
@@ -25,7 +25,7 @@ The distribution ZIP file is generated under `build/distributions`.
 
 -  Run the plug-in installation command:
 
-```console
+```bash
 dita -install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
 ```
 

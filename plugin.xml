@@ -6,14 +6,20 @@
 <plugin id="fox.jason.unit-test">
 	<feature extension="package.version" value="1.0.3"/>
 	
-	<feature extension="dita.conductor.transtype.check" value="unit-test"/>
-	<feature extension="dita.conductor.transtype.check" value="test-coverage"/>
-	<feature extension="dita.conductor.transtype.check" value="template-coverage"/>
 	<feature extension="dita.conductor.transtype.check" value="antro"/>
 	<feature extension="dita.conductor.transtype.check" value="antro-ui"/>
-	<feature extension="dita.conductor.transtype.check" value="instrument-templates"/>
-	<feature extension="dita.conductor.transtype.check" value="deinstrument-templates"/>
+	<feature extension="dita.conductor.transtype.check" value="token-report"/>
+	<feature extension="dita.conductor.transtype.check" value="unit-test"/>
+	<feature extension="dita.conductor.transtype.check" value="xsl-deinstrument"/>
+	<feature extension="dita.conductor.transtype.check" value="xsl-instrument"/>
+	<feature extension="dita.conductor.transtype.check" value="xsl-report"/>
 	<feature extension="dita.conductor.lib.import" file="lib/ant-junit.jar"/>
+	<transtype desc="Runs an antro ANT profiling report" name="antro">
+		<param desc="The transtype to run the profile against" name="test.transtype" type="string"/>
+		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
+	</transtype>
+	<transtype desc="Invokes the UI for the antro tool" name="antro-ui"/>
+	<transtype desc="Runs a token coverage report" name="token-report"/>
 	<transtype desc="Runs the unit tests and creates a test report" name="unit-test">
 		<param desc="Whether regenerated expecations should be copied" name="test.copy" type="enum">
 			<val>true</val>
@@ -25,15 +31,10 @@
 		</param>
 		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
 	</transtype>
-	<transtype desc="Runs a test coverage report" name="test-coverage"/>
-	<transtype desc="Runs a template coverage report" name="template-coverage"/>
-	<transtype desc="Runs an antro ANT profiling report" name="antro">
-		<param desc="The transtype to run the profile against" name="test.transtype" type="string"/>
-		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
-	</transtype>
-	<transtype desc="Invokes the UI for the antro tool" name="antro-ui"/>
-	<transtype desc="Annotates XSL templates with instrumentation" name="instrument-templates"/>
-	<transtype desc="Removes instrumentation from XSL templates" name="deinstrument-templates"/>
+	<transtype desc="Removes instrumentation from XSL templates" name="xsl-deinstrument"/>
+	<transtype desc="Annotates XSL templates with instrumentation" name="xsl-instrument"/>
+	<transtype desc="Runs an XSL template coverage report" name="xsl-report"/>
+
 	<feature extension="dita.xsl.messages" file="resource/messages.xml"/>
 	<!--
 	<feature extension="ant.import" file="build_dita2unit-test.xml"/><feature extension="ant.import" file="build_dita2test-coverage.xml"/>-->

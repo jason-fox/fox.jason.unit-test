@@ -27,7 +27,7 @@ Each suite of tests (identified by a directory called `test`) can be found in a 
 
 This structure means that an integration test of multiple plug-ins can be run by adding a `test` directory to each plug-in and invoking the tests as shown:
 
-```console
+```bash
 PATH_TO_DITA_OT/bin/dita --input ./plugins -f unit-test
 ```
 

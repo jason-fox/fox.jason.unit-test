@@ -103,11 +103,17 @@
 			<run-test ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
 			
 			<!-- strip out comments and save comments only to a separate file -->
-			<tempfile deleteonexit="true" property="no-comments" suffix=".fo"/>
-			<xslt classpathref="xslt.class.path" in="${dita.temp.dir}/topic.fo" out="${no-comments}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/no-comments.xsl"/>
+			
+			<copy file="${dita.temp.dir}/topic.fo" tofile="${output.dir}/topic.fo"/>
+			<replaceregexp match="--&gt;\n" replace="--&gt;" flags="gs">
+			    <fileset file="${output.dir}/topic.fo"/>
+			</replaceregexp>	
+			<replaceregexp match="&lt;!--[^&lt;]*--&gt;" replace="" flags="g" byline="true">
+			    <fileset file="${output.dir}/topic.fo"/>
+			</replaceregexp>
+
 			<xslt classpathref="xslt.class.path" in="${dita.temp.dir}/topic.fo" out="${output.dir}/templates-covered.txt" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/comments-only.xsl"/>
-			<!-- Move topic.fo and then clean temp after invocation -->
-			<xmltask dest="${output.dir}/topic.fo" encoding="UTF-8" outputter="simple" source="${no-comments}"/>
+
 			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
 		</sequential>
 	</macrodef>
@@ -134,7 +140,17 @@
 			<tempfile deleteonexit="true" property="no-comments" suffix=".svrl"/>
 			<tempfile deleteonexit="true" property="ordered-document" suffix=".svrl"/>
 			<!-- strip out comments and save comments only to a separate file -->
-			<xslt classpathref="xslt.class.path" in="${output.dir}/${document}.svrl" out="${no-comments}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/no-comments.xsl"/>
+
+
+			<copy file="${output.dir}/${document}.svrl" tofile="${no-comments}"/>
+			<replaceregexp match="--&gt;\n" replace="--&gt;" flags="gs">
+			    <fileset file="${no-comments}"/>
+			</replaceregexp>
+			
+			<replaceregexp match="&lt;!--[^&lt;]*--&gt;" replace="" flags="g" byline="true">
+			    <fileset file="${no-comments}"/>
+			</replaceregexp>
+
 			<xslt classpathref="xslt.class.path" in="${output.dir}/${document}.svrl" out="${output.dir}/templates-covered.txt" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/comments-only.xsl"/>
 			<xslt classpathref="xslt.class.path" in="${no-comments}" out="${ordered-document}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/order.xsl"/>
 			<xmltask dest="${output.dir}/fragment.svrl" outputter="simple" source="${ordered-document}"/>
@@ -186,9 +202,15 @@
 
 			<!-- strip out comments and save comments only to a separate file -->
 			<echo file="@{to}" message="${fragment}"/>
+
+			<replaceregexp match="--&gt;\n" replace="--&gt;" flags="gs">
+			    <fileset file="@{to}"/>
+			</replaceregexp>
+			
 			<replaceregexp match="&lt;!--[^&lt;]*--&gt;" replace="" flags="g" byline="true">
 			    <fileset file="@{to}"/>
 			</replaceregexp>
+			
 			
 			<echo file="${output.dir}/templates-covered.txt" message="${fragment}"/>
 			<replaceregexp match="\s*&lt;[a-z|/].*&gt;" replace="" flags="g" byline="true">
@@ -488,7 +510,7 @@
 				<arg value="--propertyfile"/>
 				<arg value="${test.properties}"/>
 				<!-- Add to obtain verbose output. -->
-				<arg value="-v"/>
+				<arg value="-d"/>
 			</exec>
 			<!-- For Windows run from a DOS command -->
 			<exec dir="${dita.dir}/bin" executable="cmd" osfamily="windows" outputproperty="dita.ot.output" resultproperty="dita.ot.result">
