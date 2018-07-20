@@ -8,7 +8,6 @@
 		Pre-process for generating an XSL template coverage report.
 	-->
 	<target depends="unit-test.log.init" name="xsl-coverage">
-		<unit-test-log id="UNIT002I" level="info" message="Running an XSL coverage report"/>
 		<property name="test.coverage.report" value="true"/>
 	</target>
 
@@ -16,7 +15,7 @@
 		Pre-process for generating a token coverage report.
 	-->
 	<target depends="unit-test.log.init" name="token-coverage">
-		<unit-test-log id="UNIT002I" level="info" message="Running a token coverage report"/>
+		<property name="coverage.message" value="Running a token coverage report"/>
 		<property name="coverage.includes" value="**/expected.*"/>
 		<property name="coverage.file" value="coverage.xml"/>
 		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl"/>
@@ -29,9 +28,11 @@
 	-->
 	<target if="test.coverage.report" name="coverage.report">
 		<!-- The default report is an instrumented XSLT report -->
+		<property name="coverage.message" value="Running an XSL coverage report"/>
 		<property name="coverage.includes" value="**/out/templates-covered.txt"/>
 		<property name="coverage.file" value="template-coverage.xml"/>
 		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/template-report.xsl"/>
+		<unit-test-log id="UNIT002I" level="info" message="${coverage.message}"/>
 
 		<tempfile deleteonexit="true" destdir="${dita.temp.dir}" property="coverage.report.xml"/>
 		<xmltask dest="${coverage.report.xml}" source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml"/>

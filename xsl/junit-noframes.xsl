@@ -408,7 +408,7 @@ under the License.
                 <xsl:otherwise>TableRowColor</xsl:otherwise>
             </xsl:choose>
         </xsl:attribute>
-        <td><xsl:value-of select="@name"/></td>
+        <td><xsl:value-of select="normalize-space(@name)"/></td>
         <xsl:choose>
             <xsl:when test="failure">
                 <td class="Failure">Failure</td>

@@ -31,7 +31,8 @@ Table of Contents
 - [Usage](#usage)
   * [Invoking the unit tests from the Command line](#invoking-the-unit-tests-from-the-command-line)
     + [Obtaining a unit test report](#obtaining-a-unit-test-report)
-    + [Obtaining coverage information](#obtaining-coverage-information)
+    + [XSLT coverage report](#xslt-coverage-report)
+    + [Token coverage report](#token-coverage-report)
     + [Obtaining ANT script profile information](#obtaining-ant-script-profile-information)
     + [Viewing profiler information](#viewing-profiler-information)
     + [Parameter Reference](#parameter-reference)
@@ -118,13 +119,50 @@ This is the test report from the example tests found within the plug-in `sample`
 * If the `-i` input directory is a test suite, all tests within the suite will be run.
 * If the `-i` input directory is not a test suite, all test suites directly beneath that directory will be run.
 
+### XSLT Coverage Report
 
-### Obtaining coverage information
+To run a XSLT Coverage Report, each DITA-OT Plug-In must be **instrumented** - this annotates the XSLT templates within the plugin to be able to generate coverage information. A copy of each `*.xsl` file is also saved with the `*.orig` suffix.
 
+```console
+PATH_TO_DITA_OT/bin/dita -f xsl-instrument -i PATH_TO_PLUG_IN
+```
+
+To revert back to the original files just run the de-instrument transform as shown:
+
+```console
+PATH_TO_DITA_OT/bin/dita -f xsl-instrument -i PATH_TO_PLUG_IN
+```
+
+Once a Plug-In has been **instrumented** the test suite should contain a `template-coverage.xml` file which holds a list of all template decision points. To obtain coverage information, use the `unit-test` transform as stated previously:
+
+```console
+PATH_TO_DITA_OT/bin/dita -f unit-test -i PATH_TO_UNIT_TESTS
+```
+
+* If the `-i` input directory is a test suite, coverage for that test suite will be reported.
+* If the `-i` input directory is not a test suite, coverage for all test suites directly beneath that directory will be reported.
+
+Once the command has run, both a test report file and a coverage report file are created. 
+Additionally, if any error occurs, the command will fail.
+
+It is also possible to run coverage over a single file. An individual test can be run directly 
+from the command line by running the default target within that test. That can be followed by
+direct invocation of the coverage report
+
+```console
+ant -f PATH_TO_PLUGIN/test/TEST_NAME/build.xml
+PATH_TO_DITA_OT/bin/dita -f xsl-report -i PATH_TO_PLUGIN
+```
+
+
+### Token Coverage Report
+
+This is a quicker alternative report to XSLT instrumentation and code coverage, but it requires the
+developer to create the token `coverage.xml` file manually.
 Each test suite should contain a `coverage.xml` file which holds a series of tokens representing all potential output values. To obtain coverage information, use the `test-coverage` transform.
 
 ```console
-PATH_TO_DITA_OT/bin/dita -f test-coverage -i PATH_TO_UNIT_TESTS
+PATH_TO_DITA_OT/bin/dita -f token-report -i PATH_TO_UNIT_TESTS
 ```
 
 Once the command has run,  a coverage report is created

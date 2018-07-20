@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="unit-test">
+	<import file="../bootstrap.xml"/>
+	<description>
+		Expect that XSLT coverage of an instrumented plug-in will succeed
+	</description>
+	<target name="unit-test">
+		<property name="test-plugin" value="${dita.dir}/plugins/com.here.validate.svrl.text-rules"/>
+		<exec-transtype transtype="xsl-instrument" ditamap="${test-plugin}"/>
+		<contains-text expected="Instrumenting XSL Templates"/>
+		<exec-transtype transtype="unit-test" ditamap="${test-plugin}"/>
+		<contains-text expected="Running an XSL coverage report"/>
+		<exec-transtype transtype="xsl-deinstrument" ditamap="${test-plugin}"/>
+		<contains-text expected="Reverting instrumentation of XSL Templates"/>
+	</target>
+</project>

@@ -2,11 +2,11 @@
 <project basedir="." default="unit-test">
 	<import file="../bootstrap.xml"/>
 	<description>
-		Expect that a test suite with a coverage.xml will calculate test coverage
+		Expect that a test suite with a coverage.xml will calculate token coverage
 	</description>
 	<target name="unit-test">
-		<exec-transtype transtype="test-coverage" ditamap="${basedir}"/>
-		<contains-text expected="Running a test-coverage report"/>
+		<exec-transtype transtype="token-report" ditamap="${basedir}"/>
+		<contains-text expected="Running a token coverage report"/>
 		<compare-output suffix=".html" result="./out/coverage.html"/>
 	</target>
 </project>

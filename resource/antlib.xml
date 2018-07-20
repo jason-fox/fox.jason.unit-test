@@ -510,7 +510,7 @@
 				<arg value="--propertyfile"/>
 				<arg value="${test.properties}"/>
 				<!-- Add to obtain verbose output. -->
-				<arg value="-d"/>
+				<arg value="-v"/>
 			</exec>
 			<!-- For Windows run from a DOS command -->
 			<exec dir="${dita.dir}/bin" executable="cmd" osfamily="windows" outputproperty="dita.ot.output" resultproperty="dita.ot.result">
