@@ -139,14 +139,14 @@ Once a Plug-In has been **instrumented** the test suite should contain a `templa
 PATH_TO_DITA_OT/bin/dita -f unit-test -i PATH_TO_UNIT_TESTS
 ```
 
-* If the `-i` input directory is a test suite, coverage for that test suite will be reported.
-* If the `-i` input directory is not a test suite, coverage for all test suites directly beneath that directory will be reported.
+* If the `-i` input directory is a test suite, XSL coverage for that test suite will be reported.
+* If the `-i` input directory is not a test suite, XSL coverage for all test suites directly beneath that directory will be reported.
 
-Once the command has run, both a test report file and a coverage report file are created. 
+Once the command has run, both a test report file and an XSL coverage report file are created. 
 Additionally, if any error occurs, the command will fail.
 
-It is also possible to run coverage over a single file. An individual test can be run directly 
-from the command line by running the default target within that test. That can be followed by
+It is also possible to run XSL coverage over a single test. An individual test can be run directly 
+from the command line by running the default target within that test. This can be followed by
 direct invocation of the coverage report
 
 ```console
@@ -154,6 +154,12 @@ ant -f PATH_TO_PLUGIN/test/TEST_NAME/build.xml
 PATH_TO_DITA_OT/bin/dita -f xsl-report -i PATH_TO_PLUGIN
 ```
 
+#### Sample XSL Report
+
+The XSL coverage report will show a schematic of all template decision points, with covered lines
+displayed in green, and uncovered lines displayed in red.
+
+![](https://jason-fox.github.io/fox.jason.unit-test/xsl-coverage.png)
 
 ### Token Coverage Report
 
@@ -167,8 +173,9 @@ PATH_TO_DITA_OT/bin/dita -f token-report -i PATH_TO_UNIT_TESTS
 
 Once the command has run,  a coverage report is created
  
- **Sample Test Report**
-This is the test report from the example tests found within the plug-in `sample` directory. 
+#### Sample Token Report
+
+This is the token report from the example tests found within the plug-in `sample` directory. 
 
 * Coverage for the Spell-checker is looking to ensure that all rules have been run. Uncovered rules are highlighted in RED.
 * Coverage for HTML processing is looking for the presence of `<codeph>`,  `<codeblock>` and `<p>` tags being rendered in the tests. 
