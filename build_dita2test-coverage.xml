@@ -170,7 +170,7 @@
 			<arg value="-Ddita.dir=${dita.dir}"/>
 			<arg value="-buildfile"/>
 			<arg value="${dita.plugin.fox.jason.unit-test.dir}/run-instrument.xml"/>
-			<arg value="-Ddita.plugin.com.here.validate.svrl.dir=${dita.plugin.com.here.validate.svrl.dir}"/>
+			<arg value="-Ddita.plugin.fox.jason.unit-test.dir=${dita.plugin.fox.jason.unit-test.dir}"/>
 			<arg value="-Ddita.temp.dir=${dita.temp.dir}"/>
 			<arg value="-Dtest.instrument.xsl.dir=${test.instrument.xsl.dir}"/>
 			<arg value="-Dargs.input=${args.input}"/>
