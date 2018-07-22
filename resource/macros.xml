@@ -28,7 +28,7 @@
 				</path>
 			</resourcecount>
 			<xmltask dest="@{resultfile}" source="@{resultfile}">
-				<attr attr="count" path="testsuites/testsuite[@id='${test-suite}']/*[@id='@{id}']" value="${fileset.count}"/>
+				<attr attr="hits" path="//package [@name='${test-suite}']//*[@id='@{id}']" value="${fileset.count}"/>
 			</xmltask>
 			<if>
 				<not>
@@ -71,7 +71,7 @@
 						<math datatype="int" operand1="${token.count}" operand2="1" operation="+" result="token.count"/>
 					</actions>
 				</call>
-				<call path="//text">
+				<call path="//line">
 					<param default="" name="token" path="text()"/>
 					<param default="" name="id" path="@id"/>
 					<actions>
@@ -86,9 +86,9 @@
 			</xmltask>
 			<math datatype="double" operand1="${covered.count}" operand2="${token.count}" operation="/" result="percentage"/>
 			<xmltask dest="@{resultfile}" source="@{resultfile}">
-				<attr attr="percent" path="testsuites/testsuite[@id='${test-suite}']" value="${percentage}"/>
-				<attr attr="tokens" path="testsuites/testsuite[@id='${test-suite}']" value="${token.count}"/>
-				<attr attr="covered" path="testsuites/testsuite[@id='${test-suite}']" value="${covered.count}"/>
+				<attr attr="percent" path="//package[@name='${test-suite}']" value="${percentage}"/>
+				<attr attr="tokens" path="//package[@name='${test-suite}']" value="${token.count}"/>
+				<attr attr="covered" path="//package[@name='${test-suite}']" value="${covered.count}"/>
 			</xmltask>
 		</sequential>
 	</macrodef>

@@ -37,17 +37,31 @@
 		of all .svrl files found in directory specified by $path
 	-->
 	<xsl:template name="generate-template-coverage">
-		<xsl:element name="testsuite">
-			 <xsl:attribute name="id">
+		<xsl:element name="package">
+			 <xsl:attribute name="name">
 			 	<xsl:value-of select="$SOURCE"/>
 			 </xsl:attribute>
 			
-			<!-- xsl:copy-of select="@*" is the standard way of copying all attributes. -->
-			<xsl:copy-of select="@*"/>
-			<xsl:for-each select="collection($path)">
-				<!-- xsl:copy-of copies nodes and all their descendants -->
-				<xsl:apply-templates select="document(document-uri(.))/testsuite/node()" mode="identity"/>
-			</xsl:for-each>
+			<xsl:element name="classes">
+			
+				<xsl:for-each select="collection($path)">
+				   <xsl:variable name="document-uri">
+				    	<xsl:value-of select="substring-before(substring-after(replace(replace(replace(document-uri(/), $path, ''), '.orig',''), 'file:/', ''),'coverage/'), '.')"/>
+					</xsl:variable>
+					<xsl:element name="class">
+						 <xsl:attribute name="name">
+						 	<xsl:value-of select="$document-uri"/>
+						 </xsl:attribute>
+						  <xsl:attribute name="filename">
+						 	<xsl:value-of select="concat($document-uri,'.xsl')"/>
+						 </xsl:attribute>
+						<xsl:element name="lines">
+							<xsl:apply-templates select="document(document-uri(.))/lines/node()" mode="identity"/>
+						</xsl:element>
+					</xsl:element>
+				</xsl:for-each>
+			
+			</xsl:element>
 		</xsl:element>
 	</xsl:template>
 

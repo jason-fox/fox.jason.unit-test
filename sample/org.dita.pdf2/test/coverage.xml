@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<testsuite id="org.dita.pdf2">
-	<text id="plain-text">font-family="STANDARD"</text>
-	<!--text id="monospace-text">font-family="MONOSPACE"</text-->
 
-	<element id="codeblock">fo:block font-family="MONOSPACE"</element>	
-	<element id="codeph-tt">fo:inline font-family="MONOSPACE"</element>
-	<element id="colspec">fo:table-column</element>
-	<element id="colspec-width">fo:table-column column-width</element>
-	<element id="em">fo:inline font-style="italic"</element>
-	<element id="entry">fo:table-cell</element>
-	<!--element id="div">div</element-->
-	<element id="li">fo:list-item-label</element>
-	<!--element id="ol">ol</element-->
-	<!--element id="p">p</element-->
-	<element id="ph">fo:inline border-end-width="0pt"</element>
-	<!--element id="note">note</element-->
-	<!--element id="section">section</element-->
-	<element id="strong">fo:inline font-weight="bold"</element>
-	<element id="sub">fo:inline baseline-shift="sub"</element>
-	<element id="sup">fo:inline baseline-shift="super"</element>
-	<element id="table">fo:table</element>
-	<element id="tbody">fo:table-body</element>
-    <element id="thead">fo:table-header</element>
-    <element id="row">fo:table-row</element>
-	<element id="ul">fo:list-item</element>
-	<element id="u">fo:inline text-decoration="underline"</element>
-	<element id="xref-internal">fo:basic-link internal-destination=".*"</element>
-	<element id="xref-external">fo:basic-link external-destination=".*"</element>
-</testsuite>
+<package name="org.dita.pdf2">
+	<lines>
+		<line id="plain-text">font-family="STANDARD"</line>
+		<!--line id="monospace-text">font-family="MONOSPACE"</line-->
+	</lines>
+	<elements>
+		<element id="codeblock">fo:block font-family="MONOSPACE"</element>	
+		<element id="codeph-tt">fo:inline font-family="MONOSPACE"</element>
+		<element id="colspec">fo:table-column</element>
+		<element id="colspec-width">fo:table-column column-width</element>
+		<element id="em">fo:inline font-style="italic"</element>
+		<element id="entry">fo:table-cell</element>
+		<!--element id="div">div</element-->
+		<element id="li">fo:list-item-label</element>
+		<!--element id="ol">ol</element-->
+		<!--element id="p">p</element-->
+		<element id="ph">fo:inline border-end-width="0pt"</element>
+		<!--element id="note">note</element-->
+		<!--element id="section">section</element-->
+		<element id="strong">fo:inline font-weight="bold"</element>
+		<element id="sub">fo:inline baseline-shift="sub"</element>
+		<element id="sup">fo:inline baseline-shift="super"</element>
+		<element id="table">fo:table</element>
+		<element id="tbody">fo:table-body</element>
+	    <element id="thead">fo:table-header</element>
+	    <element id="row">fo:table-row</element>
+		<element id="ul">fo:list-item</element>
+		<element id="u">fo:inline text-decoration="underline"</element>
+		<element id="xref-internal">fo:basic-link internal-destination=".*"</element>
+		<element id="xref-external">fo:basic-link external-destination=".*"</element>
+	</elements>
+</package>
        
         

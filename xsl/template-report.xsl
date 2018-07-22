@@ -154,7 +154,7 @@
   <h2>Summary</h2>
   <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
      <xsl:call-template name="testsuite.coverage.header"/>
-    <xsl:for-each select="testsuites/testsuite">
+    <xsl:for-each select="//package">
 
 
 
@@ -164,7 +164,7 @@
         <xsl:when test="@percent &gt; 0.7"/>
         <xsl:otherwise><xsl:attribute name="class">Error</xsl:attribute></xsl:otherwise>
       </xsl:choose>
-      <td><xsl:value-of select="@id"/></td>
+      <td><xsl:value-of select="@name"/></td>
       <td>
          <div>
             <xsl:attribute name="style">background-color:coral;width:100%</xsl:attribute>
@@ -192,16 +192,20 @@
 
 <xsl:template name="test-suites">
   <h2>Test suites</h2>
-  <xsl:for-each select="testsuites/testsuite">
-    <h3><xsl:value-of select="@id"/></h3>
+  <xsl:for-each select="//package">
+    <h3><xsl:value-of select="@name"/></h3>
 
     <table class="details" border="0" cellpadding="0" cellspacing="0" width="95%">
       <tr valign="top">
         <th width="20%">id</th>
         <th style="text-align:left">Templates</th>
-        <th width="5em">Count</th>
+        <th width="5em">Hits</th>
       </tr>
-      <xsl:for-each select="*">
+      <xsl:for-each select="classes/class/lines/line">
+         
+
+
+
         <xsl:variable name="token" select="."/>
           <xsl:variable name="xslfile" select="substring-after(.,':')"/>
           <xsl:variable name="previousfile" select="substring-after(preceding-sibling::*[1],':')"/>
@@ -218,8 +222,8 @@
         <xsl:if test="not($selfClosed)">
           <tr>
             <xsl:attribute name="class">
-              <xsl:if test="@count = 0">Error </xsl:if>
-              <xsl:if test="not(@count = 0)">Success </xsl:if>
+              <xsl:if test="@hits = 0">Error </xsl:if>
+              <xsl:if test="not(@hits = 0)">Success </xsl:if>
               <xsl:if test="$xslfile = $previousfile">Merge </xsl:if>
             </xsl:attribute>
             <td>
@@ -255,7 +259,7 @@
             </td>
             <td>
               <xsl:if test="@open">
-                <xsl:value-of select="@count"/>
+                <xsl:value-of select="@hits"/>
               </xsl:if>
             </td>
           </tr>

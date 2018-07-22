@@ -1,7 +1,7 @@
 <xsl:stylesheet
 xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-xmlns:instrument="http://jason.fox/xslt/instrument/"
-exclude-result-prefixes="xs instrument"
+xmlns:instrument="http://jason.fox/xslt/instrument/" xmlns:saxon="http://saxon.sf.net/"
+exclude-result-prefixes="xs instrument saxon"
 version="2.0">
   <!-- Defining that this .xsl generates plain text file -->
 	<xsl:output indent="yes" method="xml" omit-xml-declaration="yes" cdata-section-elements="text" />
@@ -14,14 +14,14 @@ version="2.0">
   
 
   <xsl:template match="xsl:stylesheet">
-    <xsl:element name="testsuite">
+    <xsl:element name="lines">
       <xsl:apply-templates select="xsl:template"/>
     </xsl:element>
   </xsl:template>
 
    <xsl:template name="addElement">
     <xsl:param name="open" />
-    <xsl:element name="text">
+    <xsl:element name="line">
       <xsl:attribute name="id">
         <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
       </xsl:attribute>
@@ -43,11 +43,17 @@ version="2.0">
       <xsl:attribute name="indent">
         <xsl:value-of select="count(ancestor::xsl:*)"/>
       </xsl:attribute>
+      <xsl:attribute name="branch">
+        <xsl:value-of select="false()"/>
+      </xsl:attribute>
+    
       <xsl:if test="$open">
         <xsl:attribute name="attributes">
           <xsl:value-of select="normalize-space(instrument:compute(.))"/>
+        </xsl:attribute> 
+        <xsl:attribute name="number">
+          <xsl:value-of select="saxon:line-number()"/>
         </xsl:attribute>
-       
       </xsl:if>
       <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
     </xsl:element>

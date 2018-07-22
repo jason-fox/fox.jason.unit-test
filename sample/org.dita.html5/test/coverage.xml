@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<testsuite id="org.dita.html5">
-	<element id="codeblock">pre class="pre codeblock"</element>	
-	<element id="codeph">code</element>
-	<element id="colspec">col style=".*"</element>
-	<element id="em">em</element>
-	<element id="entry">td class="entry"</element>
-	<element id="div">div</element>
-	<element id="li">li</element>
-	<element id="ol">ol</element>
-	<element id="p">p</element>
-	<element id="note">div class="note.*"</element>
-	<element id="ph">span class="ph.*"</element>
-	<element id="row">tr class="row"</element>
-	<element id="section">section</element>
-	<element id="strong">strong</element>
-	<element id="sub">sub</element>
-	<element id="sup">sup</element>
-	<element id="span">span</element>
-	<element id="table">table</element>
-	<element id="tbody">tbody</element>
-	<element id="thead">thead</element>
-	<element id="tt">span style="font-family: monospace"</element>
-	<element id="ul">ul</element>
-	<element id="xref-internal">a href=".*"</element>
-	<element id="xref-external">a target="_blank"</element>
-</testsuite>
+<package name="org.dita.html5">
+	<elements>
+		<element id="codeblock">pre class="pre codeblock"</element>	
+		<element id="codeph">code</element>
+		<element id="colspec">col style=".*"</element>
+		<element id="em">em</element>
+		<element id="entry">td class="entry"</element>
+		<element id="div">div</element>
+		<element id="li">li</element>
+		<element id="ol">ol</element>
+		<element id="p">p</element>
+		<element id="note">div class="note.*"</element>
+		<element id="ph">span class="ph.*"</element>
+		<element id="row">tr class="row"</element>
+		<element id="section">section</element>
+		<element id="strong">strong</element>
+		<element id="sub">sub</element>
+		<element id="sup">sup</element>
+		<element id="span">span</element>
+		<element id="table">table</element>
+		<element id="tbody">tbody</element>
+		<element id="thead">thead</element>
+		<element id="tt">span style="font-family: monospace"</element>
+		<element id="ul">ul</element>
+		<element id="xref-internal">a href=".*"</element>
+		<element id="xref-external">a target="_blank"</element>
+	</elements>
+</package>
 
 
 

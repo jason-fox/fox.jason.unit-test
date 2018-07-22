@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<testsuite id="com.here.validate.svrl.text-rules">
-	<text id="duplicated-punctuation">duplicated-punctuation</text>
-	<text id="duplicated-words">duplicated-words</text>
-	<text id="incorrect-capitalization">incorrect-capitalization</text>
-	<text id="incorrect-grammar">incorrect-grammar</text>
-	<text id="incorrect-punctuation">incorrect-punctuation</text>
-	<text id="incorrect-spelling">incorrect-spelling</text>
-	<text id="a-followed-by-vowel">a-followed-by-vowel</text>
-	<text id="an-followed-by-consonant">an-followed-by-consonant</text>
-	<text id="latin-abbreviation">latin-abbreviation</text>
-	<text id="sentence-capitalization">sentence-capitalization</text>
-	<text id="split-infinitive">split-infinitive</text>
-	<text id="where-not-were">where-not-were</text>
-</testsuite>
+<package name="com.here.validate.svrl.text-rules">
+	<lines>
+		<line id="1">duplicated-punctuation</line>
+		<line id="2">duplicated-words</line>
+		<line id="3">incorrect-capitalization</line>
+		<line id="4">incorrect-grammar</line>
+		<line id="5">incorrect-punctuation</line>
+		<line id="6">incorrect-spelling</line>
+		<line id="7">a-followed-by-vowel</line>
+		<line id="8">an-followed-by-consonant</line>
+		<line id="9">latin-abbreviation</line>
+		<line id="10">sentence-capitalization</line>
+		<line id="11">split-infinitive</line>
+		<line id="12">where-not-were</line>
+	</lines>
+</package>

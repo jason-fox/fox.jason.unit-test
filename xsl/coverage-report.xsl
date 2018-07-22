@@ -97,7 +97,7 @@
       <th style="text-align:left">Title</th>
       <th width="30%" ></th>
       <th width="5em" >Tokens</th>
-      <th width="5em">Covered</th>
+      <th width="5em">Hits</th>
       <th width="5em">Percent</th>
     </tr>
 </xsl:template>
@@ -109,7 +109,7 @@
   <h2>Summary</h2>
   <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
      <xsl:call-template name="testsuite.coverage.header"/>
-    <xsl:for-each select="testsuites/testsuite">
+    <xsl:for-each select="//package">
 
 
 
@@ -119,7 +119,7 @@
         <xsl:when test="@percent &gt; 0.7"/>
         <xsl:otherwise><xsl:attribute name="class">Error</xsl:attribute></xsl:otherwise>
       </xsl:choose>
-      <td><xsl:value-of select="@id"/></td>
+      <td><xsl:value-of select="@name"/></td>
       <td>
          <div>
             <xsl:attribute name="style">background-color:coral;width:100%</xsl:attribute>
@@ -147,19 +147,19 @@
 
 <xsl:template name="test-suites">
   <h2>Test suites</h2>
-  <xsl:for-each select="testsuites/testsuite">
-    <h3><xsl:value-of select="@id"/></h3>
+  <xsl:for-each select="//package">
+    <h3><xsl:value-of select="@name"/></h3>
 
     <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
       <tr valign="top">
         <th width="20%">id</th>
         <th style="text-align:left">Token</th>
-        <th width="5em">Count</th>
+        <th width="5em">Hits</th>
       </tr>
-      <xsl:for-each select="*">
+      <xsl:for-each select="*//(line|element)">
         <tr>
           <xsl:choose>
-            <xsl:when test="@count=0"><xsl:attribute name="class">Error</xsl:attribute></xsl:when>
+            <xsl:when test="@hits=0"><xsl:attribute name="class">Error</xsl:attribute></xsl:when>
             <xsl:otherwise><xsl:attribute name="class">Success</xsl:attribute></xsl:otherwise>
           </xsl:choose>
           <td><xsl:value-of select="@id"/></td>
@@ -167,7 +167,7 @@
             <pre><code><xsl:value-of select="replace(., '\.xsl/', '.xsl&#xA;')"/></code></pre>
           </td>
           <td>
-            <xsl:value-of select="@count"/>
+            <xsl:value-of select="@hits"/>
           </td>
         </tr>
       </xsl:for-each>
