@@ -37,6 +37,7 @@ Table of Contents
     + [Viewing profiler information](#viewing-profiler-information)
     + [Parameter Reference](#parameter-reference)
   * [Integration with Travis CI](#integration-with-travis-ci)
+  * [Integration with Coveralls](#integration-with-coveralls)
 - [Unit Test File Structure](#unit-test-file-structure)
   * [Test suite files](#test-suite-files)
     + [`bootstrap.xml` file](#bootstrapxml-file)
@@ -231,14 +232,14 @@ For automated testing of DITA-OT plug-ins, place your tests under a `test` direc
 of the repository along with the `.travis.yml` in the root itself.
 
 
-For example to test against DITA-OT 3.0.3 and DITA-OT 2.5.4, use the following `.travis.yml`:
+For example to test against DITA-OT 3.1 and DITA-OT 2.5.4, use the following `.travis.yml`:
 
 ```yml
 language: java
 jdk:
   - oraclejdk8
 env:
-  - DITA_OT=3.0.3
+  - DITA_OT=3.1
   - DITA_OT=2.5.4
 before_script:
   - zip -r PLUGIN-NAME.zip . -x *.zip* *.git/* *temp/* *out/*
@@ -278,6 +279,36 @@ clean-temp:
 The command "dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -v" exited with 0.
 ```
 
+
+Integration with Coveralls
+--------------------------
+
+**Coveralls** is a web service to help you track your code coverage over time, and ensure that all your new code is fully covered. More information about how to set up coveralls-travis integration can be found on the [travis website](https://docs.coveralls.io/).
+
+If a plug-in nas been instrumented (using the `xsl-instrument` transform) and unit tests are run, a cobertura style `coverage.xml` file will be created along with the test results and a coverage report.
+This can be forwared to Coveralls using the standard maven plug-in as shown:
+
+```yml
+language: java
+jdk:
+  - oraclejdk8
+env:
+  - DITA_OT=3.1
+  - DITA_OT=2.5.4
+before_script:
+  - zip -r PLUGIN-NAME.zip . -x *.zip* *.git/* *temp/* *out/*
+  - curl -LO https://github.com/dita-ot/dita-ot/releases/download/$DITA_OT/dita-ot-$DITA_OT.zip
+  - unzip -q dita-ot-$DITA_OT.zip
+  - chmod +x dita-ot-$DITA_OT/bin/dita
+  - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
+  - dita-ot-$DITA_OT/bin/dita --install PLUGIN-NAME.zip 
+  - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/PLUGIN-NAME -f xsl-instrument
+script:
+  - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/PLUGIN-NAME -f unit-test --output . -v
+after_success:
+  - cp dita-ot-$DITA_OT/plugins/fox.jason.unit-test/resource/pom.xml pom.xml
+  - mvn clean org.eluder.coveralls:coveralls-maven-plugin:report
+``` 
 
 Unit Test File Structure
 ========================
