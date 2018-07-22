@@ -18,7 +18,7 @@
 		<property name="coverage.message" value="Running a token coverage report"/>
 		<property name="coverage.includes" value="**/expected.*"/>
 		<property name="coverage.file" value="coverage.xml"/>
-		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/coverage-report.xsl"/>
+		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/token-report.xsl"/>
 		<property name="test.coverage.report" value="true"/>
 	</target>
 
@@ -31,7 +31,8 @@
 		<property name="coverage.message" value="Running an XSL coverage report"/>
 		<property name="coverage.includes" value="**/out/templates-covered.txt"/>
 		<property name="coverage.file" value="template-coverage.xml"/>
-		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/template-report.xsl"/>
+		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/xsl-report.xsl"/>
+		<property name="cobertura.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/cobertura-report.xsl"/>
 		<unit-test-log id="UNIT002I" level="info" message="${coverage.message}"/>
 
 		<tempfile deleteonexit="true" destdir="${dita.temp.dir}" property="coverage.report.xml"/>
@@ -53,7 +54,7 @@
 			</sequential>
 		</for>
 		<xslt classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.html" style="${coverage.xsl}"/>
-		<copy file="${coverage.report.xml}" tofile="${output.dir}/coverage.xml"/>
+		<xslt classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.xml" style="${cobertura.xsl}" />
 	</target>
 	<!--
 		Setting up pre-processing for Antro. Checks that mandatory parameters are present
