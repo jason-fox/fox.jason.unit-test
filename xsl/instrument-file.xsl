@@ -65,11 +65,12 @@ version="2.0">
       </xsl:element>
       <xsl:element name="xsl:text" xml:space="preserve">&#xA;</xsl:element>
     </xsl:element>
+    </xsl:if>
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates mode="template"/>
     </xsl:element>
-    </xsl:if>
+   
   </xsl:template>
 
   <xsl:template match="xsl:when" mode="template">
