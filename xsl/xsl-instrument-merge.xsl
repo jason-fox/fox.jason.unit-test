@@ -4,7 +4,7 @@
 	<!-- Defining that this .xsl generates an indented, UTF8-encoded XML file -->
 	<xsl:output encoding="utf-8" indent="yes" method="xml" omit-xml-declaration="yes"/>
 	<xsl:param name="in">.</xsl:param>
-	<xsl:param name="extension">xml</xsl:param>
+	<xsl:param name="extension">x?l</xsl:param>
 	<xsl:param name="out">template-coverage.xml</xsl:param>
 	<xsl:param as="xs:string" name="SOURCE"/>
 	<!--

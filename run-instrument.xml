@@ -32,7 +32,7 @@
 		</xslt>
 
 		<!-- Instrument XSL files thereafter -->
-		<xslt classpath="${fox.jason.unit-test.dir}/lib/saxon-9.1.0.8.jar" destdir="${dita.temp.dir}/coverage"  extension=".xml" style="${test.instrument.xsl.dir}/xsl-instrument-list.xsl" basedir="${args.input}" includes="**/*.xsl"
+		<xslt classpath="${fox.jason.unit-test.dir}/lib/saxon-9.1.0.8.jar" destdir="${dita.temp.dir}/coverage"  extension=".xsl" style="${test.instrument.xsl.dir}/xsl-instrument-list.xsl" basedir="${args.input}" includes="**/*.xsl"
 			excludes="**/*_template.xsl">
 			<xmlcatalog refid="dita.catalog"/>
 			<factory name="net.sf.saxon.TransformerFactoryImpl">
