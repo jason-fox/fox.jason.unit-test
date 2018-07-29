@@ -46,14 +46,14 @@
 			
 				<xsl:for-each select="collection($path)">
 				   <xsl:variable name="document-uri">
-				    	<xsl:value-of select="substring-before(substring-after(replace(replace(replace(document-uri(/), $path, ''), '.orig',''), 'file:/', ''),'coverage/'), '.')"/>
+				    	<xsl:value-of select="substring-after(replace(replace(replace(document-uri(/), $path, ''), '.orig',''), 'file:/', ''),'coverage/')"/>
 					</xsl:variable>
 					<xsl:element name="class">
 						 <xsl:attribute name="name">
-						 	<xsl:value-of select="$document-uri"/>
+						 	<xsl:value-of select="substring-before($document-uri,'.')"/>
 						 </xsl:attribute>
 						  <xsl:attribute name="filename">
-						 	<xsl:value-of select="concat($document-uri,'.xsl')"/>
+						 	<xsl:value-of select="$document-uri"/>
 						 </xsl:attribute>
 						<xsl:element name="lines">
 							<xsl:apply-templates select="document(document-uri(.))/lines/node()" mode="identity"/>
