@@ -9,5 +9,6 @@ version="2.0">
   </xsl:template>
 
   <xsl:template match="line[not(@number)]"/>
+  <xsl:template match="line[not(@hits)]"/>
 
 </xsl:stylesheet>
