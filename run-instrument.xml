@@ -11,11 +11,9 @@
 		<xmlcatalog id="dita.catalog">
 			<catalogpath path="${dita.dir}/catalog-dita.xml"/>
 		</xmlcatalog>
-		<!--
-			Apply the XSLT defined over the root ditamap This create SVRL files from the *.ditamap and fires the associated Validator ruleset.
 
-		-->
-		<xslt classpath="${fox.jason.unit-test.dir}/lib/saxon-9.1.0.8.jar" destdir="${dita.temp.dir}/coverage"  extension=".xml" style="${test.instrument.xsl.dir}/instrument-listing.xsl" basedir="${args.input}" includes="**/*.xsl">
+		<!-- Instrument ANT files first -->
+		<xslt classpath="${fox.jason.unit-test.dir}/lib/saxon-9.1.0.8.jar" destdir="${dita.temp.dir}/coverage"  extension=".xml" style="${test.instrument.xsl.dir}/ant-instrument-list.xsl" basedir="${args.input}" includes="build_*.xml" excludes="build_*_template.xml">
 			<xmlcatalog refid="dita.catalog"/>
 			<factory name="net.sf.saxon.TransformerFactoryImpl">
 				<!--
@@ -32,6 +30,28 @@
 			</factory>
 			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
 		</xslt>
+
+		<!-- Instrument XSL files thereafter -->
+		<xslt classpath="${fox.jason.unit-test.dir}/lib/saxon-9.1.0.8.jar" destdir="${dita.temp.dir}/coverage"  extension=".xml" style="${test.instrument.xsl.dir}/xsl-instrument-list.xsl" basedir="${args.input}" includes="**/*.xsl"
+			excludes="**/*_template.xsl">
+			<xmlcatalog refid="dita.catalog"/>
+			<factory name="net.sf.saxon.TransformerFactoryImpl">
+				<!--
+					Setting several options of Saxon XSLT engine to enable some additional functionality,
+					see for more details:
+					http://www.saxonica.com/html/documentation/configuration/config-features.html
+				-->
+				<attribute name="http://saxon.sf.net/feature/allow-external-functions" value="true"/>
+				<!-- Enable keeping track of line numbers whilst transforming -->
+				<attribute name="http://saxon.sf.net/feature/linenumbering" value="true"/>
+				<attribute name="http://saxon.sf.net/feature/sourceParserClass" value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+				<!-- Enable DTD validation whilst transforming -->
+				<attribute name="http://saxon.sf.net/feature/validation" value="false"/>
+			</factory>
+			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
+		</xslt>
+
+
 		
 	</target>
 </project>

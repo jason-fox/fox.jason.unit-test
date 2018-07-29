@@ -154,11 +154,6 @@
 		  <path location="${args.input}"/>
 		</pathconvert>
 
-		<!-- Create a list of templates in the plugin -/->
-		<xslt classpathref="dost.class.path" destdir="${dita.temp.dir}/coverage"  extension=".xml" style="${test.instrument.xsl.dir}/instrument-listing.xsl" basedir="${args.input}" includes="**/*.xsl">
-			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
-		</xslt>-->
-
 		<path id="instrument.classpath">
 			<fileset dir="${dita.plugin.fox.jason.unit-test.dir}/lib">
 				<include name="*.jar"/>
@@ -179,25 +174,35 @@
 		</java>
 
 		<!-- Merge the list of templates into a single file -->
-		<xslt classpathref="dost.class.path" force="true" in="${test.instrument.xsl.dir}/listing-merge.xsl" out="${test.instrument.report.file}" style="${test.instrument.xsl.dir}/listing-merge.xsl">
+		<xslt classpathref="dost.class.path" force="true" in="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl" out="${test.instrument.report.file}" style="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl" failOnNoResources="false" failonerror="false">
 			<param expression="${dita.temp.dir}/coverage" name="in"/>
 			<param expression="${test.coverage.source}" name="SOURCE"/>
 		</xslt>
 
+		<condition property="xsl.exists">
+			<resourcecount when="gt" count="0">
+	  			<fileset dir="${args.input}">
+					<include name="**/*.xsl"/>
+				</fileset>
+			</resourcecount>
+		</condition>
+
 		<!-- Keep a copy of un-instrumented templates -->
-		<copy todir="${args.input}">
+		<copy if:set="xsl.exists" todir="${args.input}">
 		  <fileset dir="${args.input}">
 			<include name="**/*.xsl"/>
 		  </fileset>
 		  <globmapper from="*" to="*.orig"/>
 		</copy>
 
+
+
 		<!-- instrument each XSLT file within the plugin -->
-		<xslt classpathref="dost.class.path" style="${test.instrument.xsl.dir}/instrument-file.xsl" destdir="${dita.temp.dir}/plugins" basedir="${args.input}" includes="**/*.xsl" extension=".xsl">
+		<xslt if:set="xsl.exists" classpathref="dost.class.path" style="${test.instrument.xsl.dir}/xsl-instrument-file.xsl" destdir="${dita.temp.dir}/plugins" basedir="${args.input}" includes="**/*.xsl" extension=".xsl">
 			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
 		</xslt>
 
-		<move todir="${args.input}">
+		<move if:set="xsl.exists" todir="${args.input}">
 		  <fileset dir="${dita.temp.dir}/plugins">
 			<include name="**/*.xsl"/>
 		  </fileset>
