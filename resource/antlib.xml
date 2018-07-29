@@ -101,19 +101,7 @@
 		<sequential>
 			<init-test/>
 			<run-test ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
-			
-			<!-- strip out comments and save comments only to a separate file -->
-			
 			<copy file="${dita.temp.dir}/topic.fo" tofile="${output.dir}/topic.fo"/>
-			<replaceregexp match="--&gt;\n" replace="--&gt;" flags="gs">
-			    <fileset file="${output.dir}/topic.fo"/>
-			</replaceregexp>	
-			<replaceregexp match="&lt;!--[^&lt;]*--&gt;" replace="" flags="g" byline="true">
-			    <fileset file="${output.dir}/topic.fo"/>
-			</replaceregexp>
-
-			<xslt classpathref="xslt.class.path" in="${dita.temp.dir}/topic.fo" out="${output.dir}/templates-covered.txt" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/comments-only.xsl"/>
-
 			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
 		</sequential>
 	</macrodef>
@@ -139,19 +127,8 @@
 			<!-- Clean up temp and svrl after invocation -->
 			<tempfile deleteonexit="true" property="no-comments" suffix=".svrl"/>
 			<tempfile deleteonexit="true" property="ordered-document" suffix=".svrl"/>
-			<!-- strip out comments and save comments only to a separate file -->
-
 
 			<copy file="${output.dir}/${document}.svrl" tofile="${no-comments}"/>
-			<replaceregexp match="--&gt;\n" replace="--&gt;" flags="gs">
-			    <fileset file="${no-comments}"/>
-			</replaceregexp>
-			
-			<replaceregexp match="&lt;!--[^&lt;]*--&gt;" replace="" flags="g" byline="true">
-			    <fileset file="${no-comments}"/>
-			</replaceregexp>
-
-			<xslt classpathref="xslt.class.path" in="${output.dir}/${document}.svrl" out="${output.dir}/templates-covered.txt" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/comments-only.xsl"/>
 			<xslt classpathref="xslt.class.path" in="${no-comments}" out="${ordered-document}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/order.xsl"/>
 			<xmltask dest="${output.dir}/fragment.svrl" outputter="simple" source="${ordered-document}"/>
 			<delete dir="${dita.temp.dir}" failonerror="false" quiet="true"/>
@@ -201,21 +178,7 @@
 			// ]]></script>
 
 			<!-- strip out comments and save comments only to a separate file -->
-			<echo file="@{to}" message="${fragment}"/>
-
-			<replaceregexp match="--&gt;\n" replace="--&gt;" flags="gs">
-			    <fileset file="@{to}"/>
-			</replaceregexp>
-			
-			<replaceregexp match="&lt;!--[^&lt;]*--&gt;" replace="" flags="g" byline="true">
-			    <fileset file="@{to}"/>
-			</replaceregexp>
-			
-			
-			<echo file="${output.dir}/templates-covered.txt" message="${fragment}"/>
-			<replaceregexp match="\s*&lt;[a-z|/].*&gt;" replace="" flags="g" byline="true">
-			    <fileset file="${output.dir}/templates-covered.txt"/>
-			</replaceregexp>
+			<echo file="@{to}" message="${fragment}"/>	
 		</sequential>
 	</macrodef>
 	<!-- 
@@ -400,6 +363,11 @@
 			<condition property="test.colorize" value="true">
 				<os family="unix"/>
 			</condition>
+			<condition property="dita.ot.verbose" value="-d">
+				<istrue value="${test.coverage.report}"/>
+			</condition>
+			<property name="dita.ot.verbose" value="-v"/>
+
 			<path id="xslt.class.path">
 				<fileset dir="${dita.dir}/lib">
 					<include name="*.jar"/>
@@ -491,6 +459,7 @@
 		<attribute default="test.properties" name="propertyfile"/>
 		<attribute name="maxwait"/>
 		<attribute default="no" name="clean"/>
+		<attribute name="ditaoutput" default="dita.ot.output"/>
 		<sequential>
 			<local name="test.properties"/>
 			<get-test-resource default="${test.propertyfile}" file="@{propertyfile}" property="test.properties"/>
@@ -509,16 +478,26 @@
 				<arg value="--clean.temp=@{clean}"/>
 				<arg value="--propertyfile"/>
 				<arg value="${test.properties}"/>
-				<!-- Add to obtain verbose output. -->
-				<arg value="-v"/>
+				<arg value="${dita.ot.verbose}"/>
 			</exec>
 			<!-- For Windows run from a DOS command -->
 			<exec dir="${dita.dir}/bin" executable="cmd" osfamily="windows" outputproperty="dita.ot.output" resultproperty="dita.ot.result">
 				<arg value="/C"/>
-				<arg value="dita -input @{ditamap} -output @{output}-format @{transtype} -temp ${dita.temp.dir} --clean.temp=@{clean} -v"/>
+				<arg value="dita -input @{ditamap} -output @{output}-format @{transtype} -temp ${dita.temp.dir} --clean.temp=@{clean} ${dita.ot.verbose}"/>
 			</exec>
 			<unix-timestamp property="stop"/>
+
 			<echo level="info" message="${dita.ot.output}" taskname="dita-ot"/>
+			<script language="javascript">//
+				<![CDATA[
+		    	var input = project.getProperty("dita.ot.output");
+		       	var re = /(([\w|\.\-]*:$)|(\w*:.*\.xsl))/gm;
+		       	var myArray = input.match(re);
+		      	project.setProperty("dita.ot.instrument", myArray.join(String.fromCharCode(13)));
+			// ]]></script>
+
+
+			<echo message="${dita.ot.instrument}" file="${output.dir}/instrument.txt" />
 			<assert-equal arg1="${dita.ot.result}" arg2="@{expectedresult}" body="Expected @{expectedresult} got ${dita.ot.result}" message="[FAILED] Unexpected Result ${dita.ot.result} from DITA-OT"/>
 			<calculate-value operand1="${stop}" operand2="${start}" operation="-" resultproperty="duration"/>
 			<assert-timeout duration="${duration}" maxwait="@{maxwait}"/>

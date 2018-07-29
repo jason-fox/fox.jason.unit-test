@@ -58,7 +58,7 @@
 			<var name="covered.count" value="0"/>
 			<var name="percentage" value="0"/>
 			<xmltask source="@{dir}/test/@{file}">
-				<call path="//element">
+				<call path="//element[text()]">
 					<param default="" name="token" path="text()"/>
 					<param default="" name="id" path="@id"/>
 					<actions>
@@ -71,7 +71,7 @@
 						<math datatype="int" operand1="${token.count}" operand2="1" operation="+" result="token.count"/>
 					</actions>
 				</call>
-				<call path="//line">
+				<call path="//line[text()]">
 					<param default="" name="token" path="text()"/>
 					<param default="" name="id" path="@id"/>
 					<actions>

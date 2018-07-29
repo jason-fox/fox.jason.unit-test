@@ -26,10 +26,10 @@
 		Generate coverage report. Take each element of the listing file
 		and see if it can be found in the outputs
 	-->
-	<target if="test.coverage.report" name="coverage.report">
+	<target if:true="test.coverage.report" name="coverage.report">
 		<!-- The default report is an instrumented XSLT report -->
 		<property name="coverage.message" value="Running an XSL coverage report"/>
-		<property name="coverage.includes" value="**/out/templates-covered.txt"/>
+		<property name="coverage.includes" value="**/out/instrument.txt"/>
 		<property name="coverage.file" value="template-coverage.xml"/>
 		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/xsl-report.xsl"/>
 		<property name="cobertura.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/cobertura-report.xsl"/>

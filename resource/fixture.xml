@@ -19,6 +19,7 @@
 				<arg value="-Dtest.root.dir=${basedir}"/>
 				<arg value="-Dtest.copy.dir=${test.copy.dir}/${test-suite}"/>
 				<arg value="-Dtest.copy=${test.copy}"/>
+				<arg value="-Dtest.coverage.report=${test.coverage.report}"/>
 				<arg value="-Ddita.dir=${dita.dir}"/>
 				<arg value="-Dtest.colorize=false"/>
 			</exec>

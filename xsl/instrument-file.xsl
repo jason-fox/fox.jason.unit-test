@@ -15,93 +15,37 @@ version="2.0">
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="@*|node()" mode="template">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()" mode="template"/>
-    </xsl:copy>
-  </xsl:template>
 
- <xsl:template match="xsl:template">
+ <xsl:template match="xsl:template|xsl:function">
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates select="xsl:param"/>
-      <xsl:element name="xsl:if">
-       <xsl:attribute name="test">
-          <xsl:text>. instance of element()</xsl:text>
-        </xsl:attribute>
-        <xsl:element name="xsl:comment">
-          <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
-        </xsl:element>
-        <xsl:element name="xsl:text" xml:space="preserve">&#xA;</xsl:element>
-      </xsl:element>
-      <xsl:apply-templates select="node()[not(self::xsl:param)]" mode="template"/>
-    </xsl:element>
-  </xsl:template>
-
-  <xsl:template match="xsl:if" mode="template">
-    <xsl:element name="{name()}">
-      <xsl:apply-templates select="@*"/>
-      <xsl:element name="xsl:if">
-       <xsl:attribute name="test">
-          <xsl:text>. instance of element()</xsl:text>
-        </xsl:attribute>
-        <xsl:element name="xsl:comment">
-          <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
-        </xsl:element>
-      </xsl:element>
-      <xsl:apply-templates mode="template"/>
-    </xsl:element>
-  </xsl:template>
-
-   <xsl:template match="xsl:choose|xsl:for-each" mode="template">
-    <xsl:if test="not(ancestor::xsl:variable)">
-    <xsl:element name="xsl:if">
-     <xsl:attribute name="test">
-        <xsl:text>. instance of element()</xsl:text>
-      </xsl:attribute>
-      <xsl:text>&#xA;</xsl:text>
-      <xsl:element name="xsl:comment">
+      <xsl:element name="xsl:message">
         <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
       </xsl:element>
-      <xsl:element name="xsl:text" xml:space="preserve">&#xA;</xsl:element>
-    </xsl:element>
-    </xsl:if>
-    <xsl:element name="{name()}">
-      <xsl:apply-templates select="@*"/>
-      <xsl:apply-templates mode="template"/>
-    </xsl:element>
-   
-  </xsl:template>
-
-  <xsl:template match="xsl:when" mode="template">
-    <xsl:element name="{name()}">
-      <xsl:apply-templates select="@*"/>
-      <xsl:element name="xsl:if">
-       <xsl:attribute name="test">
-          <xsl:text>. instance of element()</xsl:text>
-        </xsl:attribute>
-        <xsl:element name="xsl:comment">
-          <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
-        </xsl:element>
-        <xsl:element name="xsl:text" xml:space="preserve">&#xA;</xsl:element>
-      </xsl:element>
-      <xsl:apply-templates mode="template"/>
+      <xsl:apply-templates select="node()[not(self::xsl:param)]"/>
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="xsl:otherwise" mode="template">
+
+   <xsl:template match="xsl:choose|xsl:for-each">
+    <xsl:element name="xsl:message">
+      <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
+    </xsl:element>
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
-      <xsl:element name="xsl:if">
-       <xsl:attribute name="test">
-          <xsl:text>. instance of element()</xsl:text>
-        </xsl:attribute>
-        <xsl:element name="xsl:comment">
-          <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
-        </xsl:element>
-        <xsl:element name="xsl:text" xml:space="preserve">&#xA;</xsl:element>
-      </xsl:element>
-      <xsl:apply-templates mode="template"/>
+      <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
+
+  <xsl:template match="xsl:when|xsl:otherwise|xsl:if">
+    <xsl:element name="{name()}">
+      <xsl:apply-templates select="@*"/>
+      <xsl:element name="xsl:message">
+        <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
+      </xsl:element>
+      <xsl:apply-templates/>
+    </xsl:element>
+  </xsl:template>
+
 </xsl:stylesheet>

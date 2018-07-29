@@ -207,8 +207,8 @@
 
 
         <xsl:variable name="token" select="."/>
-          <xsl:variable name="xslfile" select="substring-after(.,':')"/>
-          <xsl:variable name="previousfile" select="substring-after(preceding-sibling::*[1],':')"/>
+          <xsl:variable name="xslfile" select="substring-after(@id,':')"/>
+          <xsl:variable name="previousfile" select="substring-after(preceding-sibling::*[1]/@id,':')"/>
 
           <xsl:variable name="current" select="@element"/>
           <xsl:variable name="attributes" select="normalize-space(@attributes)"/>
