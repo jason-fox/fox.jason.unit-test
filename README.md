@@ -663,8 +663,11 @@ The Program includes the following additional software components which were obt
 * ant-antunit.jar - https://ant.apache.org/antlibs/antunit/ - **Apache 2.0 license**
 * ant-contrib.jar - http://ant-contrib.sourceforge.net/ - **Apache 2.0 license**
 * ant-junit.jar - https://ant.apache.org/ - **Apache 2.0 license**
+* Saxon-9.1.0.8.jar - http://saxon.sourceforge.net/  - **Mozilla Public license 1.0**
+* Saxon-9.1.0.8-dom.jar - http://saxon.sourceforge.net/  - **Mozilla Public license 1.0**
 * xmltask.jar - http://www.oopsconsultancy.com/software/xmltask/ - **Apache 1.1 license**
 * antro.jar - https://github.com/jkff/antro/ - **Gnu General Public License 3**
 * swingx-2008_03_09.jar - http://swingx.dev.java.net/  - **Gnu General Public License 3**
 * json.jar-  http://www.json.org/  - **Gnu General Public License 3**
+
 
