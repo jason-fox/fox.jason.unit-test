@@ -136,6 +136,8 @@ Integration with Travis CI
 
 **Travis CI** is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. More information about how to set up travis integration can be found on the [travis website](https://docs.travis-ci.com/).
 
+![](https://jason-fox.github.io/fox.jason.unit-test/travis.png)
+
 For automated testing of DITA-OT plug-ins, place your tests under a `test` directory under the root
 of the repository along with the `.travis.yml` in the root itself.
 
@@ -191,6 +193,8 @@ Integration with Coveralls
 --------------------------
 
 **Coveralls** is a web service to help you track your code coverage over time, and ensure that all your new code is fully covered. More information about how to set up coveralls-travis integration can be found on the [travis website](https://docs.coveralls.io/).
+
+![](https://jason-fox.github.io/fox.jason.unit-test/coveralls.png)
 
 If a plug-in nas been instrumented (using the `xsl-instrument` transform) and unit tests are run, a cobertura style `coverage.xml` file will be created along with the test results and a coverage report.
 This can be forwared to Coveralls using the standard maven plug-in as shown:
