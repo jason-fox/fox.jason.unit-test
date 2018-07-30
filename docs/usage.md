@@ -2,8 +2,8 @@
 Usage
 =====
 
-Invoking the unit tests from the Command line
----------------------------------------------
+Invocation from the Command line
+--------------------------------
 
 A series of test suites can be found within the plug-in at `PATH_TO_DITA_OT/plugins/fox.jason.unit-test/sample`
 
