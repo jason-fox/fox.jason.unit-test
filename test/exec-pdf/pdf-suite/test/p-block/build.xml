@@ -5,7 +5,6 @@
 		Expect that PDF paragraph text displays correctly
 	</description>
 	<target name="unit-test">
-		<property name="test.coverage.report" value="true"/>
 		<exec-pdf/>
 		<get-pdf-article/>
 		<compare-output/>

@@ -363,10 +363,9 @@
 			<condition property="test.colorize" value="true">
 				<os family="unix"/>
 			</condition>
-			<condition property="dita.ot.verbose" value="-d">
+			<condition property="dita.ot.verbose" value="-d" else="-v">
 				<istrue value="${test.coverage.report}"/>
 			</condition>
-			<property name="dita.ot.verbose" value="-v"/>
 
 			<path id="xslt.class.path">
 				<fileset dir="${dita.dir}/lib">
