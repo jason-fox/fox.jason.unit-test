@@ -12,9 +12,9 @@ before_script:
   - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/com.here.validate.svrl/archive/master.zip
   - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/com.here.validate.svrl.text-rules/archive/master.zip
   - dita-ot-$DITA_OT/bin/dita --install fox.jason.unit-test.zip
-  - [[ $DITA_OT = "3.1" ]] && dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/fox.jason.unit-test -f xsl-instrument
+  - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/fox.jason.unit-test -f xsl-instrument 
 script:
   - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/fox.jason.unit-test -f unit-test --output . -v
 after_success:
   - cp dita-ot-$DITA_OT/plugins/fox.jason.unit-test/resource/pom.xml pom.xml
-  - [[ $DITA_OT = "3.1" ]] && mvn clean org.eluder.coveralls:coveralls-maven-plugin:report 
+  - mvn clean org.eluder.coveralls:coveralls-maven-plugin:report 
