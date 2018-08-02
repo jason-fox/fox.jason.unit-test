@@ -21,7 +21,7 @@ version="2.0">
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates select="xsl:param"/>
       <xsl:element name="xsl:message">
-        <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
+        <xsl:value-of select="concat(count(preceding::node()[not(self::xsl:message)]),':', $document-uri)"/>
       </xsl:element>
       <xsl:apply-templates select="node()[not(self::xsl:param)]"/>
     </xsl:element>
@@ -30,7 +30,7 @@ version="2.0">
 
    <xsl:template match="xsl:choose|xsl:for-each">
     <xsl:element name="xsl:message">
-      <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
+      <xsl:value-of select="concat(count(preceding::node()[not(self::xsl:message)]),':', $document-uri)"/>
     </xsl:element>
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
@@ -42,7 +42,7 @@ version="2.0">
     <xsl:element name="{name()}">
       <xsl:apply-templates select="@*"/>
       <xsl:element name="xsl:message">
-        <xsl:value-of select="concat(generate-id(.), ':', $document-uri)"/>
+        <xsl:value-of select="concat(count(preceding::node()[not(self::xsl:message)]),':', $document-uri)"/>
       </xsl:element>
       <xsl:apply-templates/>
     </xsl:element>
