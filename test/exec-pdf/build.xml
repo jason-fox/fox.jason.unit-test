@@ -5,6 +5,7 @@
 		Expect that a test suite containing PDF commands can be invoked successfully
 	</description>
 	<target name="unit-test">
+		<property name="test.coverage.report" value="true"/>
 		<exec-transtype transtype="unit-test" ditamap="."/>
 		<contains-text expected="[SUCCESS] All tests have passed"/>
 	</target>

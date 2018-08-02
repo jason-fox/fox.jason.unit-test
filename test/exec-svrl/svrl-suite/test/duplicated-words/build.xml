@@ -5,6 +5,7 @@
 		Expect that duplicated words in the text is a validation error
 	</description>
 	<target name="unit-test">
+		<property name="test.coverage.report" value="true"/>
 		<exec-svrl transtype="text-rules"/>
 		<compare-output suffix=".svrl"/>
 	</target>

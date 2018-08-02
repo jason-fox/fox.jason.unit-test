@@ -5,6 +5,7 @@
 		Expect that HTML paragraph text is displayed correctly
 	</description>
 	<target name="unit-test">
+		<property name="test.coverage.report" value="true"/>
 		<exec-html5/>
 		<get-html-article from="topics/p.html"/>
 		<compare-output suffix=".html"/>
