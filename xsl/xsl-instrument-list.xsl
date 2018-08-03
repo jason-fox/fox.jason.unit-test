@@ -100,7 +100,7 @@ version="2.0">
         </xsl:attribute>
       </xsl:if>
       <xsl:if test="$instrument">
-        <xsl:value-of select="concat(count(preceding::node()[not(self::xsl:message)]), ':', $document-uri)"/>
+        <xsl:value-of select="concat('i', count(preceding::node()[not(self::xsl:message)]), ':', $document-uri)"/>
       </xsl:if>
     </xsl:element>
    </xsl:template>
