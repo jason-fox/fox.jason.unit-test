@@ -11,12 +11,12 @@ Unit Test Framework for DITA-OT
 This is a Unit Testing framework for the DITA Open Toolkit. This plug-in consists of seven DITA-OT transforms and an ANT library:
 
 * Unit Testing
-    - The `unit-test` transform allows a user to runs a sequence of `dita` commands and checks that the documents created match the expected output. This is useful for regresssion testing, and confirming that any custom plug-ins do not conflict when upgrading the base DITA-OT engine.
+    - The `unit-test` transform allows a user to runs a sequence of `dita` commands and checks that the documents created match the expected output. This is useful for regression testing, and confirming that any custom plug-ins do not conflict when upgrading the base DITA-OT engine.
     - The `resource/antlib.xml` library offers a series of convenience methods for creating DITA-OT unit tests.
 * Code Coverage
     - The `token-report` transform checks to see if a series of tokens representing all potential output values are covered by unit tests
     - The `xsl-instrument` transform annotates an DITA-OT plug-in to enable code coverage reporting
-    - The `xsl-deinstrument` transform removes the instrumentation annotation from a specified plugin
+    - The `xsl-deinstrument` transform removes the instrumentation annotation from a specified plug-in
     - The `xsl-report` transform displays which templates have been invoked whilst running unit tests
 * ANT Profiling
     - The `antro` transform runs an ANT script profiler against a specified transform and outputs a profiler JSON file 
@@ -65,7 +65,7 @@ Table of Contents
 Install
 =======
 
-The unit test framework plug-in has been tested against [DITA-OT 3.0.x](http://www.dita-ot.org/download). It is also compatible with DITA-OT 2.x. but it is still recommended that you upgrade to the latest version. The unit test framework plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/) 1.3 to run tests and ANT junit to create a test report. ANT 1.9+ is recommended.
+The unit test framework plug-in has been tested against [DITA-OT 3.x](http://www.dita-ot.org/download). It is also compatible with DITA-OT 2.x. but it is still recommended that you upgrade to the latest version. The unit test framework plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/) 1.3 to run tests and ANT jUnit to create a test report. ANT 1.9+ is recommended.
 
 Installing DITA-OT
 ------------------
@@ -125,7 +125,7 @@ This is the test report from the example tests found within the plug-in `sample`
 
 ### XSLT Coverage Report
 
-To run a XSLT Coverage Report, each DITA-OT Plug-In must be **instrumented** - this annotates the XSLT templates within the plugin to be able to generate coverage information. A copy of each `*.xsl` file is also saved with the `*.orig` suffix.
+To run a XSLT Coverage Report, each DITA-OT Plug-In must be **instrumented** - this annotates the XSLT templates within the plug-in to be able to generate coverage information. A copy of each `*.xsl` file is also saved with the `*.orig` suffix.
 
 ```console
 PATH_TO_DITA_OT/bin/dita -f xsl-instrument -i PATH_TO_PLUG_IN
@@ -221,7 +221,7 @@ You can drill down to an individual line to see if it has been invoked and how l
 ### Parameter Reference
 
 - `test.colorize` - When set, successes and failures are output highlighted using ANSI color codes
-- `test.copy` - Specifies whether regenerated expecations should be copied. Default is `false`
+- `test.copy` - Specifies whether regenerated expectations should be copied. Default is `false`
 - `test.transtype` - The real transtype to run the antro profiler against
 - `test.propertyfile` - A properties file to use when running the unit tests or antro profiler
 
@@ -229,7 +229,7 @@ You can drill down to an individual line to see if it has been invoked and how l
 Integration with Travis CI
 --------------------------
 
-**Travis CI** is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. More information about how to set up travis integration can be found on the [travis website](https://docs.travis-ci.com/).
+**Travis CI** is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. More information about how to set up Travis integration can be found on the [Travis website](https://docs.travis-ci.com/).
 
 ![](https://jason-fox.github.io/fox.jason.unit-test/travis.png)
 
@@ -260,10 +260,10 @@ script:
 
 This will do the following:
 
-* Zip up the files in the plugin under test
+* Zip up the files in the plug-in under test
 * install the specified DITA-OT version
 * install the unit-testing framework (repeat this for other dependencies)
-* install the plugin under test
+* install the plug-in under test
 * Run the tests
 
 Unit tests will be run whenever a commit occurs.
@@ -288,12 +288,12 @@ The command "dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -
 Integration with Coveralls
 --------------------------
 
-**Coveralls** is a web service to help you track your code coverage over time, and ensure that all your new code is fully covered. More information about how to set up coveralls-travis integration can be found on the [travis website](https://docs.coveralls.io/).
+**Coveralls** is a web service to help you track your code coverage over time, and ensure that all your new code is fully covered. More information about how to set up Coveralls-Travis integration can be found on the [travis website](https://docs.coveralls.io/).
 
 ![](https://jason-fox.github.io/fox.jason.unit-test/coveralls.png)
 
-If a plug-in nas been instrumented (using the `xsl-instrument` transform) and unit tests are run, a cobertura style `coverage.xml` file will be created along with the test results and a coverage report.
-This can be forwared to Coveralls using the standard maven plug-in as shown:
+If a plug-in has been instrumented (using the `xsl-instrument` transform) and unit tests are run, a Cobertura style `coverage.xml` file will be created along with the test results and a coverage report.
+This can be forwarded to Coveralls using the standard maven plug-in as shown:
 
 ```yml
 language: java
@@ -364,7 +364,7 @@ At the root of the tests lies a `bootstrap.xml` file which references the `antli
 </project>
 ```
 
--  The location of `test.root.dir` must be set - this allows the expecation of a single test to be updated directly from the command line independently of the test harness.
+-  The location of `test.root.dir` must be set - this allows the expectation of a single test to be updated directly from the command line independently of the test harness.
 -  The location of `dita.dir` must be set - this allows a single test to be run directly from the command line independently of the test harness.
 - The functions from the unit-test `antlib.xml` must be loaded using the `<typedef>` task.
 
