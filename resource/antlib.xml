@@ -29,7 +29,28 @@
 			<copy-result dest="@{expectation}" src="@{result}"/>
 			<loadfile failonerror="true" property="actual" srcfile="@{result}"/>
 			<loadfile failonerror="true" property="expected" srcfile="@{expectation}"/>
-			<assert-equal arg1="${expected}" arg2="${actual}" body="EXPECTED :${line}${expected}${line}ACTUAL :${line}${actual}" message="[FAILED] Test Assertion Failed - Result does not match expectation${line.separator}"/>
+
+			<basename property="actual.file" file="@{result}"/>
+			<basename property="expected.file" file="@{expectation}"/>
+
+
+			<exec executable="diff" osfamily="unix" outputproperty="test.diff" resultproperty="test.diff.result">
+				<arg value="-b"/>
+				<arg value="-u"/>
+				<arg value="--suppress-common-lines"/>
+				<arg value="--label"/>
+				<arg value="${expected.file}"/>
+				<arg value="@{expectation}"/>
+				<arg value="--label"/>
+				<arg value="${actual.file}"/>
+				<arg value="@{result}"/>
+			</exec>
+
+			<condition else="${expected.file} :${line}${expected}${line}${actual.file} :${line}${actual}" property="test.body" value="${test.diff}">
+				<isset property="test.diff.result"/>
+			</condition>
+
+			<assert-equal arg1="${expected}" arg2="${actual}" body="${test.body}" message="[FAILED] Test Assertion Failed - Result does not match expectation${line.separator}"/>
 			<unit-test-success-echo/>
 		</sequential>
 	</macrodef>
