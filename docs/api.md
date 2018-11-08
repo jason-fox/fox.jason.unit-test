@@ -1,6 +1,6 @@
 
-API
-===
+<h1>Unit Testing ANT Tasks</h1>
+
 
 The following ANT tasks are available from the DITA-OT Unit Test Framework
 
@@ -39,7 +39,7 @@ if running on a UNIX system, no comparison is made.
 
 
 Contains-Text
-------------- 
+-------------
 
 #### Description
 Fail the test if the log from the test does not contain the given string
@@ -71,7 +71,7 @@ Exec-HTML5
 ----------
 
 #### Description
-Execute the HTML5 DITA-OT transform in verbose mode 
+Execute the HTML5 DITA-OT transform in verbose mode
 The test will fail if the result was not as expected or took too long
 
 #### Parameters
@@ -96,7 +96,7 @@ Exec-PDF
 --------
 
 #### Description
-Execute the PDF DITA-OT transform in verbose mode 
+Execute the PDF DITA-OT transform in verbose mode
 
 #### Parameters
 | Attribute      | Description                                        | Required                          |
