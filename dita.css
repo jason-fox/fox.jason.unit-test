@@ -49,13 +49,7 @@ th {
     color: #fff;
     border-color:#333 !important;
 }
-hr {
-  width: 200%;
-  margin-left: -50%;
-   padding-bottom : 6px;
-   box-shadow: 0px 3px 0px 0px #5dc0cf;
-   border-top : none;
-}
+
 div[role="navigation"] hr {
     box-shadow: none;
     border-top: 1px solid #e1e4e5;
@@ -66,7 +60,10 @@ div[role="navigation"] hr {
 a:hover{color:#5dc0cf !important}
 a.icon-home{color:#fff !important;
 white-space : pre-line !important;
-font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important; font-weight:normal !important;color:#000 !important; text-transform:uppercase !important; margin:0 0 0 0 !important}
+font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important; 
+font-weight:normal !important;
+color:#000 !important; 
+margin: 0 0 0 0 !important}
 .fa-home:before, .icon-home:before{content:None !important}
 .wy-menu-vertical {color: #3563ab !important; background-color:#bec3cc}
 .wy-menu-vertical .current {color: #3563ab; background-color: rgb(238, 238, 238) !important;
@@ -79,8 +76,13 @@ border-right: #efefef solid 1px; }
 .wy-menu-vertical li.current a:hover{background-color: #eee; color:#233456 !important}
 .wy-menu-vertical li.current > a:hover{background-color:#eee !important;border-right:0 !important}
 .wy-menu-vertical a:hover{color: #eee  !important}
-.wy-side-nav-search {background: #294d84 !important; border-right: #efefef solid 1px;}
-.wy-side-nav-search a{background-color:transparent !important; }
+.wy-side-nav-search {background: #fff !important;
+ border-right: #efefef solid 1px;
+ }
+.wy-side-nav-search a{
+  background-color:transparent !important; 
+  text-size: x-small;
+}
 .wy-menu-vertical span{ background-color: #294d84; color: #ffffff !important;}
 nav > div.wy-menu.wy-menu-vertical > ul > li > a{ color:#3563ab !important}
 nav > div.wy-menu.wy-menu-vertical > ul > li.current > a{color: #3563ab !important}
@@ -95,17 +97,27 @@ nav > div.wy-menu.wy-menu-vertical > ul > li > a:hover{color:#3563ab !important}
 .btn-neutral:hover{background-color:#233c68 !important; color:#ffffff !important}
 .btn-neutral:visited{color:#233c68 !important}
 .btn-neutral:visited:hover{color:#ffffff !important}
-.rst-versions{background:#294d84 none !important;border-top:0 !important;}
-.rst-versions .rst-current-version{background-color:#294d84 !important}
+.rst-versions{
+  background:#294d84 none !important;
+  border-top:0 !important;
+  bottom: 5px !important;
+}
+.rst-versions .rst-current-version{
+  background-color:#294d84 !important;
+
+ }
 .rst-versions a{color:#fff !important; text-decoration:underline !important}
 .rst-versions a:hover{color:#FFF !important}
 .fa-book,.fa{font-family:verdana !important}
 .rst-versions .rst-other-versions{color:#fff !important}
 .rst-versions .rst-other-versions hr{border-color:#fff !important}
 .fa-home:before, .icon-home:after{content:}
-a.icon-home {color: #fff !important;
+a.icon-home {color: #294d84 !important;
  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important; 
- font-size: x-large !important; font-weight: 500 !important; 
+ font-size: large !important; 
+ font-weight: 500 !important; 
+ margin-top : 15px !important;
+ margin-bottom: 10px !important;
 }
 
 
@@ -192,4 +204,16 @@ div[role="main"]{
   margin-right: 28px;
   background:  #eee;
   font-size: 110%
+}
+
+.wy-side-nav-search{
+ clear:both !important; 
+ padding:40px 10px 16px 10px;
+ background-image: url('https://jason-fox.github.io/fox.jason.unit-test/unit.png') !important;
+ background-size: 270px 40px !important;
+ background-repeat: no-repeat !important;
+ background-position: 15px 8px !important; 
+ border-bottom-color : #000000;
+ border-bottom-width: 1px;
+ border-style: solid;
 }
