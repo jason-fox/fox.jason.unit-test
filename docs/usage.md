@@ -1,7 +1,3 @@
-
-Usage
-=====
-
 Invocation from the Command line
 --------------------------------
 
@@ -15,7 +11,7 @@ To run, use the `unit-test` transform.
 PATH_TO_DITA_OT/bin/dita -f unit-test  -o out -i PATH_TO_UNIT_TESTS
 ```
 
-Once the command has run, a test report file is created. 
+Once the command has run, a test report file is created.
 Additionally, if any error occurs, the command will fail.
 
 **Sample Test Report**
@@ -49,10 +45,10 @@ PATH_TO_DITA_OT/bin/dita -f unit-test -i PATH_TO_UNIT_TESTS
 * If the `-i` input directory is a test suite, XSL coverage for that test suite will be reported.
 * If the `-i` input directory is not a test suite, XSL coverage for all test suites directly beneath that directory will be reported.
 
-Once the command has run, both a test report file and an XSL coverage report file are created. 
+Once the command has run, both a test report file and an XSL coverage report file are created.
 Additionally, if any error occurs, the command will fail.
 
-It is also possible to run XSL coverage over a single test. An individual test can be run directly 
+It is also possible to run XSL coverage over a single test. An individual test can be run directly
 from the command line by running the default target within that test. This can be followed by
 direct invocation of the coverage report
 
@@ -80,13 +76,13 @@ PATH_TO_DITA_OT/bin/dita -f token-report -i PATH_TO_UNIT_TESTS
 ```
 
 Once the command has run,  a coverage report is created
- 
+
 #### Sample Token Report
 
-This is the token report from the example tests found within the plug-in `sample` directory. 
+This is the token report from the example tests found within the plug-in `sample` directory.
 
 * Coverage for the Spell-checker is looking to ensure that all rules have been run. Uncovered rules are highlighted in RED.
-* Coverage for HTML processing is looking for the presence of `<codeph>`,  `<codeblock>` and `<p>` tags being rendered in the tests. 
+* Coverage for HTML processing is looking for the presence of `<codeph>`,  `<codeblock>` and `<p>` tags being rendered in the tests.
 
 ![enter image description here](https://jason-fox.github.io/fox.jason.unit-test/coverage.png)
 
@@ -158,7 +154,7 @@ before_script:
   - mv dita-ot*/ dita-ot/
   - chmod +x dita-ot/bin/dita
   - dita-ot/bin/dita --install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
-  - dita-ot/bin/dita --install PLUGIN-NAME.zip 
+  - dita-ot/bin/dita --install PLUGIN-NAME.zip
 script:
   - dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -v
 ```
@@ -212,11 +208,11 @@ before_script:
   - unzip -q dita-ot-$DITA_OT.zip
   - chmod +x dita-ot-$DITA_OT/bin/dita
   - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
-  - dita-ot-$DITA_OT/bin/dita --install PLUGIN-NAME.zip 
+  - dita-ot-$DITA_OT/bin/dita --install PLUGIN-NAME.zip
   - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/PLUGIN-NAME -f xsl-instrument
 script:
   - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/PLUGIN-NAME -f unit-test --output . -v
 after_success:
   - cp dita-ot-$DITA_OT/plugins/fox.jason.unit-test/resource/pom.xml pom.xml
   - mvn clean org.eluder.coveralls:coveralls-maven-plugin:report
-``` 
+```

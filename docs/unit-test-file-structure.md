@@ -1,7 +1,4 @@
 
-Unit Test File Structure
-========================
-
 The unit tests are organized in the following manner:
 
 ```
@@ -12,7 +9,7 @@ The unit tests are organized in the following manner:
 │       ├── ... etc
 │       ├── bootstrap.xml
 │       └── coverage.xml
-│ 
+│
 ├── test-suite-B
 │   └── test
 │       ├── unit-test-1
@@ -41,7 +38,7 @@ At the root of the tests lies a `bootstrap.xml` file which references the `antli
 ```xml
 <project name="bootstrap.unit-test">
   <dirname property="test.root.dir" file="${ant.file.bootstrap.unit-test}/.." />
-  <property name="dita.dir" location="PATH_TO_DITA_OT"/> 
+  <property name="dita.dir" location="PATH_TO_DITA_OT"/>
   <typedef file="${dita.dir}/plugins/fox.jason.unit-test/resource/antlib.xml"/>
 </project>
 ```
@@ -63,7 +60,7 @@ A token coverage file consists of a list of XML elements or string literals whic
     <line id="monospace-text">font-family="MONOSPACE"</line>
   </lines>
   <elements>
-    <element id="codeblock">fo:block font-family="MONOSPACE"</element>  
+    <element id="codeblock">fo:block font-family="MONOSPACE"</element>
     <element id="codeph-tt">fo:inline font-family="MONOSPACE"</element>
     <element id="colspec">fo:table-column</element>
     <element id="colspec-width">fo:table-column column-width</element>
@@ -131,7 +128,7 @@ Each unit test is organized in the following manner:
 - A test expectation (usually called `expected.html` or `expected.fo`)
 - Any further `*.dita` files or source files, graphics etc. required for the test.
 
-The `build.xml` must consist of a single default target, and `import` the `bootstrap.xml` file as shown. The `description` is used within the test report. 
+The `build.xml` must consist of a single default target, and `import` the `bootstrap.xml` file as shown. The `description` is used within the test report.
 
 ```xml
 <project basedir="." default="unit-test">
@@ -148,4 +145,4 @@ The `build.xml` must consist of a single default target, and `import` the `boots
 ```
 
 - An individual test can be run directly from the command line by running the default target.
-- Adding the comment `<!-- @disabled -->` within the `build.xml` file will disable a test 
+- Adding the comment `<!-- @disabled -->` within the `build.xml` file will disable a test
