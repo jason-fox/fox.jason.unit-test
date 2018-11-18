@@ -1,0 +1,2 @@
+build_dita*.xml linguist-language=Ant Build System
+run-instrument.xml linguist-language=Ant Build System
