@@ -194,7 +194,7 @@ Integration with Coveralls
 
 ![](https://jason-fox.github.io/fox.jason.unit-test/coveralls.png)
 
-If a plug-in nas been instrumented (using the `xsl-instrument` transform) and unit tests are run, a cobertura style `coverage.xml` file will be created along with the test results and a coverage report.
+If a plug-in has been instrumented (using the `xsl-instrument` transform) and unit tests are run, a cobertura style `coverage.xml` file will be created along with the test results and a coverage report.
 This can be forwared to Coveralls using the standard maven plug-in as shown:
 
 ```yml
