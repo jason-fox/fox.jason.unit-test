@@ -170,9 +170,10 @@
 		<attribute default="0" name="expectedresult"/>
 		<attribute default="100" name="maxwait"/>
 		<attribute default="test.properties" name="propertyfile"/>
+		<attribute name="test.output" default="dita.ot.output"/>
 		<sequential>
 			<init-test/>
-			<run-test clean="yes" ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}"/>
+			<run-test clean="yes" ditamap="@{ditamap}" expectedresult="@{expectedresult}" maxwait="@{maxwait}" propertyfile="@{propertyfile}" transtype="@{transtype}" test.output="@{test.output}"/>
 		</sequential>
 	</macrodef>
 	<!-- 
@@ -479,14 +480,14 @@
 		<attribute default="test.properties" name="propertyfile"/>
 		<attribute name="maxwait"/>
 		<attribute default="no" name="clean"/>
-		<attribute name="ditaoutput" default="dita.ot.output"/>
+		<attribute name="test.output" default="dita.ot.output"/>
 		<sequential>
 			<local name="test.properties"/>
 			<get-test-resource default="${test.propertyfile}" file="@{propertyfile}" property="test.properties"/>
 			<echo level="warning" message="Running '@{transtype}' transform ..." taskname="dita-ot"/>
 			<unix-timestamp property="start"/>
 			<!-- For Unix run the DITA executable-->
-			<exec executable="${dita.exec}" osfamily="unix" outputproperty="dita.ot.output" resultproperty="dita.ot.result">
+			<exec executable="${dita.exec}" osfamily="unix" outputproperty="@{test.output}" resultproperty="dita.ot.result">
 				<arg value="-input"/>
 				<arg value="@{ditamap}"/>
 				<arg value="-output"/>
@@ -501,20 +502,14 @@
 				<arg value="${dita.ot.verbose}"/>
 			</exec>
 			<!-- For Windows run from a DOS command -->
-			<exec dir="${dita.dir}/bin" executable="cmd" osfamily="windows" outputproperty="dita.ot.output" resultproperty="dita.ot.result">
+			<exec dir="${dita.dir}/bin" executable="cmd" osfamily="windows" outputproperty="@{test.output}" resultproperty="dita.ot.result">
 				<arg value="/C"/>
 				<arg value="dita -input @{ditamap} -output @{output}-format @{transtype} -temp ${dita.temp.dir} --clean.temp=@{clean} ${dita.ot.verbose}"/>
 			</exec>
 			<unix-timestamp property="stop"/>
 
-			<echo level="info" message="${dita.ot.output}" taskname="dita-ot"/>
-			<script language="javascript">//
-				<![CDATA[
-		    	var input = project.getProperty("dita.ot.output");
-		       	var re = /(([\w|\.\-]*:$)|(\w*:.*\.xsl))/gm;
-		       	var myArray = input.match(re);
-		      	project.setProperty("dita.ot.instrument", myArray.join(String.fromCharCode(13)));
-			// ]]></script>
+			
+			<instrumentation-scan input="@{test.output}"/>
 
 
 			<echo message="${dita.ot.instrument}" file="${output.dir}/instrument.txt" />
@@ -523,6 +518,18 @@
 			<assert-timeout duration="${duration}" maxwait="@{maxwait}"/>
 		</sequential>
 	</macrodef>
+
+	<scriptdef name="instrumentation-scan" language="javascript">
+		<attribute name="input"/>
+		<![CDATA[
+			var inputProperty = attributes.get("input")
+		    var input = project.getProperty(inputProperty);
+		    project.log(input, 2);
+		    var re = /(([\w|\.\-]*:$)|(\w*:.*\.xsl))/gm;
+		    var myArray = input.match(re);
+		    project.setProperty("dita.ot.instrument", myArray.join(String.fromCharCode(13)));
+		]]>	
+	</scriptdef>
 	<!--
 		Add ansi color tags to output if requested.
 	-->

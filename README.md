@@ -2,7 +2,7 @@ Unit Test Framework for DITA-OT
 ===============================
 
 [![license](https://img.shields.io/github/license/jason-fox/fox.jason.unit-test.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![DITA-OT 3.2](https://img.shields.io/badge/DITA--OT-3.2-blue.svg)](http://www.dita-ot.org/3.2)
+[![DITA-OT 3.3](https://img.shields.io/badge/DITA--OT-3.3-blue.svg)](http://www.dita-ot.org/3.3)
 [![DITA-OT 2.5](https://img.shields.io/badge/DITA--OT-2.5-green.svg)](http://www.dita-ot.org/2.5)
 <br/>
 [![Build Status](https://travis-ci.org/jason-fox/fox.jason.unit-test.svg?branch=master)](https://travis-ci.org/jason-fox/fox.jason.unit-test)
@@ -20,8 +20,8 @@ This is a Unit Testing framework for the DITA Open Toolkit. This plug-in consist
     - The `xsl-deinstrument` transform removes the instrumentation annotation from a specified plug-in
     - The `xsl-report` transform displays which templates have been invoked whilst running unit tests
 * ANT Profiling
-    - The `antro` transform runs an ANT script profiler against a specified transform and outputs a profiler JSON file 
-    - The `antro.ui` transform starts up the UI for the ANT script profiler, allowing a user to load a JSON file and interpret the results. 
+    - The `antro` transform runs an ANT script profiler against a specified transform and outputs a profiler JSON file
+    - The `antro.ui` transform starts up the UI for the ANT script profiler, allowing a user to load a JSON file and interpret the results.
 
 
 
@@ -69,7 +69,7 @@ Install
 The unit test framework plug-in has been tested against
 [DITA-OT 3.x](http://www.dita-ot.org/download). It is also compatible with DITA-OT 2.x.
 but it is still recommended that you upgrade to the latest version. The unit test
-framework plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/) 
+framework plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/)
 1.4 to run tests and ANT jUnit to create a test report. ANT 1.8 or higher is required,
 although a later ANT version (1.9 or 1.10) is recommended.
 
@@ -120,7 +120,7 @@ To run, use the `unit-test` transform.
 PATH_TO_DITA_OT/bin/dita -f unit-test  -o out -i PATH_TO_UNIT_TESTS
 ```
 
-Once the command has run, a test report file is created. 
+Once the command has run, a test report file is created.
 Additionally, if any error occurs, the command will fail.
 
 **Sample Test Report**
@@ -153,10 +153,10 @@ PATH_TO_DITA_OT/bin/dita -f unit-test -i PATH_TO_UNIT_TESTS
 * If the `-i` input directory is a test suite, XSL coverage for that test suite will be reported.
 * If the `-i` input directory is not a test suite, XSL coverage for all test suites directly beneath that directory will be reported.
 
-Once the command has run, both a test report file and an XSL coverage report file are created. 
+Once the command has run, both a test report file and an XSL coverage report file are created.
 Additionally, if any error occurs, the command will fail.
 
-It is also possible to run XSL coverage over a single test. An individual test can be run directly 
+It is also possible to run XSL coverage over a single test. An individual test can be run directly
 from the command line by running the default target within that test. This can be followed by
 direct invocation of the coverage report
 
@@ -183,13 +183,13 @@ PATH_TO_DITA_OT/bin/dita -f token-report -i PATH_TO_UNIT_TESTS
 ```
 
 Once the command has run,  a coverage report is created
- 
+
 #### Sample Token Report
 
-This is the token report from the example tests found within the plug-in `sample` directory. 
+This is the token report from the example tests found within the plug-in `sample` directory.
 
 * Coverage for the Spell-checker is looking to ensure that all rules have been run. Uncovered rules are highlighted in RED.
-* Coverage for HTML processing is looking for the presence of `<codeph>`,  `<codeblock>` and `<p>` tags being rendered in the tests. 
+* Coverage for HTML processing is looking for the presence of `<codeph>`,  `<codeblock>` and `<p>` tags being rendered in the tests.
 
 ![enter image description here](https://jason-fox.github.io/fox.jason.unit-test/coverage.png)
 
@@ -260,7 +260,7 @@ before_script:
   - mv dita-ot*/ dita-ot/
   - chmod +x dita-ot/bin/dita
   - dita-ot/bin/dita --install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
-  - dita-ot/bin/dita --install PLUGIN-NAME.zip 
+  - dita-ot/bin/dita --install PLUGIN-NAME.zip
 script:
   - dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -v
 ```
@@ -315,14 +315,14 @@ before_script:
   - unzip -q dita-ot-$DITA_OT.zip
   - chmod +x dita-ot-$DITA_OT/bin/dita
   - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
-  - dita-ot-$DITA_OT/bin/dita --install PLUGIN-NAME.zip 
+  - dita-ot-$DITA_OT/bin/dita --install PLUGIN-NAME.zip
   - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/PLUGIN-NAME -f xsl-instrument
 script:
   - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/PLUGIN-NAME -f unit-test --output . -v
 after_success:
   - cp dita-ot-$DITA_OT/plugins/fox.jason.unit-test/resource/pom.xml pom.xml
   - mvn clean org.eluder.coveralls:coveralls-maven-plugin:report
-``` 
+```
 
 Unit Test File Structure
 ========================
@@ -337,7 +337,7 @@ The unit tests are organized in the following manner:
 │       ├── ... etc
 │       ├── bootstrap.xml
 │       └── coverage.xml
-│ 
+│
 ├── test-suite-B
 │   └── test
 │       ├── unit-test-1
@@ -366,7 +366,7 @@ At the root of the tests lies a `bootstrap.xml` file which references the `antli
 ```xml
 <project name="bootstrap.unit-test">
   <dirname property="test.root.dir" file="${ant.file.bootstrap.unit-test}/.." />
-  <property name="dita.dir" location="PATH_TO_DITA_OT"/> 
+  <property name="dita.dir" location="PATH_TO_DITA_OT"/>
   <typedef file="${dita.dir}/plugins/fox.jason.unit-test/resource/antlib.xml"/>
 </project>
 ```
@@ -388,7 +388,7 @@ A token coverage file consists of a list of XML elements or string literals whic
     <line id="monospace-text">font-family="MONOSPACE"</line>
   </lines>
   <elements>
-    <element id="codeblock">fo:block font-family="MONOSPACE"</element>  
+    <element id="codeblock">fo:block font-family="MONOSPACE"</element>
     <element id="codeph-tt">fo:inline font-family="MONOSPACE"</element>
     <element id="colspec">fo:table-column</element>
     <element id="colspec-width">fo:table-column column-width</element>
@@ -456,7 +456,7 @@ Each unit test is organized in the following manner:
 - A test expectation (usually called `expected.html` or `expected.fo`)
 - Any further `*.dita` files or source files, graphics etc. required for the test.
 
-The `build.xml` must consist of a single default target, and `import` the `bootstrap.xml` file as shown. The `description` is used within the test report. 
+The `build.xml` must consist of a single default target, and `import` the `bootstrap.xml` file as shown. The `description` is used within the test report.
 
 ```xml
 <project basedir="." default="unit-test">
@@ -473,7 +473,7 @@ The `build.xml` must consist of a single default target, and `import` the `boots
 ```
 
 - An individual test can be run directly from the command line by running the default target.
-- Adding the comment `<!-- @disabled -->` within the `build.xml` file will disable a test 
+- Adding the comment `<!-- @disabled -->` within the `build.xml` file will disable a test
 
 
 API
@@ -516,7 +516,7 @@ if running on a UNIX system, no comparison is made.
 
 
 Contains-Text
-------------- 
+-------------
 
 #### Description
 Fail the test if the log from the test does not contain the given string
@@ -548,7 +548,7 @@ Exec-HTML5
 ----------
 
 #### Description
-Execute the HTML5 DITA-OT transform in verbose mode 
+Execute the HTML5 DITA-OT transform in verbose mode
 The test will fail if the result was not as expected or took too long
 
 #### Parameters
@@ -573,7 +573,7 @@ Exec-PDF
 --------
 
 #### Description
-Execute the PDF DITA-OT transform in verbose mode 
+Execute the PDF DITA-OT transform in verbose mode
 
 #### Parameters
 | Attribute      | Description                                        | Required                          |
