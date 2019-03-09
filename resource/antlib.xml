@@ -67,7 +67,7 @@
 		<attribute name="expected"/>
 		<attribute default="any" name="os"/>
 		<sequential>
-			<local name="test.contatins"/>
+			<local name="test.contains"/>
 			<local name="test.os.matches"/>
 			<condition else="false" property="test.os.matches" value="true">
 				<or>
