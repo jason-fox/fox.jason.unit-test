@@ -76,10 +76,11 @@ The DITA-OT Unit Test Framework is a plug-in for the DITA Open Toolkit.
 -   Full installation instructions for downloading DITA-OT can be found
     [here](https://www.dita-ot.org/3.2/topics/installing-client.html).
 
-     1.  Download the `dita-ot-3.2.zip` package from the project website at [dita-ot.org/download](https://www.dita-ot.org/download)
-     2.  Extract the contents of the package to the directory where you want to install DITA-OT.
-     3.  **Optional**: Add the absolute path for the `bin` directory to the _PATH_ system variable.
-         This defines the necessary environment variable to run the `dita` command from the command line.
+        1.  Download the `dita-ot-3.2.zip` package from the project website at [dita-ot.org/download](https://www.dita-ot.org/download)
+        2.  Extract the contents of the package to the directory where you want to install DITA-OT.
+        3.  **Optional**: Add the absolute path for the `bin` directory to the _PATH_ system variable.
+
+    This defines the necessary environment variable to run the `dita` command from the command line.
 
 ```console
 curl -LO https://github.com/dita-ot/dita-ot/releases/download/3.2/dita-ot-3.2.zip
@@ -241,23 +242,27 @@ GitHub. More information about how to set up Travis integration can be found on 
 For automated testing of DITA-OT plug-ins, place your tests under a `test` directory under the root of the repository
 along with the `.travis.yml` in the root itself.
 
-For example to test against DITA-OT 3.1 and DITA-OT 2.5.4, use the following `.travis.yml`:
+For example to test against DITA-OT 3.3 and DITA-OT 2.5.4, use the following `.travis.yml`:
 
 ```yml
 language: java
 jdk:
     - oraclejdk8
 env:
-    - DITA_OT=3.1
+    - DITA_OT=3.3
     - DITA_OT=2.5.4
-before_script:
+
+before_install:
     - zip -r PLUGIN-NAME.zip . -x *.zip* *.git/* *temp/* *out/*
     - curl -LO https://github.com/dita-ot/dita-ot/releases/download/$DITA_OT/dita-ot-$DITA_OT.zip
     - unzip -q dita-ot-$DITA_OT.zip
     - mv dita-ot*/ dita-ot/
     - chmod +x dita-ot/bin/dita
+
+install:
     - dita-ot/bin/dita --install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
     - dita-ot/bin/dita --install PLUGIN-NAME.zip
+
 script:
     - dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -v
 ```
@@ -274,7 +279,7 @@ Unit tests will be run whenever a commit occurs.
 
 The output will appear within the log as follows:
 
-```console
+```text
 [UNIT002I][INFO] Running tests for 'PLUGIN-NAME'
   [antunit] Build File: /tmp/temp20180420185923919/unit-test/fixtures/PLUGIN-NAME/fixture.xml
   [antunit] Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 31.063 sec
@@ -305,18 +310,25 @@ language: java
 jdk:
     - oraclejdk8
 env:
-    - DITA_OT=3.1
+    - DITA_OT=3.3
     - DITA_OT=2.5.4
-before_script:
+
+before_install:
     - zip -r PLUGIN-NAME.zip . -x *.zip* *.git/* *temp/* *out/*
     - curl -LO https://github.com/dita-ot/dita-ot/releases/download/$DITA_OT/dita-ot-$DITA_OT.zip
     - unzip -q dita-ot-$DITA_OT.zip
     - chmod +x dita-ot-$DITA_OT/bin/dita
+
+install:
     - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zip
     - dita-ot-$DITA_OT/bin/dita --install PLUGIN-NAME.zip
+
+before_script:
     - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/PLUGIN-NAME -f xsl-instrument
+
 script:
     - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/PLUGIN-NAME -f unit-test --output . -v
+
 after_success:
     - cp dita-ot-$DITA_OT/plugins/fox.jason.unit-test/resource/pom.xml pom.xml
     - mvn clean org.eluder.coveralls:coveralls-maven-plugin:report
