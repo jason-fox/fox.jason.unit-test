@@ -9,8 +9,8 @@ before_install:
   - chmod +x dita-ot-$DITA_OT/bin/dita
 
 install:
-  - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/com.here.validate.svrl/archive/master.zip
-  - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/com.here.validate.svrl.text-rules/archive/master.zip
+  - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/com.here.validate.svrl/archive/v2.0.2.zip
+  - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/com.here.validate.svrl.text-rules/archive/v2.0.2.zip
   - dita-ot-$DITA_OT/bin/dita --install fox.jason.unit-test.zip
   
 
