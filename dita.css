@@ -3,8 +3,8 @@
 
 
 body{
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 14px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 16px;
     line-height: 1.428571429;
     color: #333;
 }
@@ -35,10 +35,9 @@ h6,.h6 {
 
 code{padding:0px; border-width: 0px; background-color: transparent;font-size: 16px;
 font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
-font-size: 90%;
-color: #1d365d !important;
+color: #6c757d; !important;
 letter-spacing: 1px;
-
+font-size: 87.5%;
 }
 pre code{color:#ffffff !important}
 td {
@@ -55,9 +54,17 @@ div[role="navigation"] hr {
     border-top: 1px solid #e1e4e5;
 }
 
+h1 + p {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  color: #6c757d;
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 30px;
+
+}
 
 
-a:hover{color:#5dc0cf !important}
+
 a.icon-home{color:#fff !important;
 white-space : pre-line !important;
 font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important; 
@@ -154,13 +161,21 @@ a.icon-home {color: #294d84 !important;
 .wy-nav-top > a:hover {color: #ffffff  !important}
 .wy-nav-top > a{ color: #ffffff  !important; font-size: x-large}
 
-..rst-content blockquote {padding: 15px;}
+.rst-content blockquote {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    padding: .75rem 1.25rem;
+    border-radius: .25rem;
+    margin: 1em;
+}
 
 .rst-content pre code { 
     background-color: #f5f5f5; color: rgb(51, 51, 51) !important; margin: 1px; 
     border-style: solid;
     border-width: 1px;
     border-color: #ddd;
+    border-radius: 4px;
 }
 
 .rst-content table.docutils:not(.field-list) tr:nth-child(2n-1) td {
@@ -168,6 +183,21 @@ a.icon-home {color: #294d84 !important;
 }
 .rst-content table.docutils:not(.field-list) tr:nth-child(2n-1) td img {
     background-color: transparent; border-style: none; 
+}
+
+a {
+    color: #3563ab;
+    text-decoration: none;
+    background-color: transparent;
+    font-weight: 700;
+}
+
+a:hover {
+    color: #1d365d;
+    text-decoration: underline
+}
+a:visited {
+    color: #1d365d;
 }
 
 td {
