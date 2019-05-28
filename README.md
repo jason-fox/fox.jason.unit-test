@@ -1,4 +1,4 @@
-# Unit Test Framework for DITA-OT
+# Unit Test Framework for DITA-OT [<img src="https://jason-fox.github.io/fox.jason.unit-test/unit.png" align="right" width="300">](https://unit-test-framework-for-dita-ot.rtfd.io)
 
 [![license](https://img.shields.io/github/license/jason-fox/fox.jason.unit-test.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![DITA-OT 3.3](https://img.shields.io/badge/DITA--OT-3.3-blue.svg)](http://www.dita-ot.org/3.3)
