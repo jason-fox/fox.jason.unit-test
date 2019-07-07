@@ -3,17 +3,10 @@
 	This file is part of the DITA-OT Unit Test Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
 -->
-<plugin id="fox.jason.unit-test">
+<plugin id="fox.jason.unit-test" version="1.0.6">
 	<feature extension="package.version" value="1.0.6"/>
 	
-	<feature extension="dita.conductor.transtype.check" value="antro"/>
-	<feature extension="dita.conductor.transtype.check" value="antro-ui"/>
-	<feature extension="dita.conductor.transtype.check" value="token-report"/>
-	<feature extension="dita.conductor.transtype.check" value="unit-test"/>
-	<feature extension="dita.conductor.transtype.check" value="xsl-deinstrument"/>
-	<feature extension="dita.conductor.transtype.check" value="xsl-instrument"/>
-	<feature extension="dita.conductor.transtype.check" value="xsl-report"/>
-	<feature extension="dita.conductor.lib.import" file="lib/ant-junit.jar"/>
+	
 	<transtype desc="Runs an antro ANT profiling report" name="antro">
 		<param desc="The transtype to run the profile against" name="test.transtype" type="string"/>
 		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
@@ -35,10 +28,19 @@
 	<transtype desc="Annotates XSL templates with instrumentation" name="xsl-instrument"/>
 	<transtype desc="Runs an XSL template coverage report" name="xsl-report"/>
 
-	<feature extension="dita.xsl.messages" file="resource/messages.xml"/>
+
+	<!-- Import the overrides transform's ANT file 
+		 this plugin uses the older conductor target syntax for
+		 backwards compatibility.
+	-->
+
 	<!--
 	<feature extension="ant.import" file="build_dita2unit-test.xml"/><feature extension="ant.import" file="build_dita2test-coverage.xml"/>-->
+	<feature extension="dita.conductor.target.relative" file="conductor.xml"/>
 	<template file="build_dita2unit-test_template.xml"/>
 	<template file="build_dita2test-coverage_template.xml"/>
-	<feature extension="dita.conductor.target.relative" file="conductor.xml"/>
+	<!-- Ensure the plugin's error and logging messages are available -->
+	<feature extension="dita.xsl.messages" file="resource/messages.xml"/>
+	<!-- Ensure the plugin's Java libraries are available -->
+	<feature extension="dita.conductor.lib.import" file="lib/ant-junit.jar"/>
 </plugin>
