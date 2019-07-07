@@ -29,9 +29,6 @@
 				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/xmltask.jar"/>
 			</classpath>
 		</taskdef>
-		<condition property="test.colorize" value="true">
-			<os family="unix"/>
-		</condition>
 		<property name="test.root.dir" value="${dita.temp.dir}/unit-test/fixtures"/>
 		<basename file="${args.input}" property="args.input.dirname"/>
 		<condition property="testsuite.found">
@@ -131,7 +128,7 @@
 						<param default="" name="description" path="text()"/>
 						<actions>
 							<unit-test-log id="UNIT002I" level="info" message="${test.suite.run.message} for '@{description}'"/>
-							<antunit errorproperty="test-failure" failOnError="false">
+							<antunit taskname="test-suite" errorproperty="test-failure" failOnError="false">
 								<file file="@{test-suite.dir}/fixture.xml"/>
 								<xmllistener logLevel="warning" toDir="${dita.temp.dir}/unit-test/report"/>
 								<plainlistener/>
@@ -147,7 +144,7 @@
 		Creates a formatted HTML report using the optional JUnitReport task.
 	-->
 	<target name="unit-test.report">
-		<junitreport todir="${dita.temp.dir}" unless:true="test.copy">
+		<junitreport taskname="test-report" todir="${dita.temp.dir}" unless:true="test.copy">
 			<fileset dir="${dita.temp.dir}/unit-test/report" includes="*.xml"/>
 			<report format="noframes" styledir="${dita.plugin.fox.jason.unit-test.dir}/xsl" todir="${output.dir}"/>
 		</junitreport>

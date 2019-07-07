@@ -25,7 +25,7 @@ library:
     -   The `antro` transform runs an ANT script profiler against a specified transform and outputs a profiler JSON file
     -   The `antro.ui` transform starts up the UI for the ANT script profiler, allowing a user to load a JSON file and
         interpret the results.
-        
+
 :arrow_forward: [Video from DITA-OT Day 2018](https://youtu.be/MQRli3XICUo)
 
 # Table of Contents
@@ -228,7 +228,6 @@ You can drill down to an individual line to see if it has been invoked and how l
 
 ### Parameter Reference
 
--   `test.colorize` - When set, successes and failures are output highlighted using ANSI color codes
 -   `test.copy` - Specifies whether regenerated expectations should be copied. Default is `false`
 -   `test.transtype` - The real transtype to run the antro profiler against
 -   `test.propertyfile` - A properties file to use when running the unit tests or antro profiler

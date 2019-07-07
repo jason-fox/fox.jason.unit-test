@@ -21,11 +21,11 @@
 				<arg value="-Dtest.copy=${test.copy}"/>
 				<arg value="-Dtest.coverage.report=${test.coverage.report}"/>
 				<arg value="-Ddita.dir=${dita.dir}"/>
-				<arg value="-Dtest.colorize=false"/>
+				<arg value="-Dcli.color=false"/>
 			</exec>
 			<exec dir="${repo.dir}" executable="cmd" failonerror="false" osfamily="windows" outputproperty="output" resultproperty="result">
 				<arg value="/C"/>
-				<arg value="ant -f ${basedir}/@{name}/build.xml -S -q -Dtest.root.dir=${basedir} -Dtest.copy.dir=${test.copy.dir}/${test-suite} -Dtest.copy=${test.copy} -Ddita.dir=${dita.dir} -Dtest.colorize=false"/>
+				<arg value="ant -f ${basedir}/@{name}/build.xml -S -q -Dtest.root.dir=${basedir} -Dtest.copy.dir=${test.copy.dir}/${test-suite} -Dtest.copy=${test.copy} -Ddita.dir=${dita.dir} -Dcli.color=false"/>
 			</exec>
 			<condition property="test.failed">
 				<not>

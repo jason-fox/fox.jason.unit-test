@@ -53,8 +53,8 @@
 				<coverage-runner dir="@{test-suite.dir}" if:set="test-suite.coverage" resultfile="${coverage.report.xml}" includes="${coverage.includes}" file="${coverage.file}"/>
 			</sequential>
 		</for>
-		<xslt classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.html" style="${coverage.xsl}"/>
-		<xslt classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.xml" style="${cobertura.xsl}" />
+		<xslt taskname="coverage-report" classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.html" style="${coverage.xsl}"/>
+		<xslt taskname="cobertura-report" classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.xml" style="${cobertura.xsl}" />
 	</target>
 	<!--
 		Setting up pre-processing for Antro. Checks that mandatory parameters are present
@@ -90,7 +90,7 @@
 		<var name="transtype" unset="true"/>
 		<property name="transtype" value="${test.transtype}"/>
 		<tempfile createfile="true" deleteonexit="true" destdir="${dita.temp.dir}" property="test.propertyfile"/>
-		<java classname="org.apache.tools.ant.launch.Launcher" fork="true">
+		<java taskname="run-antro" classname="org.apache.tools.ant.launch.Launcher" fork="true">
 			<arg value="-buildfile"/>
 			<arg value="${dita.dir}/build.xml"/>
 			<arg value="-Dtranstype=${transtype}"/>
@@ -114,7 +114,7 @@
 	-->
 	<target depends="unit-test.log.init" name="antro.ui">
 		<unit-test-log id="UNIT002I" level="info" message="Invoking Antro UI"/>
-		<java classname="ru.jkff.antro.ui.Main" fork="true" spawn="true" unless:set="test.no-spawn">
+		<java taskname="run-antro-ui" classname="ru.jkff.antro.ui.Main" fork="true" spawn="true" unless:set="test.no-spawn">
 			<classpath>
 				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/antro.jar"/>
 				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/json.jar"/>
@@ -164,7 +164,7 @@
 			<pathelement location="${dita.dir}/lib/ant.jar"/>
 		</path>
 
-		<java classname="org.apache.tools.ant.launch.Launcher" classpathref="instrument.classpath" failonerror="true" fork="true" >
+		<java taskname="create-coverage" classname="org.apache.tools.ant.launch.Launcher" classpathref="instrument.classpath" failonerror="true" fork="true" >
 			<arg value="-Ddita.dir=${dita.dir}"/>
 			<arg value="-buildfile"/>
 			<arg value="${dita.plugin.fox.jason.unit-test.dir}/run-instrument.xml"/>
@@ -176,7 +176,7 @@
 		</java>
 
 		<!-- Merge the list of templates into a single file -->
-		<xslt classpathref="dost.class.path" force="true" in="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl" out="${test.instrument.report.file}" style="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl" failOnNoResources="false" failonerror="false">
+		<xslt taskname="merge-coverage" classpathref="dost.class.path" force="true" in="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl" out="${test.instrument.report.file}" style="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl" failOnNoResources="false" failonerror="false">
 			<param expression="${dita.temp.dir}/coverage" name="in"/>
 			<param expression="${test.coverage.source}" name="SOURCE"/>
 		</xslt>
@@ -200,7 +200,7 @@
 
 
 		<!-- instrument each XSLT file within the plugin -->
-		<xslt if:set="xsl.exists" classpathref="dost.class.path"  style="${test.instrument.xsl.dir}/xsl-instrument-file.xsl" destdir="${dita.temp.dir}/plugins" basedir="${args.input}" includes="**/*.xsl"
+		<xslt taskname="instrument-xsl" if:set="xsl.exists" classpathref="dost.class.path"  style="${test.instrument.xsl.dir}/xsl-instrument-file.xsl" destdir="${dita.temp.dir}/plugins" basedir="${args.input}" includes="**/*.xsl"
 			 extension=".xsl">
 			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
 		</xslt>
@@ -217,14 +217,14 @@
 	<target name="deinstrument">
 		<unit-test-log id="UNIT002I" level="info" message="Reverting instrumentation of XSL Templates"/>
 		<!-- Move the copy of un-instrumented templates back to the original location -->
-		<move todir="${args.input}">
+		<move taskname="deinstrument" todir="${args.input}">
 		  <fileset dir="${args.input}">
 			<include name="**/*.xsl.orig"/>
 		  </fileset>
 		  <globmapper from="*.xsl.orig" to="*.xsl"/>
 		</move>
 		<!-- Delete the listing file -->
-		<delete file="${args.input}/test/template-coverage.xml" quiet="true" failonerror="false" />
+		<delete taskname="delete-coverage" file="${args.input}/test/template-coverage.xml" quiet="true" failonerror="false" />
 	</target>
 	<!--
 		Ant target executed to run a token coverage report.

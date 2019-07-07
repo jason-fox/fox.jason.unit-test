@@ -260,33 +260,33 @@
 		<attribute name="arg2"/>
 		<attribute name="message"/>
 		<attribute name="body"/>
-		<![CDATA[
-			
-			var arg1 = attributes.get("arg1");
-			var arg2 = attributes.get("arg2");
-			var os = "true".equals(project.getProperty("test.os.matches"));
-			
+<![CDATA[
+	
+	var arg1 = attributes.get("arg1");
+	var arg2 = attributes.get("arg2");
+	var os = "true".equals(project.getProperty("test.os.matches"));
+	
 
-			if(os && !arg1.equals(arg2)){
+	if(os && !arg1.equals(arg2)){
 
-				var message = attributes.get("message");
-				var body = attributes.get("body");
-				var escape = String.fromCharCode(27);
-				var colorize = "true".equals(project.getProperty("test.colorize"));
+		var message = attributes.get("message");
+		var body = attributes.get("body");
+		var escape = String.fromCharCode(27);
+		var colorize = "true".equals(project.getProperty("cli.color"));
 
-				if (colorize) {
-					message =  escape + "[31m" + message;
-					message += escape + "[0m";
-				}
-				project.log('', 1);
-				project.log(message, 1);
-			
-				var task = project.createTask("fail"); 
-				task.setMessage(body);
+		if (colorize) {
+			message =  escape + "[31m" + message;
+			message += escape + "[0m";
+		}
+		project.log('', 1);
+		project.log(message, 1);
+	
+		var task = project.createTask("fail"); 
+		task.setMessage(body);
 
-				task.perform();
-			} 
-		]]>
+		task.perform();
+	} 
+]]>
 	</scriptdef>
 	<!--
 		Macro to invoke a conditional <fail>if time taken exceeds a given limit
@@ -328,19 +328,19 @@
 		<attribute name="operand1"/>
 		<attribute name="operation"/>
 		<attribute name="operand2"/>
-		<![CDATA[
-			var property = attributes.get("resultproperty");
-			var operand1 = attributes.get("operand1");
-			var operation = attributes.get("operation");
-			var operand2 = attributes.get("operand2");
+<![CDATA[
+	var property = attributes.get("resultproperty");
+	var operand1 = attributes.get("operand1");
+	var operation = attributes.get("operation");
+	var operand2 = attributes.get("operand2");
 
-			if(operation.equals("-")){
-				project.setProperty(property, operand1 - operand2);
-			} else if(operation.equals("%")){
-				// Percentage, not modulus.
-				project.setProperty(property,  Math.round((operand1 * 100)/ operand2));
-			}
-		]]>
+	if(operation.equals("-")){
+		project.setProperty(property, operand1 - operand2);
+	} else if(operation.equals("%")){
+		// Percentage, not modulus.
+		project.setProperty(property,  Math.round((operand1 * 100)/ operand2));
+	}
+]]>
 	</scriptdef>
 	<!--
 		if test.copy.dir is set, make a copy of the expectation file
@@ -352,24 +352,24 @@
 	<scriptdef language="javascript" name="copy-result">
 		<attribute name="src"/>
 		<attribute name="dest"/>
-		<![CDATA[
-			
-			var file = attributes.get("src");
-			var toFile = attributes.get("dest");
-			var os = "true".equals(project.getProperty("test.os.matches"));
+<![CDATA[
+	
+	var file = attributes.get("src");
+	var toFile = attributes.get("dest");
+	var os = "true".equals(project.getProperty("test.os.matches"));
 
-			var rootDir = project.getProperty("test.root.dir");
-			var testCopyDir = project.getProperty("test.copy.dir");
-			var testCopy = "true".equals(project.getProperty("test.copy"));
+	var rootDir = project.getProperty("test.root.dir");
+	var testCopyDir = project.getProperty("test.copy.dir");
+	var testCopy = "true".equals(project.getProperty("test.copy"));
 
-			if(testCopy && os){
-				var task = project.createTask("copy"); 
-				task.setFile(new java.io.File(file)); 
-				task.setTofile(new java.io.File(toFile.replace(rootDir, testCopyDir)));
-				task.setOverwrite(true);
-				task.perform();
-			} 
-		]]>
+	if(testCopy && os){
+		var task = project.createTask("copy"); 
+		task.setFile(new java.io.File(file)); 
+		task.setTofile(new java.io.File(toFile.replace(rootDir, testCopyDir)));
+		task.setOverwrite(true);
+		task.perform();
+	} 
+]]>
 	</scriptdef>
 	<!--
 		Setting up common testing pre-processing. Sets up ANT variable defaults
@@ -521,37 +521,37 @@
 
 	<scriptdef name="instrumentation-scan" language="javascript">
 		<attribute name="input"/>
-		<![CDATA[
-			var inputProperty = attributes.get("input")
-		    var input = project.getProperty(inputProperty);
-		    project.log(input, 2);
-		    var re = /(([\w|\.\-]*:$)|(\w*:.*\.xsl))/gm;
-		    var myArray = input.match(re);
-		    project.setProperty("dita.ot.instrument", myArray.join(String.fromCharCode(13)));
-		]]>	
+<![CDATA[
+	var inputProperty = attributes.get("input")
+    var input = project.getProperty(inputProperty);
+    project.log(input, 2);
+    var re = /(([\w|\.\-]*:$)|(\w*:.*\.xsl))/gm;
+    var myArray = input.match(re);
+    project.setProperty("dita.ot.instrument", myArray.join(String.fromCharCode(13)));
+]]>	
 	</scriptdef>
 	<!--
 		Add ansi color tags to output if requested.
 	-->
 	<scriptdef language="javascript" name="unit-test-success-echo">
-		<![CDATA[
-			var escape = String.fromCharCode(27);
-			var os = "true".equals(project.getProperty("test.os.matches"));
-			var colorize = "true".equals(project.getProperty("test.colorize"));
-			var testCopy = "true".equals(project.getProperty("test.copy"));
+<![CDATA[
+	var escape = String.fromCharCode(27);
+	var os = "true".equals(project.getProperty("test.os.matches"));
+	var colorize = !"false".equals(project.getProperty("cli.color"));
+	var testCopy = "true".equals(project.getProperty("test.copy"));
 
-			var input = testCopy ?  "[WARN] Updated test expectation" : "[SUCCESS] Result matched expectation";
-			var ansiColor = testCopy ? "[33m" :  "[32m";
+	var input = testCopy ?  "[WARN] Updated test expectation" : "[SUCCESS] Result matched expectation";
+	var ansiColor = testCopy ? "[33m" :  "[32m";
 
-			if (colorize) {
-				input =  escape + ansiColor + input;
-				input += escape + "[0m";
-			}
-			if (os) {
-				project.log('', 1);
-				project.log(input, 1);
-			}
-		]]>
+	if (colorize) {
+		input =  escape + ansiColor + input;
+		input += escape + "[0m";
+	}
+	if (os) {
+		project.log('', 1);
+		project.log(input, 1);
+	}
+]]>
 	</scriptdef>
 	<!--
 		Script to set a given property to the current time of the local machine.
@@ -561,10 +561,10 @@
 	-->
 	<scriptdef language="javascript" name="unix-timestamp">
 		<attribute name="property"/>
-		<![CDATA[
-			var property = attributes.get("property");
-			var nowSeconds = Math.round(new Date().getTime()/1000);
-			project.setProperty(property, nowSeconds);
-		]]>
+<![CDATA[
+	var property = attributes.get("property");
+	var nowSeconds = Math.round(new Date().getTime()/1000);
+	project.setProperty(property, nowSeconds);
+]]>
 	</scriptdef>
 </antlib>

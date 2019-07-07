@@ -150,21 +150,23 @@
 	<!--
 		Console log the successful test result and colorize if necessary. 
 	-->
-	<scriptdef language="javascript" name="unit-test-success-echo">var escape = String.fromCharCode(27);
-			var colorize = &quot;true&quot;.equals(project.getProperty(&quot;test.colorize&quot;));
-			var testCopy = &quot;true&quot;.equals(project.getProperty(&quot;test.copy&quot;));
+	<scriptdef language="javascript" name="unit-test-success-echo">
+<![CDATA[
+	var escape = String.fromCharCode(27);
+	var colorize = !"false".equals(project.getProperty("cli.color"));
+	var testCopy = "true".equals(project.getProperty("test.copy"));
 
-			var input = testCopy ?  &quot;[WARN] Updated all test expectations&quot; : &quot;[SUCCESS] All tests have passed&quot;;
-			var ansiColor = testCopy ? &quot;[33m&quot; :  &quot;[32m&quot;;
+	var input = testCopy ?  "[WARN] Updated all test expectations" : "[SUCCESS] All tests have passed";
+	var ansiColor = testCopy ? "[33m" :  "[32m";
 
-			if (colorize) {
-				input =  escape + ansiColor + input;
-				input += escape + &quot;[0m&quot;;
-			}
+	if (colorize) {
+		input =  escape + ansiColor + input;
+		input += escape + "[0m";
+	}
 
-			project.log('', 1);
-			project.log(input, 1);
-		
+	project.log("", 1);
+	project.log(input, 1);
+]]>			
 	</scriptdef>
 	<!--
 		Fail the test run. This has been extracted to ensure
