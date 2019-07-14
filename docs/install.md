@@ -7,6 +7,8 @@ a test report. ANT 1.9+ is recommended.
 
 ## Installing DITA-OT
 
+<a href="https://www.dita-ot.org"><img src="https://www.dita-ot.org/images/dita-ot-logo.svg" align="right" width="55" height="55"></a>
+
 The DITA-OT Unit Test Framework is a plug-in for the DITA Open Toolkit.
 
 -   Full installation instructions for downloading DITA-OT can be found
