@@ -73,6 +73,8 @@ a test report. ANT 1.8 or higher is required, although a later ANT version (1.9 
 
 ## Installing DITA-OT
 
+<a href="https://www.dita-ot.org"><img src="https://www.dita-ot.org/images/dita-ot-logo.svg" align="right" height="55"></a>
+
 The DITA-OT Unit Test Framework is a plug-in for the DITA Open Toolkit.
 
 -   Full installation instructions for downloading DITA-OT can be found
@@ -99,6 +101,8 @@ dita -install https://github.com/jason-fox/fox.jason.unit-test/archive/master.zi
 ```
 
 The `dita` command line tool requires no additional configuration.
+
+---
 
 # Usage
 
