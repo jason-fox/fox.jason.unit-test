@@ -238,6 +238,8 @@ You can drill down to an individual line to see if it has been invoked and how l
 
 ## Integration with Travis CI
 
+<a href="https://travis-ci.com/"><img src="https://www.libtom.net/images/TravisCI-Full-Color-45e242791b7752b745a7ae53f265acd4.png" align="right" height="40"></a>
+
 **Travis CI** is a hosted, distributed continuous integration service used to build and test software projects hosted at
 GitHub. More information about how to set up Travis integration can be found on the
 [Travis website](https://docs.travis-ci.com/).
@@ -299,6 +301,8 @@ The command "dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -
 ```
 
 ## Integration with Coveralls
+
+<a href="https://coveralls.io/"><img src="https://www.libtom.net/images/coveralls-bd6b762f7cf724a89de199133db5868f.png" align="right" height="40"></a>
 
 **Coveralls** is a web service to help you track your code coverage over time, and ensure that all your new code is
 fully covered. More information about how to set up Coveralls-Travis integration can be found on the
