@@ -306,7 +306,7 @@ The command "dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -
 
 **Coveralls** is a web service to help you track your code coverage over time, and ensure that all your new code is
 fully covered. More information about how to set up Coveralls-Travis integration can be found on the
-[travis website](https://docs.coveralls.io/).
+[Coveralls website](https://docs.coveralls.io/).
 
 ![](https://jason-fox.github.io/fox.jason.unit-test/coveralls.png)
 
