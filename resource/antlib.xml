@@ -567,4 +567,20 @@
 	project.setProperty(property, nowSeconds);
 ]]>
 	</scriptdef>
+
+
+	<!--
+		Tidy up an output to ensure the indenting is consistent.
+
+		@param file  - The file to indent
+	-->
+	<macrodef name="tidy-xml">
+		<attribute name="file"/>
+		<sequential>
+			<xmltask 
+				expandEntityReferences="false"
+				dest="@{file}" outputter="simple" source="@{file}">
+			</xmltask>
+		</sequential>
+	</macrodef>
 </antlib>
