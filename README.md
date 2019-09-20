@@ -28,7 +28,8 @@ library:
 
 :arrow_forward: [Video from DITA-OT Day 2018](https://youtu.be/MQRli3XICUo)
 
-# Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 -   [Install](#install)
     -   [Installing DITA-OT](#installing-dita-ot)
@@ -63,6 +64,8 @@ library:
     -   [Get-PDF-Article](#get-pdf-article)
 -   [Contribute](#contribute)
 -   [License](#license)
+
+</details>
 
 # Install
 
