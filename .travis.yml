@@ -1,8 +1,9 @@
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 before_install:
+  - sudo apt-get install ant
   - zip -r fox.jason.unit-test.zip . -x *.zip* *.git/* *temp/* *out/*
   - curl -LO https://github.com/dita-ot/dita-ot/releases/download/$DITA_OT/dita-ot-$DITA_OT.zip
   - unzip -q dita-ot-$DITA_OT.zip
