@@ -67,14 +67,14 @@ library:
 
 </details>
 
-# Install
+## Install
 
 The unit test framework plug-in has been tested against [DITA-OT 3.x](http://www.dita-ot.org/download). It is also
 compatible with DITA-OT 2.x. but it is still recommended that you upgrade to the latest version. The unit test framework
 plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/) 1.4 to run tests and ANT jUnit to create
 a test report. ANT 1.8 or higher is required, although a later ANT version (1.9 or 1.10) is recommended.
 
-## Installing DITA-OT
+### Installing DITA-OT
 
 <a href="https://www.dita-ot.org"><img src="https://www.dita-ot.org/images/dita-ot-logo.svg" align="right" height="55"></a>
 
@@ -95,7 +95,7 @@ unzip -q dita-ot-3.3.4.zip
 rm dita-ot-3.3.4.zip
 ```
 
-## Installing the Plug-in
+### Installing the Plug-in
 
 -   Run the plug-in installation command:
 
@@ -107,13 +107,13 @@ The `dita` command line tool requires no additional configuration.
 
 ---
 
-# Usage
+## Usage
 
-## Invocation from the Command line
+### Invocation from the Command line
 
 A series of test suites can be found within the plug-in at `PATH_TO_DITA_OT/plugins/fox.jason.unit-test/sample`
 
-### Obtaining a unit test report
+#### Obtaining a unit test report
 
 To run, use the `unit-test` transform.
 
@@ -130,7 +130,7 @@ tests are run over two test suites (PDF and HTML processing) - a third test suit
 -   If the `-i` input directory is a test suite, all tests within the suite will be run.
 -   If the `-i` input directory is not a test suite, all test suites directly beneath that directory will be run.
 
-### XSLT Coverage Report
+#### XSLT Coverage Report
 
 To run a XSLT Coverage Report, each DITA-OT Plug-In must be **instrumented** - this annotates the XSLT templates within
 the plug-in to be able to generate coverage information. A copy of each `*.xsl` file is also saved with the `*.orig`
@@ -168,14 +168,14 @@ ant -f PATH_TO_PLUGIN/test/TEST_NAME/build.xml
 PATH_TO_DITA_OT/bin/dita -f xsl-report -i PATH_TO_PLUGIN
 ```
 
-#### Sample XSL Report
+##### Sample XSL Report
 
 The XSL coverage report will show a schematic of all template decision points, with covered lines displayed in green,
 and uncovered lines displayed in red.
 
 ![](https://jason-fox.github.io/fox.jason.unit-test/xsl-coverage.png)
 
-### Token Coverage Report
+#### Token Coverage Report
 
 This is a quicker alternative report to XSLT instrumentation and code coverage, but it requires the developer to create
 the token `coverage.xml` file manually. Each test suite should contain a `coverage.xml` file which holds a series of
@@ -187,7 +187,7 @@ PATH_TO_DITA_OT/bin/dita -f token-report -i PATH_TO_UNIT_TESTS
 
 Once the command has run, a coverage report is created
 
-#### Sample Token Report
+##### Sample Token Report
 
 This is the token report from the example tests found within the plug-in `sample` directory.
 
@@ -202,7 +202,7 @@ This is the token report from the example tests found within the plug-in `sample
 -   If the `-i` input directory is not a test suite, coverage for all test suites directly beneath that directory will
     be reported.
 
-### Obtaining ANT script profile information
+#### Obtaining ANT script profile information
 
 **Antro** is a hierarchical and line-level profiler for Ant build scripts. It can be run to check which ANT scripts have
 been invoked and how long they took.
@@ -215,7 +215,7 @@ PATH_TO_DITA_OT/bin/dita -f antro --test.transform=TRANSFORM_TO_PROFILE -i docum
 
 A profiler JSON file will be generated.
 
-### Viewing profiler information
+#### Viewing profiler information
 
 To run the UI for the Antro profiler, use the `antro-ui` transform. The `-i` parameter is mandatory for all DITA-OT
 plug-ins, and should point to a real file, but is not used for this transform.
@@ -239,7 +239,7 @@ You can drill down to an individual line to see if it has been invoked and how l
 -   `test.transtype` - The real transtype to run the antro profiler against
 -   `test.propertyfile` - A properties file to use when running the unit tests or antro profiler
 
-## Integration with Travis CI
+### Integration with Travis CI
 
 <a href="https://travis-ci.com/"><img src="https://www.libtom.net/images/TravisCI-Full-Color-45e242791b7752b745a7ae53f265acd4.png" align="right" height="40"></a>
 
@@ -303,7 +303,7 @@ clean-temp:
 The command "dita-ot/bin/dita --input dita-ot/plugins/PLUGIN-NAME -f unit-test -v" exited with 0.
 ```
 
-## Integration with Coveralls
+### Integration with Coveralls
 
 <a href="https://coveralls.io/"><img src="https://www.libtom.net/images/coveralls-bd6b762f7cf724a89de199133db5868f.png" align="right" height="40"></a>
 
@@ -346,7 +346,7 @@ after_success:
     - mvn clean org.eluder.coveralls:coveralls-maven-plugin:report
 ```
 
-# Unit Test File Structure
+## Unit Test File Structure
 
 The unit tests are organized in the following manner:
 
@@ -379,9 +379,9 @@ plug-in and invoking the tests as shown:
 PATH_TO_DITA_OT/bin/dita --input ./plugins -f unit-test
 ```
 
-## Test suite files
+### Test suite files
 
-### `bootstrap.xml` file
+#### `bootstrap.xml` file
 
 At the root of the tests lies a `bootstrap.xml` file which references the `antlib.xml` library as shown:
 
@@ -399,7 +399,7 @@ At the root of the tests lies a `bootstrap.xml` file which references the `antli
     independently of the test harness.
 -   The functions from the unit-test `antlib.xml` must be loaded using the `<typedef>` task.
 
-### `coverage.xml` file
+#### `coverage.xml` file
 
 A token coverage file consists of a list of XML elements or string literals which should be present in a test-suite's
 outputs. For example, PDF tests should cover all possible fop element and attributes.
@@ -419,7 +419,7 @@ outputs. For example, PDF tests should cover all possible fop element and attrib
 </package>
 ```
 
-### `template-coverage.xml` file
+#### `template-coverage.xml` file
 
 An XSL coverage file consists of a list of XSL elements which are present within a plug-in. This file is generated by
 the `xsl-instrument` transform
@@ -445,24 +445,24 @@ the `xsl-instrument` transform
                   number="19"/>
 ```
 
-### `disabled.txt` file
+#### `disabled.txt` file
 
 If a `disabled.txt` file is present within a test suite directory, none of the tests within the directory will be run.
 
-### Overrides for `attributes.xml` `colors.xml` and `fonts.xml`
+#### Overrides for `attributes.xml` `colors.xml` and `fonts.xml`
 
 The `cfg` directory of the plug-in holds standard lists of fonts, colors and attributes to replace when running PDF
 tests - this can be overridden by individuals test or test suites if necessary by placing an equivalent override file in
 the test directory or test-suite directory.
 
-### Overrides for `test.properties`
+#### Overrides for `test.properties`
 
 Additional test properties can be passed to DITA-OT when each test is run if a `test.properties` file is present in the
 test directory or test-suite directory. The name of the file to search for can also be altered. See
 [Setting build parameters with `.properties` files](http://www.dita-ot.org/3.0/topics/using-dita-properties-file.html)
 for more details.
 
-## Individual test files
+### Individual test files
 
 Each unit test is organized in the following manner:
 
@@ -501,11 +501,11 @@ The `build.xml` must consist of a single default target, and `import` the `boots
 -   An individual test can be run directly from the command line by running the default target.
 -   Adding the comment `<!-- @disabled -->` within the `build.xml` file will disable a test
 
-# API
+## API
 
 The following ANT tasks are available from the DITA-OT Unit Test Framework
 
-## Compare-Output
+### Compare-Output
 
 #### Description
 
@@ -543,7 +543,7 @@ match.
 
 if running on a UNIX system, no comparison is made.
 
-## Contains-Text
+### Contains-Text
 
 #### Description
 
@@ -574,7 +574,7 @@ be found
 
 if running on a UNIX system, no comparison is made.
 
-## Exec-HTML5
+### Exec-HTML5
 
 #### Description
 
@@ -599,7 +599,7 @@ long
 
 runs DITA-OT using the `custom-html` HTML transtype. the output will be placed in the `/out/html` directory
 
-## Exec-PDF
+### Exec-PDF
 
 #### Description
 
@@ -623,7 +623,7 @@ Execute the PDF DITA-OT transform in verbose mode
 
 runs DITA-OT using the `custom-pdf` PDF transtype. `topic.fo` and `document.pdf` will be placed in the `/out` directory
 
-## Exec-SVRL
+### Exec-SVRL
 
 #### Description
 
@@ -654,7 +654,7 @@ runs DITA-OT using the `text-rules` SVRL transtype
 
 runs DITA-OT using the `svrl-echo` SVRL transtype - the invocation is expected to fail with validation errors.
 
-## Exec-Transtype
+### Exec-Transtype
 
 #### Description
 
@@ -685,7 +685,7 @@ runs DITA-OT using the `custom` transtype
 
 runs DITA-OT using the `custom` SVRL transtype - the invocation is expected to fail.
 
-## Get-HTML-Article
+### Get-HTML-Article
 
 #### Description
 
@@ -708,7 +708,7 @@ examination.
 
 creates a file called `fragment.html` holding the `<article>` element from the `topics/body-text.html` file.
 
-## Get-PDF-Article
+### Get-PDF-Article
 
 #### Description
 
@@ -730,11 +730,11 @@ examination. Also remove colors, fonts and excess attributes
 
 creates a file called `fragment.fo` holding the final `<fo.flow>` element from the `topics.fo` file.
 
-# Contribute
+## Contribute
 
 PRs accepted.
 
-# License
+## License
 
 [Apache 2.0](LICENSE) © 2018 Jason Fox
 
