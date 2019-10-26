@@ -6,6 +6,7 @@
 [![Build Status](https://travis-ci.org/jason-fox/fox.jason.unit-test.svg?branch=master)](https://travis-ci.org/jason-fox/fox.jason.unit-test)
 [![Coverage Status](https://coveralls.io/repos/github/jason-fox/fox.jason.unit-test/badge.svg?branch=master)](https://coveralls.io/github/jason-fox/fox.jason.unit-test?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/unit-test-framework-for-dita-ot/badge/?version=latest)](https://unit-test-framework-for-dita-ot.readthedocs.io/en/latest/?badge=latest)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fox.jason.unit-test&metric=alert_status)](https://sonarcloud.io/dashboard?id=fox.jason.unit-test)
 
 This is a Unit Testing framework for the DITA Open Toolkit. This [DITA-OT Plug-in](https://www.dita-ot.org/plugins) consists of seven DITA-OT transforms and an ANT
 library:
