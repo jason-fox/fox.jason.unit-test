@@ -1,7 +1,7 @@
 # Unit Test Framework for DITA-OT [<img src="https://jason-fox.github.io/fox.jason.unit-test/unit.png" align="right" width="300">](https://unit-test-framework-for-dita-ot.rtfd.io)
 
 [![license](https://img.shields.io/github/license/jason-fox/fox.jason.unit-test.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![DITA-OT 3.3](https://img.shields.io/badge/DITA--OT-3.3-blue.svg)](http://www.dita-ot.org/3.3)
+[![DITA-OT 3.4](https://img.shields.io/badge/DITA--OT-3.4-blue.svg)](http://www.dita-ot.org/3.4)
 [![DITA-OT 2.5](https://img.shields.io/badge/DITA--OT-2.5-green.svg)](http://www.dita-ot.org/2.5)
 [![Build Status](https://travis-ci.org/jason-fox/fox.jason.unit-test.svg?branch=master)](https://travis-ci.org/jason-fox/fox.jason.unit-test)
 [![Coverage Status](https://coveralls.io/repos/github/jason-fox/fox.jason.unit-test/badge.svg?branch=master)](https://coveralls.io/github/jason-fox/fox.jason.unit-test?branch=master)
@@ -82,18 +82,18 @@ a test report. ANT 1.8 or higher is required, although a later ANT version (1.9 
 The DITA-OT Unit Test Framework is a plug-in for the DITA Open Toolkit.
 
 -   Full installation instructions for downloading DITA-OT can be found
-    [here](https://www.dita-ot.org/3.3/topics/installing-client.html).
+    [here](https://www.dita-ot.org/3.4/topics/installing-client.html).
 
-    1.  Download the `dita-ot-3.3.4.zip` package from the project website at [dita-ot.org/download](https://www.dita-ot.org/download)
+    1.  Download the `dita-ot-3.4.zip` package from the project website at [dita-ot.org/download](https://www.dita-ot.org/download)
     2.  Extract the contents of the package to the directory where you want to install DITA-OT.
     3.  **Optional**: Add the absolute path for the `bin` directory to the _PATH_ system variable.
 
     This defines the necessary environment variable to run the `dita` command from the command line.
 
 ```console
-curl -LO https://github.com/dita-ot/dita-ot/releases/download/3.3.4/dita-ot-3.3.4.zip
-unzip -q dita-ot-3.3.4.zip
-rm dita-ot-3.3.4.zip
+curl -LO https://github.com/dita-ot/dita-ot/releases/download/3.4/dita-ot-3.4.zip
+unzip -q dita-ot-3.4.zip
+rm dita-ot-3.4.zip
 ```
 
 ### Installing the Plug-in
@@ -260,7 +260,7 @@ language: java
 jdk:
     - oraclejdk8
 env:
-    - DITA_OT=3.3
+    - DITA_OT=3.4
     - DITA_OT=2.5.4
 
 before_install:
@@ -323,7 +323,7 @@ language: java
 jdk:
     - oraclejdk8
 env:
-    - DITA_OT=3.3
+    - DITA_OT=3.4
     - DITA_OT=2.5.4
 
 before_install:
