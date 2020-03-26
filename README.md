@@ -29,6 +29,8 @@ library:
 
 :arrow_forward: [Video from DITA-OT Day 2018](https://youtu.be/MQRli3XICUo)
 
+[![](https://jason-fox.github.io/fox.jason.unit-test/unit-test-video.png)](https://youtu.be/MQRli3XICUo)
+
 <details>
 <summary><strong>Table of Contents</strong></summary>
 
