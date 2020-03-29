@@ -33,7 +33,7 @@ jobs:
   include:
     - stage: test
       name: "Unit Tests: DITA_OT=3.4"
-      env: DITA_OT=3.4
+      env: DITA_OT=3.4.1
 
       before_script:
         - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/fox.jason.unit-test -f xsl-instrument

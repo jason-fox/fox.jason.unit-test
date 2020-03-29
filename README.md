@@ -86,16 +86,16 @@ The DITA-OT Unit Test Framework is a plug-in for the DITA Open Toolkit.
 -   Full installation instructions for downloading DITA-OT can be found
     [here](https://www.dita-ot.org/3.4/topics/installing-client.html).
 
-    1.  Download the `dita-ot-3.4.zip` package from the project website at [dita-ot.org/download](https://www.dita-ot.org/download)
+    1.  Download the `dita-ot-3.4.1.zip` package from the project website at [dita-ot.org/download](https://www.dita-ot.org/download)
     2.  Extract the contents of the package to the directory where you want to install DITA-OT.
     3.  **Optional**: Add the absolute path for the `bin` directory to the _PATH_ system variable.
 
     This defines the necessary environment variable to run the `dita` command from the command line.
 
 ```console
-curl -LO https://github.com/dita-ot/dita-ot/releases/download/3.4/dita-ot-3.4.zip
-unzip -q dita-ot-3.4.zip
-rm dita-ot-3.4.zip
+curl -LO https://github.com/dita-ot/dita-ot/releases/download/3.4.1/dita-ot-3.4.1.zip
+unzip -q dita-ot-3.4.1.zip
+rm dita-ot-3.4.1.zip
 ```
 
 ### Installing the Plug-in
@@ -262,7 +262,7 @@ language: java
 jdk:
     - oraclejdk8
 env:
-    - DITA_OT=3.4
+    - DITA_OT=3.4.1
     - DITA_OT=2.5.4
 
 before_install:
@@ -325,7 +325,7 @@ language: java
 jdk:
     - oraclejdk8
 env:
-    - DITA_OT=3.4
+    - DITA_OT=3.4.1
     - DITA_OT=2.5.4
 
 before_install:
