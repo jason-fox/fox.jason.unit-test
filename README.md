@@ -128,6 +128,7 @@ Once the command has run, a test report file is created. Additionally, if any er
 
 **Sample Test Report** This is the test report from the example tests found within the plug-in `sample` directory. Nine
 tests are run over two test suites (PDF and HTML processing) - a third test suite has been disabled.
+
 ![enter image description here](https://jason-fox.github.io/fox.jason.unit-test/results.png)
 
 -   If the `-i` input directory is a test suite, all tests within the suite will be run.
