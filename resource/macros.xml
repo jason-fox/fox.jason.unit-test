@@ -135,7 +135,11 @@
 						<copy path="//project/target/@description" property="test.description"/>
 					</xmltask>
 					<property name="test.description" value="${test.name}"/>
-					<unit-test-log id="UNIT005W" if:set="test.disabled" level="warning" message="The test '@{suite}/${test.name}' is disabled."/>
+
+					<dita-ot-echo id="UNIT005W" if:set="test.disabled">
+						<param name="1" value="The test '@{suite}/${test.name}' is disabled."/>
+					</dita-ot-echo>
+
 					<xmltask dest="@{dir}/fixture.xml" source="@{dir}/fixture.xml" unless:set="test.disabled">
 						<insert path="/project">&lt;target name=&quot;test: ${test.description}&quot;&gt;
 		&lt;unit-test name=&quot;${test.name}&quot;/&gt;
@@ -168,33 +172,5 @@
 	project.log(input, 1);
 ]]>			
 	</scriptdef>
-	<!--
-		Fail the test run. This has been extracted to ensure
-		messages can be displayed easily under DITA-OT 2.x
-	-->
-	<macrodef name="unit-test-failure">
-		<sequential>
-			<dita-ot-fail id="UNIT001F" unless:set="otversion.legacy"/>
-			<fail if:set="otversion.legacy" message="At least one test has failed" taskname="UNIT001F"/>
-		</sequential>
-	</macrodef>
-	<!--
-		Write something to the message log. This has been extracted to ensure
-		messages can be displayed easily under DITA-OT 2.x
 
-		@param id - the ID of the resource string
-		@param message - the text of the message
-		@param level - the logging level (e.g. warning) 
-	-->
-	<macrodef name="unit-test-log">
-		<attribute name="id"/>
-		<attribute name="message"/>
-		<attribute name="level"/>
-		<sequential>
-			<dita-ot-echo id="@{id}" unless:set="otversion.legacy">
-				<param name="1" value="@{message}"/>
-			</dita-ot-echo>
-			<echo if:set="otversion.legacy" level="@{level}" message="@{message}" taskname="@{id}"/>
-		</sequential>
-	</macrodef>
 </antlib>

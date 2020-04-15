@@ -31,7 +31,9 @@
 		<property name="coverage.file" value="template-coverage.xml"/>
 		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/xsl-report.xsl"/>
 		<property name="cobertura.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/cobertura-report.xsl"/>
-		<unit-test-log id="UNIT002I" level="info" message="${coverage.message}"/>
+		<dita-ot-echo id="UNIT002I">
+			<param name="1" value="${coverage.message}"/>
+		</dita-ot-echo>
 
 		<tempfile deleteonexit="true" destdir="${dita.temp.dir}" property="coverage.report.xml"/>
 		<xmltask dest="${coverage.report.xml}" source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml"/>
@@ -84,7 +86,9 @@
 		Generate an Antro profiler report. Run DITA-OT using the test.transtype
 	-->
 	<target depends="unit-test.log.init" name="antro">
-		<unit-test-log id="UNIT002I" level="info" message="Generating an Antro profiling report"/>
+		<dita-ot-echo id="UNIT002I">
+			<param name="1" value="Generating an Antro profiling report"/>
+		</dita-ot-echo>
 		<var name="transtype" unset="true"/>
 		<property name="transtype" value="${test.transtype}"/>
 		<tempfile createfile="true" deleteonexit="true" destdir="${dita.temp.dir}" property="test.propertyfile"/>
@@ -111,7 +115,9 @@
 		Invoke the Antro UI from the command line
 	-->
 	<target depends="unit-test.log.init" name="antro.ui">
-		<unit-test-log id="UNIT002I" level="info" message="Invoking Antro UI"/>
+		<dita-ot-echo id="UNIT002I">
+			<param name="1" value="Invoking Antro UI"/>
+		</dita-ot-echo>
 		<java taskname="run-antro-ui" classname="ru.jkff.antro.ui.Main" fork="true" spawn="true" unless:set="test.no-spawn">
 			<classpath>
 				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/antro.jar"/>
@@ -144,7 +150,9 @@
 			<param name="1" value="${args.input}"/>
 		</dita-ot-fail>
 
-		<unit-test-log id="UNIT002I" level="info" message="Instrumenting XSL Templates"/>
+		<dita-ot-echo id="UNIT002I">
+			<param name="1" value="Instrumenting XSL Templates"/>
+		</dita-ot-echo>
 
 		<property name="test.instrument.xsl.dir" value="${dita.plugin.fox.jason.unit-test.dir}/xsl"/>
 		<property name="test.instrument.report.file" value="${args.input}/test/template-coverage.xml"/>
@@ -212,7 +220,9 @@
 		Deinstrumentation of a DITA-OT plugin
 	-->
 	<target name="deinstrument">
-		<unit-test-log id="UNIT002I" level="info" message="Reverting instrumentation of XSL Templates"/>
+		<dita-ot-echo id="UNIT002I">
+			<param name="1" value="Reverting instrumentation of XSL Templates"/>
+		</dita-ot-echo>
 		<!-- Move the copy of un-instrumented templates back to the original location -->
 		<move taskname="deinstrument" todir="${args.input}">
 		  <fileset dir="${args.input}">

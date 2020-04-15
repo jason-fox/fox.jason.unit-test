@@ -5,9 +5,6 @@
 -->
 <project name="fox.jason.unit-test" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<target name="unit-test.log.init">
-		<condition property="otversion.legacy">
-			<matches pattern="^[1|2].*" string="${otversion}"/>
-		</condition>
 		<typedef file="${dita.plugin.fox.jason.unit-test.dir}/resource/macros.xml"/>
 	</target>
 	<target name="unit-test.init">
@@ -86,8 +83,12 @@
 				<propertyregex casesensitive="false" input="@{test-suite.dir}" override="true" property="test-suite" regexp="([^/]*)$" select="\1"/>
 				<local name="test-suite.disabled"/>
 				<available file="@{test-suite.dir}/test/disabled.txt" property="test-suite.disabled"/>
-				<unit-test-log id="UNIT004W" if:set="test-suite.disabled" level="warning" message="The test suite '${test-suite}' is disabled"/>
-				<unit-test-log id="UNIT002I" level="warning" message="Generating fixtures for '${test-suite}'" unless:set="test-suite.disabled"/>
+				<dita-ot-echo id="UNIT004W" if:set="test-suite.disabled">
+					<param name="1" value="The test suite '${test-suite}' is disabled"/>
+				</dita-ot-echo>
+				<dita-ot-echo id="UNIT002I" unless:set="test-suite.disabled">
+					<param name="1" value="Generating fixtures for '${test-suite}'"/>
+				</dita-ot-echo>
 				<create-fixture dir="@{test-suite.dir}" suite="${test-suite}" unless:set="test-suite.disabled"/>
 			</sequential>
 		</for>
@@ -127,7 +128,9 @@
 					<call path="//project/description">
 						<param default="" name="description" path="text()"/>
 						<actions>
-							<unit-test-log id="UNIT002I" level="info" message="${test.suite.run.message} for '@{description}'"/>
+							<dita-ot-echo id="UNIT002I">
+								<param name="1" value="${test.suite.run.message} for '@{description}'"/>
+							</dita-ot-echo>
 							<antunit taskname="test-suite" errorproperty="test-failure" failOnError="false">
 								<file file="@{test-suite.dir}/fixture.xml"/>
 								<xmllistener logLevel="warning" toDir="${dita.temp.dir}/unit-test/report"/>
@@ -149,7 +152,7 @@
 			<report format="noframes" styledir="${dita.plugin.fox.jason.unit-test.dir}/xsl" todir="${output.dir}"/>
 		</junitreport>
 		<move file="${output.dir}/junit-noframes.html" tofile="${output.dir}/test-results.html"/>
-		<unit-test-failure if:set="test-failure" unless:true="test.copy"/>
+		<dita-ot-fail id="UNIT001F" if:set="test-failure" unless:true="test.copy"/>
 		<unit-test-success-echo/>
 	</target>
 	<!--

@@ -2,7 +2,6 @@
 
 [![license](https://img.shields.io/github/license/jason-fox/fox.jason.unit-test.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![DITA-OT 3.4](https://img.shields.io/badge/DITA--OT-3.4-blue.svg)](http://www.dita-ot.org/3.4)
-[![DITA-OT 2.5](https://img.shields.io/badge/DITA--OT-2.5-green.svg)](http://www.dita-ot.org/2.5)
 [![Build Status](https://travis-ci.org/jason-fox/fox.jason.unit-test.svg?branch=master)](https://travis-ci.org/jason-fox/fox.jason.unit-test)
 [![Coverage Status](https://coveralls.io/repos/github/jason-fox/fox.jason.unit-test/badge.svg?branch=master)](https://coveralls.io/github/jason-fox/fox.jason.unit-test?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/unit-test-framework-for-dita-ot/badge/?version=latest)](https://unit-test-framework-for-dita-ot.readthedocs.io/en/latest/?badge=latest)
@@ -72,8 +71,8 @@ library:
 
 ## Install
 
-The unit test framework plug-in has been tested against [DITA-OT 3.x](http://www.dita-ot.org/download). It is also
-compatible with DITA-OT 2.x. but it is still recommended that you upgrade to the latest version. The unit test framework
+The unit test framework plug-in has been tested against [DITA-OT 3.x](http://www.dita-ot.org/download). It is no longer
+compatible with DITA-OT 2.x. and it is recommended that you upgrade to the latest version. The unit test framework
 plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/) 1.4 to run tests and ANT jUnit to create
 a test report. ANT 1.8 or higher is required, although a later ANT version (1.9 or 1.10) is recommended.
 
@@ -256,7 +255,7 @@ GitHub. More information about how to set up Travis integration can be found on 
 For automated testing of DITA-OT plug-ins, place your tests under a `test` directory under the root of the repository
 along with the `.travis.yml` in the root itself.
 
-For example to test against DITA-OT 3.3 and DITA-OT 2.5.4, use the following `.travis.yml`:
+For example to test against DITA-OT 3.4.1  use the following `.travis.yml`:
 
 ```yml
 language: java
@@ -264,7 +263,6 @@ jdk:
     - oraclejdk8
 env:
     - DITA_OT=3.4.1
-    - DITA_OT=2.5.4
 
 before_install:
     - zip -r PLUGIN-NAME.zip . -x *.zip* *.git/* *temp/* *out/*
@@ -327,7 +325,6 @@ jdk:
     - oraclejdk8
 env:
     - DITA_OT=3.4.1
-    - DITA_OT=2.5.4
 
 before_install:
     - zip -r PLUGIN-NAME.zip . -x *.zip* *.git/* *temp/* *out/*
