@@ -43,7 +43,3 @@ jobs:
         - mvn clean org.eluder.coveralls:coveralls-maven-plugin:report
         - rm -rf dita-ot-$DITA_OT
         - sonar-scanner
-
-    - stage: test
-      name: "Unit Tests: DITA_OT=2.5.4"
-      env: DITA_OT=2.5.4
