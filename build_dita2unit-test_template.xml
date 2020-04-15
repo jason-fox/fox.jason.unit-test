@@ -5,7 +5,7 @@
 -->
 <project name="fox.jason.unit-test" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<target name="unit-test.log.init">
-		<typedef file="${dita.plugin.fox.jason.unit-test.dir}/resource/macros.xml"/>
+		<typedef file="${dita.plugin.fox.jason.unit-test.dir}/resource/antlib.xml"/>
 	</target>
 	<target name="unit-test.init">
 		<dita-ot-fail id="DOTA069F">
