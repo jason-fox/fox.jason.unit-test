@@ -26,7 +26,7 @@ public class FindFragmentTask extends Task {
    */
   @Override
   public void execute() {
-    String input = project.getProperty("htmlSource");
+    String input = getProject().getProperty("htmlSource");
     int start = input.indexOf("<article");
     int end = input.indexOf("</article>") + 10;
     getProject().setProperty("fragment", input.substring(start, end));

@@ -108,18 +108,16 @@ public class CalculateValueTask extends Task {
     }
 
     if ("-".equals(operation)) {
-      project.setProperty(
+      getProject().setProperty(
         property,
         String.valueOf(Integer.parseInt(operand1) - Integer.parseInt(operand2))
       );
     } else if ("%".equals(operation)) {
       // Percentage, not modulus.
-      project.setProperty(
+      getProject().setProperty(
         property,
         String.valueOf(
-          Math.round(
-            (Integer.parseInt(operand1) * 100) / Integer.parseInt(operand2)
-          )
+          (Integer.parseInt(operand1) * 100) / Integer.parseInt(operand2)
         )
       );
     }
