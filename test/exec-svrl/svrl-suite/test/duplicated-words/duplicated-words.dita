@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="duplicated-words">
+  <title>duplicated-words</title>
+  <body>
+    <p>
+    Duplicated words should not appear in the running text
+    </p>
+     <section id="good">
+      <title>Good text</title>
+      <p>
+         This is a sentence, the sentence does not contain duplicate words.
+      </p>
+    </section>
+    <section id="bad">
+      <title>Bad text</title>
+      <p>
+        This is a a sentence, the sentence does contains a duplicated word "a".
+      </p>
+    </section>
+  </body>
+</topic>
