@@ -15,7 +15,7 @@ addons:
       secure: "Czsiu8Rw6rd65jdkCeTG+gGyMhxb9gqoupTsv7D6qb0kN+jH45PhbUBcszQk7d3/WU5aO+SVghRD1bY/pHKAAZGJS5lOH2zvXJ9M+AF29kd8A2y4KPOurrZP+bQ/gluLeNXCbC9t9s+qFNaOUWYYAGmK/cqWjvNLnkKw6WosWI1AlyvDF0JOFDOKKfJ2NzWCHElWZn7wqC0UdZIikZen4Vpu3FKsb60QideLcJWbQsnyG/pSQ1eM1VNo4fKPiQlY3rInovz9YHiiNi4brDCXIZ1pWqOwIQleAEvS/fHjsPf8lZZZellDGIswVcEx09l2c+sn+oVdv/8CdgvrwMmGzfsldyu+On8fkllvTnSIlnxDdi9lTe33GxmKzj7iwl9PL9DdCgW5DrOQT9sFsmFLXtIKK/vdH8bCBP+4KsbPsufwK3M3oLjVCmTkRV/Gn7ln+beM8GphUuGdP50wdca9rVB/6BOFBP6i6zYCkuOLiLWq1FNPsKflASwBGxZx06VsKmCv4Ub7dWQXminCCE+uE6u5aNS914Y3Dlanr70FgpYSi1htpa9yidn5jh78GsdtMogKB0MJevxzAbnqfFtiwiGXJD69DsgnPUidSYEnrYzhLmz1esT04YqmcPxYRfvS1mO/Fl6bI95ILIlt204eYpd1BchBpnzwPE5P5Zqc1RA="
 
 env:
-  - DITA_OT=3.4.1
+  - DITA_OT=3.5
 
 before_install:
   - zip -r fox.jason.unit-test.zip . -x *.zip* *.git/* *temp/* *out/*
@@ -24,9 +24,9 @@ before_install:
   - chmod +x dita-ot-$DITA_OT/bin/dita
 
 install:
-  - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/com.here.validate.svrl/archive/v2.0.2.zip
-  - dita-ot-$DITA_OT/bin/dita --install https://github.com/jason-fox/com.here.validate.svrl.text-rules/archive/v2.0.2.zip
-  - dita-ot-$DITA_OT/bin/dita --install fox.jason.unit-test.zip
+  - dita-ot-$DITA_OT/bin/dita install https://github.com/jason-fox/com.here.validate.svrl/archive/v2.0.2.zip
+  - dita-ot-$DITA_OT/bin/dita install https://github.com/jason-fox/com.here.validate.svrl.text-rules/archive/v2.0.2.zip
+  - dita-ot-$DITA_OT/bin/dita install fox.jason.unit-test.zip
   
 before_script:
   - dita-ot-$DITA_OT/bin/dita --input dita-ot-$DITA_OT/plugins/fox.jason.unit-test -f xsl-instrument
