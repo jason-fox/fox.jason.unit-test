@@ -7,8 +7,8 @@
 [![Documentation Status](https://readthedocs.org/projects/unit-test-framework-for-dita-ot/badge/?version=latest)](https://unit-test-framework-for-dita-ot.readthedocs.io/en/latest/?badge=latest)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fox.jason.unit-test&metric=alert_status)](https://sonarcloud.io/dashboard?id=fox.jason.unit-test)
 
-This is a Unit Testing framework for the DITA Open Toolkit. This [DITA-OT Plug-in](https://www.dita-ot.org/plugins) consists of seven DITA-OT transforms and an ANT
-library:
+This is a Unit Testing framework for the DITA Open Toolkit. This [DITA-OT Plug-in](https://www.dita-ot.org/plugins)
+consists of seven DITA-OT transforms and an ANT library:
 
 -   Unit Testing
     -   The `unit-test` transform allows a user to runs a sequence of `dita` commands and checks that the documents
@@ -85,7 +85,8 @@ The DITA-OT Unit Test Framework is a plug-in for the DITA Open Toolkit.
 -   Full installation instructions for downloading DITA-OT can be found
     [here](https://www.dita-ot.org/3.4/topics/installing-client.html).
 
-    1.  Download the `dita-ot-3.4.1.zip` package from the project website at [dita-ot.org/download](https://www.dita-ot.org/download)
+    1.  Download the `dita-ot-3.4.1.zip` package from the project website at
+        [dita-ot.org/download](https://www.dita-ot.org/download)
     2.  Extract the contents of the package to the directory where you want to install DITA-OT.
     3.  **Optional**: Add the absolute path for the `bin` directory to the _PATH_ system variable.
 
@@ -255,7 +256,7 @@ GitHub. More information about how to set up Travis integration can be found on 
 For automated testing of DITA-OT plug-ins, place your tests under a `test` directory under the root of the repository
 along with the `.travis.yml` in the root itself.
 
-For example to test against DITA-OT 3.4.1  use the following `.travis.yml`:
+For example to test against DITA-OT 3.4.1 use the following `.travis.yml`:
 
 ```yml
 language: java
