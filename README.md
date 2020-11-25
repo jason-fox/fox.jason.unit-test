@@ -243,6 +243,44 @@ You can drill down to an individual line to see if it has been invoked and how l
 -   `test.transtype` - The real transtype to run the antro profiler against
 -   `test.propertyfile` - A properties file to use when running the unit tests or antro profiler
 
+### Integration with GitHub Actions. 
+
+<a href="https://docs.github.com/en/free-pro-team@latest/actions"><img src="https://github.githubassets.com/images/modules/site/features/actions-icon-actions.svg" align="right" height="40"></a>
+
+**GitHub Actions** are a CI/CD environment integrated directly with GitHub. More information about how to set up GitHub Actions can be found on the
+[GitHub website](https://docs.github.com/en/free-pro-team@latest/actions) 
+
+![](https://jason-fox.github.io/fox.jason.unit-test/github-actions.png)
+
+A GitHub Action has been created to automate your [DITA-OT Plugin testing](https://github.com/jason-fox/dita-unit-test-action). To add automated CI/CD testing of your DITA-OT plug-ins, place your tests under a `test` directory under the root of the repository
+along with the `ci.yml` in the `.github/workflows` directory.
+
+```yaml
+name: CI
+'on':
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  unit-test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Run DITA-OT Unit Test
+        uses: jason-fox/dita-unit-test-action@master
+        with:
+          plugin: 'com.oxygenxml.editlink'
+```
+
+-   `plugin` - **Required** The name of the DITA-OT plugin to install and test.
+-   `setup-script` - The name of an optional bash script to run to install any dependencies prior to run the test. Defaults to `test-setup.sh` if not supplied.
+-   `prerequisites` - Comma separated list of additional DITA-OT plugins to install prior to installing the plugin under test.
+
 ### Integration with Travis CI
 
 <a href="https://travis-ci.com/"><img src="https://www.libtom.net/images/TravisCI-Full-Color-45e242791b7752b745a7ae53f265acd4.png" align="right" height="40"></a>
