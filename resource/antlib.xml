@@ -2,6 +2,6 @@
 <antlib>
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/xmltask.jar" name="xmltask"/>
 
-	<taskdef resource="fox/jason/unittest/antlib.xml" classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/unittest-1.0.jar"/>
+	<taskdef resource="fox/jason/unittest/antlib.xml" classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/unittest-1.1.jar"/>
 	
 </antlib>

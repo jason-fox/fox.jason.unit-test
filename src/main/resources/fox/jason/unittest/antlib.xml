@@ -195,7 +195,6 @@
 			<exec executable="diff" osfamily="unix" outputproperty="test.diff" resultproperty="test.diff.result">
 				<arg value="-b"/>
 				<arg value="-u"/>
-				<arg value="--suppress-common-lines"/>
 				<arg value="--label"/>
 				<arg value="${expected.file}"/>
 				<arg value="@{expectation}"/>
