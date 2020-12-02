@@ -376,11 +376,11 @@
 			-->
 			<xslt classpathref="xslt.class.path" in="@{from}" out="@{to}" style="${dita.dir}/plugins/fox.jason.unit-test/xsl/topic-fo.xsl"/>
 			<replace file="@{to}" token="${basedir}" value="."/>
-			<replace file="@{to}" token="UTF-8standalone=&quot;null&quot;" value="encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;"/>
 			<replace-pdf-font-family file="@{to}"/>
 			<replace-pdf-colors file="@{to}"/>
 			<replace-pdf-attributes file="@{to}"/>
 			<xmltask dest="@{to}" outputter="simple" source="@{to}"/>
+			<replace file="@{to}" token="UTF-8standalone=&quot;null&quot;" value="encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;"/>
 		</sequential>
 	</macrodef>
 	<!-- 
