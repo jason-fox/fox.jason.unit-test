@@ -17,9 +17,11 @@
 	<attribute name="line-height-shift-adjustment"/>
 	<attribute name="margin-bottom"/>
 	<attribute name="margin-top"/>
+	<attribute name="padding-end"/>
 	<attribute name="padding-left"/>
 	<attribute name="padding-top"/>
 	<attribute name="padding-bottom"/>
+	<attribute name="padding-start"/>
 	<attribute name="space-after"/>
 	<attribute name="space-after.optimum"/>
 	<attribute name="space-before"/>
