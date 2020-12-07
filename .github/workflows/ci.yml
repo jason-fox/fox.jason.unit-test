@@ -33,6 +33,7 @@ jobs:
         uses: jason-fox/dita-unit-test-action@master
         with:
           dita-ot-version: 3.5.4
-          plugin: 'fox.jason.readthedocs'
+          plugin: 'fox.jason.unit-test'
+          prerequisites: com.here.validate.svrl,com.here.validate.svrl.text-rules
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
