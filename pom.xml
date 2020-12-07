@@ -12,6 +12,19 @@
 			<version>1.10.8</version>
 		</dependency>
 	</dependencies>
+
+	<properties>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.organization>dita-ot-plugins</sonar.organization>
+		<sonar.projectKey>fox.jason.unit-test</sonar.projectKey>
+		<sonar.sources>cfg,src,xsl</sonar.sources>
+		<sonar.java.binaries>target/classes/fox/jason/unittest/tasks</sonar.java.binaries>
+		<sonar.java.libraries>lib/*.jar</sonar.java.libraries>
+		<sonar.test.exclusions>test,sample</sonar.test.exclusions>
+		<sonar.cpd.exclusions>src/fox/jason/unittest/tasks/** </sonar.cpd.exclusions>
+		<sonar.flex.cobertura.reportPaths>coverage.xml</sonar.flex.cobertura.reportPaths>
+		<sonar.exclusions>coverage.html,test-results.html,pom.xml,coverage.xml</sonar.exclusions>
+	</properties>
 	
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -63,6 +76,20 @@
 				<configuration>
 					<outputDirectory>${basedir}/lib</outputDirectory>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.3.0.603</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>sonar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
