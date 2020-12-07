@@ -184,6 +184,7 @@
 			</condition>
 			<property name="line" value="${line.separator}===================================================${line.separator}"/>
 			<fixcrlf eof="remove" eol="unix" file="@{result}"/>
+			<replace file="@{result}" token="UTF-8standalone=&quot;null&quot;" value="encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;"/>
 			<copy-result dest="@{expectation}" src="@{result}"/>
 			<loadfile failonerror="true" property="actual" srcfile="@{result}"/>
 			<loadfile failonerror="true" property="expected" srcfile="@{expectation}"/>
@@ -380,7 +381,6 @@
 			<replace-pdf-colors file="@{to}"/>
 			<replace-pdf-attributes file="@{to}"/>
 			<xmltask dest="@{to}" outputter="simple" source="@{to}"/>
-			<replace file="@{to}" token="UTF-8standalone=&quot;null&quot;" value="encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;"/>
 		</sequential>
 	</macrodef>
 	<!-- 
