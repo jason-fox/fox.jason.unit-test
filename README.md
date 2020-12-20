@@ -2,7 +2,7 @@
 
 [![license](https://img.shields.io/github/license/jason-fox/fox.jason.unit-test.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![DITA-OT 3.5](https://img.shields.io/badge/DITA--OT-3.5-blue.svg)](http://www.dita-ot.org/3.5)
-[![Build Status](https://api.travis-ci.com/jason-fox/fox.jason.unit-test.svg?branch=master)](https://travis-ci.com/github/jason-fox/fox.jason.unit-test)
+[![CI](https://github.com/jason-fox/fox.jason.unit-test/workflows/CI/badge.svg)](https://github.com/jason-fox/fox.jason.unit-test/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/jason-fox/fox.jason.unit-test/badge.svg?branch=master)](https://coveralls.io/github/jason-fox/fox.jason.unit-test?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/unit-test-framework-for-dita-ot/badge/?version=latest)](https://unit-test-framework-for-dita-ot.readthedocs.io/en/latest/?badge=latest)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fox.jason.unit-test&metric=alert_status)](https://sonarcloud.io/dashboard?id=fox.jason.unit-test)
@@ -243,12 +243,12 @@ You can drill down to an individual line to see if it has been invoked and how l
 -   `test.transtype` - The real transtype to run the antro profiler against
 -   `test.propertyfile` - A properties file to use when running the unit tests or antro profiler
 
-### Integration with GitHub Actions. 
+### Integration with GitHub Actions.
 
 <a href="https://docs.github.com/en/free-pro-team@latest/actions"><img src="https://github.githubassets.com/images/modules/site/features/actions-icon-actions.svg" align="right" height="40"></a>
 
 **GitHub Actions** are a CI/CD environment integrated directly with GitHub. More information about how to set up GitHub Actions can be found on the
-[GitHub website](https://docs.github.com/en/free-pro-team@latest/actions) 
+[GitHub website](https://docs.github.com/en/free-pro-team@latest/actions)
 
 ![](https://jason-fox.github.io/fox.jason.unit-test/github-actions.png)
 
