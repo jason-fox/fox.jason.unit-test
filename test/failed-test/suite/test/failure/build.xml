@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="unit-test">
-	<description>
-		Expect that a test fails
-	</description>
-	<target name="unit-test">
-		<fail message="This test fails"/>
-	</target>
-</project>
