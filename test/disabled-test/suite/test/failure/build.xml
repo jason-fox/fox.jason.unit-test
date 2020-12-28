@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- @disabled -->
+<project basedir="." default="unit-test">
+	<description>
+		Expect that a failing test that is disabled is not invoked 
+	</description>
+	<target name="unit-test">
+		<fail message="This test fails"/>
+	</target>
+</project>

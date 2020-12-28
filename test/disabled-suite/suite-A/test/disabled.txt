@@ -1,0 +1,2 @@
+If this file is called disabled.txt, the test suite is disabled. 
+To enable it rename the file.
