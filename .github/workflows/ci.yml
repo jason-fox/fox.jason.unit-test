@@ -34,7 +34,9 @@ jobs:
         with:
           dita-ot-version: 3.6
           plugin: 'fox.jason.unit-test'
-          prerequisites: com.here.validate.svrl,com.here.validate.svrl.text-rules
+          prerequisites: |
+            https://github.com/jason-fox/com.here.validate.svrl/archive/master.zip
+            https://github.com/jason-fox/com.here.validate.svrl.text-rules/archive/master.zip
           setup-script: 'test/setup.sh'
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
