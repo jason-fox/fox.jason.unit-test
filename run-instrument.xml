@@ -9,7 +9,7 @@
 	-->
 	<target name="run-instrument">
 		<xmlcatalog id="dita.catalog">
-			<catalogpath path="${dita.dir}/catalog-dita.xml"/>
+			<catalogpath path="${dita.plugin.org.dita.base.dir}/catalog-dita.xml"/>
 		</xmlcatalog>
 
 		<!-- Instrument ANT files first -->
