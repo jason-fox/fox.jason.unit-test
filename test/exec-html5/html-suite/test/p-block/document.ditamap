@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bookmap PUBLIC "-//OASIS//DTD DITA BookMap//EN" "bookmap.dtd">
+<bookmap>	
+	<chapter navtitle="p-block">
+		<topicref format="dita" type="topic" href="topics/p.dita"/>
+	</chapter>
+</bookmap>
