@@ -1,1 +1,0 @@
-dita --uninstall fox.jason.unit-test
