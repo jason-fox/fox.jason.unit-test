@@ -10,7 +10,13 @@
 	</target>
 	<target name="data">
 		<text id="duplicated-words">duplicated-words</text>
-		<xslfile plugin="com.here.validate.svrl.text-rules" path="/Customization/xsl/common-rules.xsl" />
-		<template match="*[not(self::codeblock or ancestor::codeblock)]" mode="default-lang-spelling-rules"/>
+		<xslfile
+      plugin="com.here.validate.svrl.text-rules"
+      path="/Customization/xsl/common-rules.xsl"
+    />
+		<template
+      match="*[not(self::codeblock or ancestor::codeblock)]"
+      mode="default-lang-spelling-rules"
+    />
 	</target>
 </project>

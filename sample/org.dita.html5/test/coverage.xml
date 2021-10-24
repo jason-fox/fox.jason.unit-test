@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-
 <package name="org.dita.html5">
 	<elements>
 		<element id="codeblock">pre class="pre codeblock"</element>	
@@ -28,11 +27,3 @@
 		<element id="xref-external">a target="_blank"</element>
 	</elements>
 </package>
-
-
-
-
-       
-        
-        
-        

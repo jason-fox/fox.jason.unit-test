@@ -1,6 +1,9 @@
-<?xml version="1.0" ?>
-
-<xsl:stylesheet version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<?xml version="1.0"?>
+<xsl:stylesheet
+  version="2.0"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+>
 	<!-- Defining that this .xsl generates an indented, UTF8-encoded XML file -->
 	<xsl:output encoding="utf-8" indent="yes" method="xml" omit-xml-declaration="yes"/>
 	<xsl:param name="in">.</xsl:param>
@@ -17,10 +20,14 @@
 	<xsl:variable name="path">
 		<xsl:choose>
 			<xsl:when test="not(starts-with($in,'file:')) and not(starts-with($in,'/')) ">
-				<xsl:value-of select="translate(concat('file:/', $in ,'?select=*.', $extension ,';recurse=yes;on-error=warning'), '\', '/')"/>
+				<xsl:value-of
+          select="translate(concat('file:/', $in ,'?select=*.', $extension ,';recurse=yes;on-error=warning'), '\', '/')"
+        />
 			</xsl:when>
 			<xsl:when test="starts-with($in,'/')">
-				<xsl:value-of select="translate(concat('file:', $in ,'?select=*.', $extension ,';recurse=yes;on-error=warning'), '\', '/')"/>
+				<xsl:value-of
+          select="translate(concat('file:', $in ,'?select=*.', $extension ,';recurse=yes;on-error=warning'), '\', '/')"
+        />
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="translate(concat($in ,'?select=*.', $extension ,';recurse=yes;on-error=warning'), '\', '/')"/>
@@ -46,7 +53,9 @@
 			
 				<xsl:for-each select="collection($path)">
 				   <xsl:variable name="document-uri">
-				    	<xsl:value-of select="substring-after(replace(replace(replace(document-uri(/), $path, ''), '.orig',''), 'file:/', ''),'coverage/')"/>
+				    	<xsl:value-of
+              select="substring-after(replace(replace(replace(document-uri(/), $path, ''), '.orig',''), 'file:/', ''),'coverage/')"
+            />
 					</xsl:variable>
 					<xsl:element name="class">
 						 <xsl:attribute name="name">

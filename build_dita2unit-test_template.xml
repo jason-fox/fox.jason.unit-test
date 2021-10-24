@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!--ant-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!--ant-->
 <!--
 	This file is part of the DITA-OT Unit Test Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
@@ -18,7 +19,9 @@
 		</dita-ot-fail>
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
 			<classpath>
-				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"/>
+				<pathelement
+          location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"
+        />
 			</classpath>
 		</taskdef>
 		<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" name="xmltask">
@@ -33,8 +36,14 @@
 		</condition>
 		
 		<!-- If args.input is a test suite, copy over the test suite to temp -->
-		<mkdir dir="${test.root.dir}/${args.input.dirname}/test" if:set="testsuite.found"/>
-		<copy if:set="testsuite.found" todir="${test.root.dir}/${args.input.dirname}/test">
+		<mkdir
+      dir="${test.root.dir}/${args.input.dirname}/test"
+      if:set="testsuite.found"
+    />
+		<copy
+      if:set="testsuite.found"
+      todir="${test.root.dir}/${args.input.dirname}/test"
+    >
 			<fileset dir="${args.input}/test"/>
 		</copy>
 		<!-- 
@@ -56,7 +65,14 @@
 				<condition property="test.coverage.report" value="true">
 					<available file="@{test-suite.dir}/test/template-coverage.xml" type="file"/>
 				</condition>
-				<propertyregex casesensitive="false" input="@{test-suite.dir}" override="true" property="test-suite" regexp="([^/]*)$" select="\1"/>
+				<propertyregex
+          casesensitive="false"
+          input="@{test-suite.dir}"
+          override="true"
+          property="test-suite"
+          regexp="([^/]*)$"
+          select="\1"
+        />
 				<mkdir dir="${test.root.dir}/${test-suite}/test" if:set="testsuite.found"/>
 				<copy if:set="testsuite.found" todir="${test.root.dir}/${test-suite}/test">
 					<fileset dir="@{test-suite.dir}/test"/>
@@ -80,16 +96,30 @@
 				</dirset>
 			</path>
 			<sequential>
-				<propertyregex casesensitive="false" input="@{test-suite.dir}" override="true" property="test-suite" regexp="([^/]*)$" select="\1"/>
+				<propertyregex
+          casesensitive="false"
+          input="@{test-suite.dir}"
+          override="true"
+          property="test-suite"
+          regexp="([^/]*)$"
+          select="\1"
+        />
 				<local name="test-suite.disabled"/>
-				<available file="@{test-suite.dir}/test/disabled.txt" property="test-suite.disabled"/>
+				<available
+          file="@{test-suite.dir}/test/disabled.txt"
+          property="test-suite.disabled"
+        />
 				<dita-ot-echo id="UNIT004W" if:set="test-suite.disabled">
 					<param name="1" value="The test suite '${test-suite}' is disabled"/>
 				</dita-ot-echo>
 				<dita-ot-echo id="UNIT002I" unless:set="test-suite.disabled">
 					<param name="1" value="Generating fixtures for '${test-suite}'"/>
 				</dita-ot-echo>
-				<create-fixture dir="@{test-suite.dir}" suite="${test-suite}" unless:set="test-suite.disabled"/>
+				<create-fixture
+          dir="@{test-suite.dir}"
+          suite="${test-suite}"
+          unless:set="test-suite.disabled"
+        />
 			</sequential>
 		</for>
 	</target>
@@ -99,7 +129,11 @@
 	<target name="unit-test">
 		<property name="test.copy.dir" value="${args.input}"/>
 		<property name="test.copy" value="false"/>
-		<condition property="test.suite.run.message" value="Updating test expectations"  else="Running tests">
+		<condition
+      property="test.suite.run.message"
+      value="Updating test expectations"
+      else="Running tests"
+    >
 			<istrue value="${test.copy}"/>
 		</condition>
 		<propertyset id="test-properties">
@@ -111,7 +145,9 @@
 		</propertyset>
 		<taskdef resource="org/apache/ant/antunit/antlib.xml">
 			<classpath>
-				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-antunit-1.4.jar"/>
+				<pathelement
+          location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-antunit-1.4.jar"
+        />
 			</classpath>
 		</taskdef>
 		<mkdir dir="${dita.temp.dir}/unit-test/report"/>
@@ -147,16 +183,30 @@
 		Creates a formatted HTML report using the optional JUnitReport task.
 	-->
 	<target name="unit-test.report">
-		<junitreport taskname="test-report" todir="${dita.temp.dir}" unless:true="test.copy">
+		<junitreport
+      taskname="test-report"
+      todir="${dita.temp.dir}"
+      unless:true="test.copy"
+    >
 			<fileset dir="${dita.temp.dir}/unit-test/report" includes="*.xml"/>
-			<report format="noframes" styledir="${dita.plugin.fox.jason.unit-test.dir}/xsl" todir="${output.dir}"/>
+			<report
+        format="noframes"
+        styledir="${dita.plugin.fox.jason.unit-test.dir}/xsl"
+        todir="${output.dir}"
+      />
 		</junitreport>
-		<move file="${output.dir}/junit-noframes.html" tofile="${output.dir}/test-results.html"/>
+		<move
+      file="${output.dir}/junit-noframes.html"
+      tofile="${output.dir}/test-results.html"
+    />
 		<dita-ot-fail id="UNIT001F" if:set="test-failure" unless:true="test.copy"/>
 		<unit-test-success-echo/>
 	</target>
 	<!--
 		Ant target executed to run a unit test suite.
 	-->
-	<target depends="build-init,unit-test.init,generate-fixtures,unit-test,coverage.report,unit-test.report" name="dita2unit-test"/>
+	<target
+    depends="build-init,unit-test.init,generate-fixtures,unit-test,coverage.report,unit-test.report"
+    name="dita2unit-test"
+  />
 </project>

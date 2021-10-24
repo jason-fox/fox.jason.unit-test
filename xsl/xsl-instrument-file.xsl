@@ -1,7 +1,9 @@
 <xsl:stylesheet
-xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-exclude-result-prefixes="xs"
-version="2.0">
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  exclude-result-prefixes="xs"
+  version="2.0"
+>
 
   <xsl:param as="xs:string" name="SOURCE"/>
   <xsl:variable name="SOURCEPATH" select="replace($SOURCE, '\\', '/')"/>

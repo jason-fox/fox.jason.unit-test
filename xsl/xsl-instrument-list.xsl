@@ -1,10 +1,12 @@
 <xsl:stylesheet
-xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-xmlns:saxon="http://saxon.sf.net/"
-exclude-result-prefixes="xs saxon"
-version="2.0">
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:saxon="http://saxon.sf.net/"
+  exclude-result-prefixes="xs saxon"
+  version="2.0"
+>
   <!-- Defining that this .xsl generates plain text file -->
-	<xsl:output indent="yes" method="xml" omit-xml-declaration="yes" cdata-section-elements="text" />
+	<xsl:output indent="yes" method="xml" omit-xml-declaration="yes" cdata-section-elements="text"/>
 
    <xsl:param as="xs:string" name="SOURCE"/>
   <xsl:variable name="SOURCEPATH" select="replace($SOURCE, '\\', '/')"/>
@@ -108,11 +110,13 @@ version="2.0">
 
 
   <xsl:template match="xsl:template|xsl:function">
-    <xsl:if test="not(comment()[contains(., 'ignore-instrument')]) and not(ancestor::*/comment()[contains(., 'ignore-instrument')])">
+    <xsl:if
+      test="not(comment()[contains(., 'ignore-instrument')]) and not(ancestor::*/comment()[contains(., 'ignore-instrument')])"
+    >
       <xsl:call-template name="addElement"/>
       <xsl:apply-templates mode="template"/>
       <xsl:call-template name="addElement">
-        <xsl:with-param name="open" select="false()" />
+        <xsl:with-param name="open" select="false()"/>
     </xsl:call-template>
     </xsl:if>
   </xsl:template>
@@ -121,18 +125,18 @@ version="2.0">
     <xsl:call-template name="addElement"/>
     <xsl:apply-templates mode="template"/>
     <xsl:call-template name="addElement">
-      <xsl:with-param name="open" select="false()" />
+      <xsl:with-param name="open" select="false()"/>
     </xsl:call-template>
   </xsl:template>
 
    <xsl:template match="xsl:*" mode="template">
     <xsl:call-template name="addElement">
-      <xsl:with-param name="instrument" select="false()" />
+      <xsl:with-param name="instrument" select="false()"/>
     </xsl:call-template>
     <xsl:apply-templates mode="template"/>
     <xsl:call-template name="addElement">
-      <xsl:with-param name="open" select="false()" />
-      <xsl:with-param name="instrument" select="false()" />
+      <xsl:with-param name="open" select="false()"/>
+      <xsl:with-param name="instrument" select="false()"/>
     </xsl:call-template>
    </xsl:template>
   

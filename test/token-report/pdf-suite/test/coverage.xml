@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-
 <package name="pdf-suite">
 	<lines>
 		<line id="plain-text">font-family="STANDARD"</line>
@@ -32,7 +31,3 @@
 		<element id="xref-external">fo:basic-link external-destination=".*"</element>
 	</elements>
 </package>
-       
-        
-       
-        

@@ -6,20 +6,45 @@
 <plugin id="fox.jason.unit-test" version="2.1.1">
 	
 	<transtype desc="Runs an antro ANT profiling report" name="antro">
-		<param desc="The transtype to run the profile against" name="test.transtype" type="string"/>
-		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
+		<param
+      desc="The transtype to run the profile against"
+      name="test.transtype"
+      type="string"
+    />
+		<param
+      desc="The properties file to run the profile against"
+      name="test.propertyfile"
+      type="file"
+    />
 	</transtype>
 	<transtype desc="Invokes the UI for the antro tool" name="antro-ui"/>
 	<transtype desc="Runs a token coverage report" name="token-report"/>
-	<transtype desc="Runs the unit tests and creates a test report" name="unit-test">
-		<param desc="Whether regenerated expecations should be copied" name="test.copy" type="enum">
+	<transtype
+    desc="Runs the unit tests and creates a test report"
+    name="unit-test"
+  >
+		<param
+      desc="Whether regenerated expecations should be copied"
+      name="test.copy"
+      type="enum"
+    >
 			<val>true</val>
 			<val default="true">false</val>
 		</param>
-		<param desc="The properties file to run the profile against" name="test.propertyfile" type="file"/>
+		<param
+      desc="The properties file to run the profile against"
+      name="test.propertyfile"
+      type="file"
+    />
 	</transtype>
-	<transtype desc="Removes instrumentation from XSL templates" name="xsl-deinstrument"/>
-	<transtype desc="Annotates XSL templates with instrumentation" name="xsl-instrument"/>
+	<transtype
+    desc="Removes instrumentation from XSL templates"
+    name="xsl-deinstrument"
+  />
+	<transtype
+    desc="Annotates XSL templates with instrumentation"
+    name="xsl-instrument"
+  />
 	<transtype desc="Runs an XSL template coverage report" name="xsl-report"/>
 
 

@@ -10,13 +10,16 @@
 
 		<!-- Tidy the HTML by removing some non-XML compliant elements -->
 		<replace file="./out/coverage.html">
-			<replacetoken><![CDATA[<!DOCTYPE html
+			<replacetoken
+      ><![CDATA[<!DOCTYPE html
   PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">]]></replacetoken>
 			<replacevalue/>
 		</replace>
 		<replace file="./out/coverage.html">
-			<replacetoken><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">]]></replacetoken>
-			<replacevalue><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>]]></replacevalue>
+			<replacetoken
+      ><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">]]></replacetoken>
+			<replacevalue
+      ><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>]]></replacevalue>
 		</replace>
 		<replace file="./out/coverage.html">
 			<replacetoken><![CDATA[&nbsp;]]></replacetoken>

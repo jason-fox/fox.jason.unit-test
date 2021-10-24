@@ -11,7 +11,13 @@
 	</target>
 	<target name="data">
 		<text id="duplicated-punctuation">duplicated-punctuation</text>
-		<xslfile plugin="com.here.validate.svrl.text-rules" path="/Customization/xsl/common-rules.xsl" />
-		<template match="*[not((.//p) or (.//entry) or (.//codeph) or (.//li))]" mode="common-grammar-rules"/>
+		<xslfile
+      plugin="com.here.validate.svrl.text-rules"
+      path="/Customization/xsl/common-rules.xsl"
+    />
+		<template
+      match="*[not((.//p) or (.//entry) or (.//codeph) or (.//li))]"
+      mode="common-grammar-rules"
+    />
 	</target>
 </project>

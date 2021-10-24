@@ -1,7 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--ant-->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--ant-->
 <antlib>
-	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/xmltask.jar" name="xmltask"/>
+	<taskdef
+    classname="com.oopsconsultancy.xmltask.ant.XmlTask"
+    classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/xmltask.jar"
+    name="xmltask"
+  />
 
-	<taskdef resource="fox/jason/unittest/antlib.xml" classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/unittest-1.1.jar"/>
+	<taskdef
+    resource="fox/jason/unittest/antlib.xml"
+    classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/unittest-1.1.jar"
+  />
 	
 </antlib>

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!--ant-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!--ant-->
 <!--
   This file is part of the Spelling and Grammar Checker project.
   See the accompanying LICENSE file for applicable licenses.
@@ -13,7 +14,15 @@
 		</xmlcatalog>
 
 		<!-- Instrument ANT files first -->
-		<xslt classpath="${fox.jason.unit-test.dir}/lib/saxon-9.1.0.8.jar" destdir="${dita.temp.dir}/coverage"  extension=".xml" style="${test.instrument.xsl.dir}/ant-instrument-list.xsl" basedir="${args.input}" includes="build_*.xml" excludes="build_*_template.xml">
+		<xslt
+      classpath="${fox.jason.unit-test.dir}/lib/saxon-9.1.0.8.jar"
+      destdir="${dita.temp.dir}/coverage"
+      extension=".xml"
+      style="${test.instrument.xsl.dir}/ant-instrument-list.xsl"
+      basedir="${args.input}"
+      includes="build_*.xml"
+      excludes="build_*_template.xml"
+    >
 			<xmlcatalog refid="dita.catalog"/>
 			<factory name="net.sf.saxon.TransformerFactoryImpl">
 				<!--
@@ -21,10 +30,16 @@
 					see for more details:
 					http://www.saxonica.com/html/documentation/configuration/config-features.html
 				-->
-				<attribute name="http://saxon.sf.net/feature/allow-external-functions" value="true"/>
+				<attribute
+          name="http://saxon.sf.net/feature/allow-external-functions"
+          value="true"
+        />
 				<!-- Enable keeping track of line numbers whilst transforming -->
 				<attribute name="http://saxon.sf.net/feature/linenumbering" value="true"/>
-				<attribute name="http://saxon.sf.net/feature/sourceParserClass" value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+				<attribute
+          name="http://saxon.sf.net/feature/sourceParserClass"
+          value="org.apache.xml.resolver.tools.ResolvingXMLReader"
+        />
 				<!-- Enable DTD validation whilst transforming -->
 				<attribute name="http://saxon.sf.net/feature/validation" value="false"/>
 			</factory>
@@ -32,8 +47,15 @@
 		</xslt>
 
 		<!-- Instrument XSL files thereafter -->
-		<xslt classpath="${fox.jason.unit-test.dir}/lib/saxon-9.1.0.8.jar" destdir="${dita.temp.dir}/coverage"  extension=".xsl" style="${test.instrument.xsl.dir}/xsl-instrument-list.xsl" basedir="${args.input}" includes="**/*.xsl"
-			excludes="**/*_template.xsl">
+		<xslt
+      classpath="${fox.jason.unit-test.dir}/lib/saxon-9.1.0.8.jar"
+      destdir="${dita.temp.dir}/coverage"
+      extension=".xsl"
+      style="${test.instrument.xsl.dir}/xsl-instrument-list.xsl"
+      basedir="${args.input}"
+      includes="**/*.xsl"
+      excludes="**/*_template.xsl"
+    >
 			<xmlcatalog refid="dita.catalog"/>
 			<factory name="net.sf.saxon.TransformerFactoryImpl">
 				<!--
@@ -41,10 +63,16 @@
 					see for more details:
 					http://www.saxonica.com/html/documentation/configuration/config-features.html
 				-->
-				<attribute name="http://saxon.sf.net/feature/allow-external-functions" value="true"/>
+				<attribute
+          name="http://saxon.sf.net/feature/allow-external-functions"
+          value="true"
+        />
 				<!-- Enable keeping track of line numbers whilst transforming -->
 				<attribute name="http://saxon.sf.net/feature/linenumbering" value="true"/>
-				<attribute name="http://saxon.sf.net/feature/sourceParserClass" value="org.apache.xml.resolver.tools.ResolvingXMLReader"/>
+				<attribute
+          name="http://saxon.sf.net/feature/sourceParserClass"
+          value="org.apache.xml.resolver.tools.ResolvingXMLReader"
+        />
 				<!-- Enable DTD validation whilst transforming -->
 				<attribute name="http://saxon.sf.net/feature/validation" value="false"/>
 			</factory>

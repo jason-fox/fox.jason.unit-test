@@ -11,7 +11,13 @@
 	</target>
 	<target name="data">
 		<text id="incorrect-capitalization">incorrect-capitalization</text>
-		<xslfile plugin="com.here.validate.svrl" path="/Customization/xsl/textual-rules.xsl" />
-		<template match="*[not(self::draft-comment or self::codeph or self::codeblock or ancestor::codeblock)]" mode="common-textual-rules"/>
+		<xslfile
+      plugin="com.here.validate.svrl"
+      path="/Customization/xsl/textual-rules.xsl"
+    />
+		<template
+      match="*[not(self::draft-comment or self::codeph or self::codeblock or ancestor::codeblock)]"
+      mode="common-textual-rules"
+    />
 	</target>
 </project>

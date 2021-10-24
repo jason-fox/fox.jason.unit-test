@@ -5,7 +5,10 @@
 		Expect that XSLT Report run directly will succeed
 	</description>
 	<target name="unit-test">
-		<property name="test-plugin" value="${dita.dir}/plugins/com.here.validate.svrl.text-rules"/>
+		<property
+      name="test-plugin"
+      value="${dita.dir}/plugins/com.here.validate.svrl.text-rules"
+    />
 		<exec-transtype transtype="xsl-report" ditamap="${test-plugin}"/>
 		<contains-text expected="Running an XSL coverage report"/>
 	</target>

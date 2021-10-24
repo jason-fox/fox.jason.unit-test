@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   This file is part of the DITA-OT Unit Test Plug-in project.
   See the accompanying LICENSE file for applicable licenses.
@@ -13,19 +13,23 @@
     <response/>
   </message>
   <message id="UNIT003F" type="FATAL">
-    <reason>Override transtype is not specified, or is specified using the wrong parameter.</reason>
+    <reason
+    >Override transtype is not specified, or is specified using the wrong parameter.</reason>
     <response>Add --test.transtype=&lt;transtype&gt;.</response>
   </message>
   <message id="UNIT004W" type="WARN">
     <reason>%1</reason>
-    <response>Delete or rename the disabled.txt file to re-enable the test-suite</response>
+    <response
+    >Delete or rename the disabled.txt file to re-enable the test-suite</response>
   </message>
   <message id="UNIT005W" type="WARN">
     <reason>%1</reason>
-    <response>Remove the comment @disabled from the build.xml file to re-enable the test</response>
+    <response
+    >Remove the comment @disabled from the build.xml file to re-enable the test</response>
   </message>
   <message id="UNIT006F" type="FATAL">
     <reason>The %1 plugin is already instrumented</reason>
-    <response>First run the xsl-deinstrument transform to reset the instrumentation</response>
+    <response
+    >First run the xsl-deinstrument transform to reset the instrumentation</response>
   </message>
 </messages>

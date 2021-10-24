@@ -97,7 +97,10 @@
 	<color hex="#[8-b][0-9a-f][c-e][0-9a-f][d-f][0-9a-f]" name="LIGHTBLUE"/>
 	<color hex="#f[0-9a-f][a-c][0-9a-f][b-d][0-9a-f]" name="LIGHTPINK"/>
 	<color hex="#f[0-9a-f][8|a][0-9a-f][6-8][0-9a-f]" name="LIGHTSALMON"/>
-	<color hex="#[7|8|a][0-9a-f][7|8|a][0-9a-f][8|9|a][0-9a-f]" name="LIGHTSLATEGRAY"/>
+	<color
+    hex="#[7|8|a][0-9a-f][7|8|a][0-9a-f][8|9|a][0-9a-f]"
+    name="LIGHTSLATEGRAY"
+  />
 	<color hex="#[c-e][0-9a-f][6-8][0-9a-f][c-e][0-9a-f]" name="ORCHID"/>
 	<color hex="#[67][0-9a-f][23][0-9a-f][9a][0-9a-f]" name="REBECCAPURPLE"/>
 	<color hex="#[a-c][0-9a-f][7|8|a][0-9a-f][7|8|a][0-9a-f]" name="ROSYBROWN"/>

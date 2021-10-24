@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
-<project basedir="." name="unit-test.fixture" xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project
+  basedir="."
+  name="unit-test.fixture"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+>
 	<description/>
 	<basename file="${ant.file.unit-test.fixture}/.." property="test-suite"/>
 	<!--
@@ -11,7 +16,13 @@
 	<macrodef name="unit-test">
 		<attribute name="name"/>
 		<sequential>
-			<exec executable="ant" failonerror="false" osfamily="unix" outputproperty="output" resultproperty="result">
+			<exec
+        executable="ant"
+        failonerror="false"
+        osfamily="unix"
+        outputproperty="output"
+        resultproperty="result"
+      >
 				<arg value="-f"/>
 				<arg value="${basedir}/test/@{name}/build.xml"/>
 				<arg value="-S"/>
@@ -23,9 +34,18 @@
 				<arg value="-Ddita.dir=${dita.dir}"/>
 				<arg value="-Dcli.color=false"/>
 			</exec>
-			<exec dir="${repo.dir}" executable="cmd" failonerror="false" osfamily="windows" outputproperty="output" resultproperty="result">
+			<exec
+        dir="${repo.dir}"
+        executable="cmd"
+        failonerror="false"
+        osfamily="windows"
+        outputproperty="output"
+        resultproperty="result"
+      >
 				<arg value="/C"/>
-				<arg value="ant -f ${basedir}/@{name}/build.xml -S -q -Dtest.root.dir=${basedir} -Dtest.copy.dir=${test.copy.dir}/${test-suite} -Dtest.copy=${test.copy} -Ddita.dir=${dita.dir} -Dcli.color=false"/>
+				<arg
+          value="ant -f ${basedir}/@{name}/build.xml -S -q -Dtest.root.dir=${basedir} -Dtest.copy.dir=${test.copy.dir}/${test-suite} -Dtest.copy=${test.copy} -Ddita.dir=${dita.dir} -Dcli.color=false"
+        />
 			</exec>
 			<condition property="test.failed">
 				<not>

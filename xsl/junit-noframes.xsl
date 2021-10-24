@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
-
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-        xmlns:lxslt="http://xml.apache.org/xslt">
-<xsl:output method="html" indent="yes" encoding="UTF-8"
-  doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" />
-<xsl:decimal-format decimal-separator="." grouping-separator="," />
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" xmlns:lxslt="http://xml.apache.org/xslt">
+<xsl:output method="html" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
+<xsl:decimal-format decimal-separator="." grouping-separator=","/>
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -36,64 +33,73 @@ under the License.
         <head>
             <title>AntUnit Test Results</title>
     <style type="text/css">
-      body {
-        font:normal 68% verdana,arial,helvetica;
-        color:#000000;
-      }
+body {
+  font: normal 68% verdana, arial, helvetica;
+  color: #000000;
+}
 
-     
+table tr td,
+table tr th {
+  font-size: 68%;
+}
+table.details tr th {
+  font-weight: bold;
+  text-align: left;
+  background: #a6caf0;
+}
+table.details tr td {
+  background: #eeeee0;
+}
+table.details td.Success {
+  background: lightgreen;
+}
+table.details td.Failure {
+  background: lightcoral;
+  color: whitesmoke;
+}
 
-      table tr td, table tr th {
-          font-size: 68%;
-      }
-      table.details tr th{
-        font-weight: bold;
-        text-align:left;
-        background:#a6caf0;
-      }
-      table.details tr td{
-        background:#eeeee0;
-      }
-      table.details td.Success {
-        background: lightgreen;
-      }
-      table.details td.Failure {
-         background: lightcoral; color: whitesmoke;
-      }
-
-      p {
-        line-height:1.5em;
-        margin-top:0.5em; margin-bottom:1.0em;
-      }
-      h1 {
-        margin: 0px 0px 5px; font: 165% verdana,arial,helvetica
-      }
-      h2 {
-        margin-top: 1em; margin-bottom: 0.5em; font: bold 125% verdana,arial,helvetica
-      }
-      h3 {
-        margin-bottom: 0.5em; font: bold 115% verdana,arial,helvetica
-      }
-      h4 {
-        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
-      }
-      h5 {
-        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
-      }
-      h6 {
-        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
-      }
-      .Error {
-        font-weight:bold; color:red;
-      }
-      .Failure {
-        font-weight:bold; color:purple;
-      }
-      .Properties {
-        text-align:right;
-      }
-      
-      </style>
+p {
+  line-height: 1.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+h1 {
+  margin: 0px 0px 5px;
+  font: 165% verdana, arial, helvetica;
+}
+h2 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font: bold 125% verdana, arial, helvetica;
+}
+h3 {
+  margin-bottom: 0.5em;
+  font: bold 115% verdana, arial, helvetica;
+}
+h4 {
+  margin-bottom: 0.5em;
+  font: bold 100% verdana, arial, helvetica;
+}
+h5 {
+  margin-bottom: 0.5em;
+  font: bold 100% verdana, arial, helvetica;
+}
+h6 {
+  margin-bottom: 0.5em;
+  font: bold 100% verdana, arial, helvetica;
+}
+.Error {
+  font-weight: bold;
+  color: red;
+}
+.Failure {
+  font-weight: bold;
+  color: purple;
+}
+.Properties {
+  text-align: right;
+}
+        </style>
        <!--
       <script type="text/javascript" language="JavaScript">
         var Projects = new Array();
@@ -135,7 +141,7 @@ under the License.
       -->
         </head>
         <body>
-            <a name="top"></a>
+            <a name="top"/>
             <xsl:call-template name="pageHeader"/>
 
             <!-- Summary part -->
@@ -171,7 +177,10 @@ under the License.
             <!-- list all directories recursively -->
             <xsl:for-each select="./testsuite[not(./@package = preceding-sibling::testsuite/@package)]">
                 <xsl:sort select="@package"/>
-                <xsl:variable name="testsuites-in-directory" select="/testsuites/testsuite[./@package = current()/@package]"/>
+                <xsl:variable
+          name="testsuites-in-directory"
+          select="/testsuites/testsuite[./@package = current()/@package]"
+        />
                 <xsl:variable name="testCount" select="sum($testsuites-in-directory/tests/text())"/>
                 <xsl:variable name="errorCount" select="sum($testsuites-in-directory/errors/text())"/>
                 <xsl:variable name="failureCount" select="sum($testsuites-in-directory/failures/text())"/>
@@ -186,7 +195,9 @@ under the License.
                             <xsl:when test="$errorCount &gt; 0">Error</xsl:when>
                         </xsl:choose>
                     </xsl:attribute>
-                    <td><a href="#{replace(@package, '^.*\.', '')}"><xsl:value-of select="replace(@package, '^.*\.', '')"/></a></td>
+                    <td><a href="#{replace(@package, '^.*\.', '')}"><xsl:value-of
+                select="replace(@package, '^.*\.', '')"
+              /></a></td>
                     <td><xsl:value-of select="$testCount"/></td>
                     <td>
                       <xsl:if test="$errorCount &gt; 0">
@@ -219,14 +230,17 @@ under the License.
         <!-- create an anchor to this directory name -->
         <xsl:for-each select="/testsuites/testsuite[not(./@package = preceding-sibling::testsuite/@package)]">
             <xsl:sort select="@package"/>
-                <a name="{@package}"></a>
+                <a name="{@package}"/>
                 <h3>Tests for <xsl:value-of select="replace(@package, '^.*\.', '')"/></h3>
 
                 <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
                     <xsl:call-template name="testsuite.test.header"/>
 
                     <!-- match the testsuites of this directory -->
-                    <xsl:apply-templates select="/testsuites/testsuite[./@package = current()/@package]" mode="print.test"/>
+                    <xsl:apply-templates
+          select="/testsuites/testsuite[./@package = current()/@package]"
+          mode="print.test"
+        />
                 </table>
                 <a href="#top">Back to top</a>
                 <p/>
@@ -238,7 +252,7 @@ under the License.
         <xsl:for-each select="testsuite">
             <xsl:sort select="@name"/>
             <!-- create an anchor to this class name -->
-            <a name="{replace(@package, '^.*\.', '')}"></a>
+            <a name="{replace(@package, '^.*\.', '')}"/>
             <h3>Tests for <xsl:value-of select="replace(@package, '^.*\.', '')"/></h3>
 
             <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
@@ -334,8 +348,10 @@ under the License.
     <h1>Unit Test Results</h1>
     <table width="100%">
     <tr>
-        <td align="left"></td>
-        <td align="right">Designed for use with <a href='http://ant.apache.org/antlibs/antunit/'>AntUnit</a> and <a href='http://ant.apache.org/'>Ant</a>.</td>
+        <td align="left"/>
+        <td align="right">Designed for use with <a href='http://ant.apache.org/antlibs/antunit/'>AntUnit</a> and <a
+            href='http://ant.apache.org/'
+          >Ant</a>.</td>
     </tr>
     </table>
     <hr size="1"/>
@@ -420,7 +436,7 @@ under the License.
             </xsl:when>
             <xsl:otherwise>
                 <td class="Success">Success</td>
-                <td></td>
+                <td/>
             </xsl:otherwise>
         </xsl:choose>
         <td>
@@ -466,7 +482,7 @@ under the License.
     </xsl:choose>
     <xsl:choose>
         <xsl:when test="@linenumber">
-            <br></br>
+            <br/>
             at line <xsl:value-of select="@linenumber"/>
             <xsl:choose>
                 <xsl:when test="@columnnumber">

@@ -1,76 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-        xmlns:lxslt="http://xml.apache.org/xslt">
-<xsl:output method="html" indent="yes" encoding="UTF-8"
-  doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" />
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" xmlns:lxslt="http://xml.apache.org/xslt">
+<xsl:output method="html" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
 
 <xsl:template match="/">
 <html>
     <head>
     <title>Coverage Results</title>
     <style type="text/css">
-      body {
-        font:normal 68% verdana,arial,helvetica;
-        color:#000000;
-      }
+body {
+  font: normal 68% verdana, arial, helvetica;
+  color: #000000;
+}
 
-     
+table tr td,
+table tr th {
+  font-size: 68%;
+}
+table.details tr th {
+  font-weight: bold;
+  text-align: left;
+  background: #a6caf0;
+}
+table.details tr td {
+  background: #eeeee0;
+}
+table.details td.Success {
+  background: lightgreen;
+}
+table.details td.Failure {
+  background: lightcoral;
+  color: whitesmoke;
+}
 
-      table tr td, table tr th {
-          font-size: 68%;
-      }
-      table.details tr th{
-        font-weight: bold;
-        text-align:left;
-        background:#a6caf0;
-      }
-      table.details tr td{
-        background:#eeeee0;
-      }
-      table.details td.Success {
-        background: lightgreen;
-      }
-      table.details td.Failure {
-         background: lightcoral; color: whitesmoke;
-      }
-
-      p {
-        line-height:1.5em;
-        margin-top:0.5em; margin-bottom:1.0em;
-      }
-      h1 {
-        margin: 0px 0px 5px; font: 165% verdana,arial,helvetica
-      }
-      h2 {
-        margin-top: 1em; margin-bottom: 0.5em; font: bold 125% verdana,arial,helvetica
-      }
-      h3 {
-        margin-bottom: 0.5em; font: bold 115% verdana,arial,helvetica
-      }
-      h4 {
-        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
-      }
-      h5 {
-        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
-      }
-      h6 {
-        margin-bottom: 0.5em; font: bold 100% verdana,arial,helvetica
-      }
-      .Error {
-        font-weight:bold; color:red;
-      }
-      .Success {
-        font-weight:bold; color:green;
-      }
-      .Failure {
-        font-weight:bold; color:purple;
-      }
-      .Properties {
-        text-align:right;
-      }
-      
-      </style>
+p {
+  line-height: 1.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+h1 {
+  margin: 0px 0px 5px;
+  font: 165% verdana, arial, helvetica;
+}
+h2 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font: bold 125% verdana, arial, helvetica;
+}
+h3 {
+  margin-bottom: 0.5em;
+  font: bold 115% verdana, arial, helvetica;
+}
+h4 {
+  margin-bottom: 0.5em;
+  font: bold 100% verdana, arial, helvetica;
+}
+h5 {
+  margin-bottom: 0.5em;
+  font: bold 100% verdana, arial, helvetica;
+}
+h6 {
+  margin-bottom: 0.5em;
+  font: bold 100% verdana, arial, helvetica;
+}
+.Error {
+  font-weight: bold;
+  color: red;
+}
+.Success {
+  font-weight: bold;
+  color: green;
+}
+.Failure {
+  font-weight: bold;
+  color: purple;
+}
+.Properties {
+  text-align: right;
+}
+        </style>
     </head>
   <body>
 
@@ -95,8 +102,8 @@
 <xsl:template name="testsuite.coverage.header">
       <tr valign="top">
       <th style="text-align:left">Title</th>
-      <th width="30%" ></th>
-      <th width="5em" >Tokens</th>
+      <th width="30%"/>
+      <th width="5em">Tokens</th>
       <th width="5em">Hits</th>
       <th width="5em">Percent</th>
     </tr>
@@ -124,7 +131,9 @@
          <div>
             <xsl:attribute name="style">background-color:coral;width:100%</xsl:attribute>
             <div>
-               <xsl:attribute name="style">background-color:lightgreen;width:<xsl:value-of select="format-number(@percent,'0.00%')"/></xsl:attribute>
+               <xsl:attribute name="style">background-color:lightgreen;width:<xsl:value-of
+                    select="format-number(@percent,'0.00%')"
+                  /></xsl:attribute>
                &#160;
              </div>
         </div> 
@@ -176,4 +185,3 @@
 </xsl:template>
 
 </xsl:stylesheet>
-

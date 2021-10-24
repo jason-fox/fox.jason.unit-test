@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><!--ant-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!--ant-->
 <!--
 	This file is part of the DITA-OT Unit Test Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
 -->
-<project name="fox.jason.unit-test.coverage" xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project
+  name="fox.jason.unit-test.coverage"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless"
+>
 	<!--
 		Pre-process for generating an XSL template coverage report.
 	-->
@@ -18,7 +23,10 @@
 		<property name="coverage.message" value="Running a token coverage report"/>
 		<property name="coverage.includes" value="**/expected.*"/>
 		<property name="coverage.file" value="coverage.xml"/>
-		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/token-report.xsl"/>
+		<property
+      name="coverage.xsl"
+      value="${dita.plugin.fox.jason.unit-test.dir}/xsl/token-report.xsl"
+    />
 		<property name="test.coverage.report" value="true"/>
 	</target>
 
@@ -31,14 +39,27 @@
 		<property name="coverage.message" value="Running an XSL coverage report"/>
 		<property name="coverage.includes" value="**/out/instrument.txt"/>
 		<property name="coverage.file" value="template-coverage.xml"/>
-		<property name="coverage.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/xsl-report.xsl"/>
-		<property name="cobertura.xsl" value="${dita.plugin.fox.jason.unit-test.dir}/xsl/cobertura-report.xsl"/>
+		<property
+      name="coverage.xsl"
+      value="${dita.plugin.fox.jason.unit-test.dir}/xsl/xsl-report.xsl"
+    />
+		<property
+      name="cobertura.xsl"
+      value="${dita.plugin.fox.jason.unit-test.dir}/xsl/cobertura-report.xsl"
+    />
 		<dita-ot-echo id="UNIT002I">
 			<param name="1" value="${coverage.message}"/>
 		</dita-ot-echo>
 
-		<tempfile deleteonexit="true" destdir="${dita.temp.dir}" property="coverage.report.xml"/>
-		<xmltask dest="${coverage.report.xml}" source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml"/>
+		<tempfile
+      deleteonexit="true"
+      destdir="${dita.temp.dir}"
+      property="coverage.report.xml"
+    />
+		<xmltask
+      dest="${coverage.report.xml}"
+      source="${dita.plugin.fox.jason.unit-test.dir}/resource/coverage.xml"
+    />
 		<for param="test-suite.dir">
 			<path>
 				<dirset dir="${test.root.dir}" includes="*">
@@ -46,17 +67,52 @@
 				</dirset>
 			</path>
 			<sequential>
-				<propertyregex casesensitive="false" input="@{test-suite.dir}" override="true" property="test-suite" regexp="([^/]*)$" select="\1"/>
+				<propertyregex
+          casesensitive="false"
+          input="@{test-suite.dir}"
+          override="true"
+          property="test-suite"
+          regexp="([^/]*)$"
+          select="\1"
+        />
 				<local name="test-suite.coverage"/>
-				<available file="@{test-suite.dir}/test/${coverage.file}" property="test-suite.coverage"/>
-				<xmltask dest="${coverage.report.xml}" if:set="test-suite.coverage" source="${coverage.report.xml}">
-					<insert file="@{test-suite.dir}/test/${coverage.file}" path="coverage/packages"/>
+				<available
+          file="@{test-suite.dir}/test/${coverage.file}"
+          property="test-suite.coverage"
+        />
+				<xmltask
+          dest="${coverage.report.xml}"
+          if:set="test-suite.coverage"
+          source="${coverage.report.xml}"
+        >
+					<insert
+            file="@{test-suite.dir}/test/${coverage.file}"
+            path="coverage/packages"
+          />
 				</xmltask>
-				<coverage-runner dir="@{test-suite.dir}" if:set="test-suite.coverage" resultfile="${coverage.report.xml}" includes="${coverage.includes}" file="${coverage.file}"/>
+				<coverage-runner
+          dir="@{test-suite.dir}"
+          if:set="test-suite.coverage"
+          resultfile="${coverage.report.xml}"
+          includes="${coverage.includes}"
+          file="${coverage.file}"
+        />
 			</sequential>
 		</for>
-		<xslt taskname="coverage-report" classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.html" style="${coverage.xsl}"/>
-		<xslt taskname="cobertura-report" classpathref="dost.class.path" in="${coverage.report.xml}" out="${output.dir}/coverage.xml" style="${cobertura.xsl}" />
+		<xslt
+      taskname="coverage-report"
+      classpathref="dost.class.path"
+      in="${coverage.report.xml}"
+      out="${output.dir}/coverage.html"
+      style="${coverage.xsl}"
+    />
+		<xslt
+      taskname="cobertura-report"
+      classpathref="dost.class.path"
+      in="${coverage.report.xml}"
+      out="${output.dir}/coverage.xml"
+      style="${cobertura.xsl}"
+    />
 	</target>
 	<!--
 		Setting up pre-processing for Antro. Checks that mandatory parameters are present
@@ -80,7 +136,9 @@
 		</dita-ot-fail>
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
 			<classpath>
-				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"/>
+				<pathelement
+          location="${dita.plugin.fox.jason.unit-test.dir}/lib/ant-contrib-1.0b3.jar"
+        />
 			</classpath>
 		</taskdef>
 	</target>
@@ -93,8 +151,17 @@
 		</dita-ot-echo>
 		<var name="transtype" unset="true"/>
 		<property name="transtype" value="${test.transtype}"/>
-		<tempfile createfile="true" deleteonexit="true" destdir="${dita.temp.dir}" property="test.propertyfile"/>
-		<java taskname="run-antro" classname="org.apache.tools.ant.launch.Launcher" fork="true">
+		<tempfile
+      createfile="true"
+      deleteonexit="true"
+      destdir="${dita.temp.dir}"
+      property="test.propertyfile"
+    />
+		<java
+      taskname="run-antro"
+      classname="org.apache.tools.ant.launch.Launcher"
+      fork="true"
+    >
 			<arg value="-buildfile"/>
 			<arg value="${dita.dir}/build.xml"/>
 			<arg value="-Dtranstype=${transtype}"/>
@@ -120,11 +187,19 @@
 		<dita-ot-echo id="UNIT002I">
 			<param name="1" value="Invoking Antro UI"/>
 		</dita-ot-echo>
-		<java taskname="run-antro-ui" classname="ru.jkff.antro.ui.Main" fork="true" spawn="true" unless:set="test.no-spawn">
+		<java
+      taskname="run-antro-ui"
+      classname="ru.jkff.antro.ui.Main"
+      fork="true"
+      spawn="true"
+      unless:set="test.no-spawn"
+    >
 			<classpath>
 				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/antro.jar"/>
 				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/json.jar"/>
-				<pathelement location="${dita.plugin.fox.jason.unit-test.dir}/lib/swingx-2008_03_09.jar"/>
+				<pathelement
+          location="${dita.plugin.fox.jason.unit-test.dir}/lib/swingx-2008_03_09.jar"
+        />
 			</classpath>
 		</java>
 	</target>
@@ -144,7 +219,7 @@
 	<!--
 		Instrumentation of a DITA-OT plugin
 	-->
-	<target name="instrument" >
+	<target name="instrument">
 		<dita-ot-fail id="UNIT006F">
 			<condition>
 				<available file="${args.input}/test/template-coverage.xml" type="file"/>
@@ -156,8 +231,14 @@
 			<param name="1" value="Instrumenting XSL Templates"/>
 		</dita-ot-echo>
 
-		<property name="test.instrument.xsl.dir" value="${dita.plugin.fox.jason.unit-test.dir}/xsl"/>
-		<property name="test.instrument.report.file" value="${args.input}/test/template-coverage.xml"/>
+		<property
+      name="test.instrument.xsl.dir"
+      value="${dita.plugin.fox.jason.unit-test.dir}/xsl"
+    />
+		<property
+      name="test.instrument.report.file"
+      value="${args.input}/test/template-coverage.xml"
+    />
 
 		<pathconvert property="test.coverage.source" dirsep="/">
 		  <map from="${dita.dir}/plugins/" to=""/>
@@ -172,12 +253,20 @@
 			<pathelement location="${dita.dir}/lib/ant.jar"/>
 		</path>
 
-		<java taskname="create-coverage" classname="org.apache.tools.ant.launch.Launcher" classpathref="instrument.classpath" failonerror="true" fork="true" >
+		<java
+      taskname="create-coverage"
+      classname="org.apache.tools.ant.launch.Launcher"
+      classpathref="instrument.classpath"
+      failonerror="true"
+      fork="true"
+    >
 			<arg value="-Ddita.dir=${dita.dir}"/>
 			<arg value="-Ddita.plugin.org.dita.base.dir=${dita.plugin.org.dita.base.dir}"/>
 			<arg value="-buildfile"/>
 			<arg value="${dita.plugin.fox.jason.unit-test.dir}/run-instrument.xml"/>
-			<arg value="-Ddita.plugin.fox.jason.unit-test.dir=${dita.plugin.fox.jason.unit-test.dir}"/>
+			<arg
+        value="-Ddita.plugin.fox.jason.unit-test.dir=${dita.plugin.fox.jason.unit-test.dir}"
+      />
 			<arg value="-Ddita.temp.dir=${dita.temp.dir}"/>
 			<arg value="-Dtest.instrument.xsl.dir=${test.instrument.xsl.dir}"/>
 			<arg value="-Dargs.input=${args.input}"/>
@@ -185,7 +274,16 @@
 		</java>
 
 		<!-- Merge the list of templates into a single file -->
-		<xslt taskname="merge-coverage" classpathref="dost.class.path" force="true" in="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl" out="${test.instrument.report.file}" style="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl" failOnNoResources="false" failonerror="false">
+		<xslt
+      taskname="merge-coverage"
+      classpathref="dost.class.path"
+      force="true"
+      in="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl"
+      out="${test.instrument.report.file}"
+      style="${test.instrument.xsl.dir}/xsl-instrument-merge.xsl"
+      failOnNoResources="false"
+      failonerror="false"
+    >
 			<param expression="${dita.temp.dir}/coverage" name="in"/>
 			<param expression="${test.coverage.source}" name="SOURCE"/>
 		</xslt>
@@ -209,8 +307,16 @@
 
 
 		<!-- instrument each XSLT file within the plugin -->
-		<xslt taskname="instrument-xsl" if:set="xsl.exists" classpathref="dost.class.path"  style="${test.instrument.xsl.dir}/xsl-instrument-file.xsl" destdir="${dita.temp.dir}/plugins" basedir="${args.input}" includes="**/*.xsl"
-			 extension=".xsl">
+		<xslt
+      taskname="instrument-xsl"
+      if:set="xsl.exists"
+      classpathref="dost.class.path"
+      style="${test.instrument.xsl.dir}/xsl-instrument-file.xsl"
+      destdir="${dita.temp.dir}/plugins"
+      basedir="${args.input}"
+      includes="**/*.xsl"
+      extension=".xsl"
+    >
 			<param expression="${dita.dir}/plugins/${test.coverage.source}" name="SOURCE"/>
 		</xslt>
 
@@ -235,24 +341,41 @@
 		  <globmapper from="*.xsl.orig" to="*.xsl"/>
 		</move>
 		<!-- Delete the listing file -->
-		<delete taskname="delete-coverage" file="${args.input}/test/template-coverage.xml" quiet="true" failonerror="false" />
+		<delete
+      taskname="delete-coverage"
+      file="${args.input}/test/template-coverage.xml"
+      quiet="true"
+      failonerror="false"
+    />
 	</target>
 	<!--
 		Ant target executed to run a token coverage report.
 	-->
-	<target depends="build-init,unit-test.init,token-coverage,coverage.report" name="dita2token-report"/>
+	<target
+    depends="build-init,unit-test.init,token-coverage,coverage.report"
+    name="dita2token-report"
+  />
 	<!--
 		Ant target executed to run an XSL coverage report.
 	-->
-	<target depends="build-init,unit-test.init,xsl-coverage,coverage.report" name="dita2xsl-report"/>
+	<target
+    depends="build-init,unit-test.init,xsl-coverage,coverage.report"
+    name="dita2xsl-report"
+  />
 	<!--
 		Ant target executed to instrument a plug-in
 	-->
-	<target depends="build-init,instrument.init,instrument" name="dita2xsl-instrument"/>
+	<target
+    depends="build-init,instrument.init,instrument"
+    name="dita2xsl-instrument"
+  />
 		<!--
 		Ant target executed to deinstrument a plugin
 	-->
-	<target depends="build-init,instrument.init,deinstrument" name="dita2xsl-deinstrument"/>
+	<target
+    depends="build-init,instrument.init,deinstrument"
+    name="dita2xsl-deinstrument"
+  />
 	<!--
 		Ant target executed when the running the Antro profiler
 	-->

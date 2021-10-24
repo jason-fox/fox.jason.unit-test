@@ -11,7 +11,13 @@
 	</target>
 	<target name="data">
 		<text id="incorrect-spelling">incorrect-spelling</text>
-		<xslfile plugin="com.here.validate.svrl.text-rules" path="/Customization/xsl/common-rules.xsl" />
-		<template match="*[not(self::codeblock or ancestor::codeblock)]" mode="default-lang-spelling-rules"/>
+		<xslfile
+      plugin="com.here.validate.svrl.text-rules"
+      path="/Customization/xsl/common-rules.xsl"
+    />
+		<template
+      match="*[not(self::codeblock or ancestor::codeblock)]"
+      mode="default-lang-spelling-rules"
+    />
 	</target>
 </project>

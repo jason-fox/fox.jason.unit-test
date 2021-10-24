@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-
 <package name="com.here.validate.svrl.text-rules">
 	<lines>
 		<line id="1">duplicated-punctuation</line>

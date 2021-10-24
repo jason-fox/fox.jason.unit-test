@@ -6,7 +6,7 @@
 	</description>
 	<target name="unit-test">
 		<exec-html5/>
-		<get-html-article from="topics/codeblock.html" />
+		<get-html-article from="topics/codeblock.html"/>
 		<compare-output suffix=".html"/>
 	</target>
 	<target name="meta-data">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="unit-test"  xmlns:unless="ant:unless">
+<project basedir="." default="unit-test" xmlns:unless="ant:unless">
 	<import file="../bootstrap.xml"/>
 	<description>
 		Expect that an invocation of antro will succeed
@@ -9,7 +9,11 @@
 		<contains-text expected="Generating an Antro profiling report"/>
 
 		<fileset dir="${basedir}/out" includes="antro*" id="antro.files"/>
-		<pathconvert refid="antro.files" property="antro.file.exists" setonempty="false"/>
+		<pathconvert
+      refid="antro.files"
+      property="antro.file.exists"
+      setonempty="false"
+    />
 		<fail unless:set="antro.file.exists"/>
 	</target>
 </project>
