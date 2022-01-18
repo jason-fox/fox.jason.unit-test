@@ -776,7 +776,7 @@ PRs accepted.
 
 ## License
 
-[Apache 2.0](LICENSE) © 2018 - 2021 Jason Fox
+[Apache 2.0](LICENSE) © 2018 - 2022 Jason Fox
 
 The Program includes the following additional software components which were obtained under license:
 
