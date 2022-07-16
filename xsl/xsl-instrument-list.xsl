@@ -1,3 +1,8 @@
+<?xml version="1.0"?>
+<!--
+  This file is part of the DITA-OT Unit Test Plug-in project.
+  See the accompanying LICENSE file for applicable licenses.
+-->
 <xsl:stylesheet
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -6,14 +11,13 @@
   version="2.0"
 >
   <!-- Defining that this .xsl generates plain text file -->
-	<xsl:output indent="yes" method="xml" omit-xml-declaration="yes" cdata-section-elements="text"/>
+  <xsl:output indent="yes" method="xml" omit-xml-declaration="yes" cdata-section-elements="text"/>
 
-   <xsl:param as="xs:string" name="SOURCE"/>
+  <xsl:param as="xs:string" name="SOURCE"/>
   <xsl:variable name="SOURCEPATH" select="replace($SOURCE, '\\', '/')"/>
   <xsl:variable name="document-uri">
     <xsl:value-of select="replace(replace(replace(document-uri(/), $SOURCEPATH, ''), '.orig',''), 'file:/', '')"/>
   </xsl:variable>
-  
 
   <xsl:template match="xsl:stylesheet">
     <xsl:element name="lines">
@@ -21,7 +25,7 @@
     </xsl:element>
   </xsl:template>
 
-   <xsl:template name="addElement">
+  <xsl:template name="addElement">
     <xsl:param name="open" select="true()"/>
     <xsl:param name="instrument" select="true()"/>
     <xsl:element name="line">
@@ -39,7 +43,7 @@
           <xsl:when test="name(..) = 'xsl:otherwise'">
             <xsl:value-of select="concat(generate-id(ancestor::xsl:otherwise[1]), ':', $document-uri)"/>
           </xsl:when>
-           <xsl:when test="name(..) = 'xsl:for-each'">
+          <xsl:when test="name(..) = 'xsl:for-each'">
             <xsl:value-of select="concat(generate-id(ancestor::xsl:for-each[1]), ':', $document-uri)"/>
           </xsl:when>
           <xsl:when test="ancestor::xsl:if">
@@ -83,20 +87,20 @@
       <xsl:attribute name="branch">
         <xsl:value-of select="false()"/>
       </xsl:attribute>
-    
+
       <xsl:if test="$open">
         <xsl:variable name="attributes">
           <xsl:for-each select="@*">
-             <xsl:text> </xsl:text>
-             <xsl:value-of select="name()"/>
-             <xsl:text>=&quot;</xsl:text>
-             <xsl:value-of select="."/>
-             <xsl:text>&quot;</xsl:text>
+            <xsl:text/>
+            <xsl:value-of select="name()"/>
+            <xsl:text>=&quot;</xsl:text>
+            <xsl:value-of select="."/>
+            <xsl:text>&quot;</xsl:text>
           </xsl:for-each>
         </xsl:variable>
         <xsl:attribute name="attributes">
           <xsl:value-of select="normalize-space($attributes)"/>
-        </xsl:attribute> 
+        </xsl:attribute>
         <xsl:attribute name="number">
           <xsl:value-of select="saxon:line-number()"/>
         </xsl:attribute>
@@ -105,9 +109,7 @@
         <xsl:value-of select="concat('i', count(preceding::node()[not(self::xsl:message)]), ':', $document-uri)"/>
       </xsl:if>
     </xsl:element>
-   </xsl:template>
-
-
+  </xsl:template>
 
   <xsl:template match="xsl:template|xsl:function">
     <xsl:if
@@ -117,7 +119,7 @@
       <xsl:apply-templates mode="template"/>
       <xsl:call-template name="addElement">
         <xsl:with-param name="open" select="false()"/>
-    </xsl:call-template>
+      </xsl:call-template>
     </xsl:if>
   </xsl:template>
 
@@ -129,7 +131,7 @@
     </xsl:call-template>
   </xsl:template>
 
-   <xsl:template match="xsl:*" mode="template">
+  <xsl:template match="xsl:*" mode="template">
     <xsl:call-template name="addElement">
       <xsl:with-param name="instrument" select="false()"/>
     </xsl:call-template>
@@ -138,9 +140,7 @@
       <xsl:with-param name="open" select="false()"/>
       <xsl:with-param name="instrument" select="false()"/>
     </xsl:call-template>
-   </xsl:template>
-  
+  </xsl:template>
 
   <xsl:template match="text()"/>
-
 </xsl:stylesheet>

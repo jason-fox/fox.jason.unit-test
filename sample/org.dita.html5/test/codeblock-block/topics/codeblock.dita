@@ -4,12 +4,12 @@
   <title>codeblock</title>
   <body>
     <codeblock>
-      This is written in <b>bold text</b>.
-      This is written in <i>italic text</i>.
-      This is written in superscript <sup>text</sup>. 
-      This is written in subscript <sub>text</sub>.
-      This is written in <tt>monospace</tt> text.
-      This is written in <u>underline</u> text.
+     This is written in <b>bold text</b>.
+     This is written in <i>italic text</i>.
+     This is written in superscript <sup>text</sup>. 
+     This is written in subscript <sub>text</sub>.
+     This is written in <tt>monospace</tt> text.
+     This is written in <u>underline</u> text.
     </codeblock>
     </body>
 </topic>

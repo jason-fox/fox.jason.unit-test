@@ -13,6 +13,7 @@ import org.apache.tools.ant.taskdefs.Copy;
 // This allows us to refresh the test expectations
 
 public class CopyResultTask extends Task {
+
   /**
    * Field src.
    */
@@ -63,9 +64,7 @@ public class CopyResultTask extends Task {
       throw new BuildException("You must supply a source of the expecation");
     }
     if (dest == null) {
-      throw new BuildException(
-        "You must supply a destination of the expecation"
-      );
+      throw new BuildException("You must supply a destination of the expecation");
     }
 
     boolean os = "true".equals(getProject().getProperty("test.os.matches"));

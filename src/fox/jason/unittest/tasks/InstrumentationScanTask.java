@@ -15,6 +15,7 @@ import org.apache.tools.ant.Task;
 // Task to check to see which XSL files have been covered.
 
 public class InstrumentationScanTask extends Task {
+
   /**
    * Field input.
    */
@@ -53,16 +54,12 @@ public class InstrumentationScanTask extends Task {
 
     List<String> allMatches = new ArrayList<>();
     Matcher m = Pattern
-      .compile(
-        "(([\\w|\\.\\-]*:$)|(\\w*:.*\\.xsl))",
-        Pattern.MULTILINE | Pattern.CASE_INSENSITIVE
-      )
+      .compile("(([\\w|\\.\\-]*:$)|(\\w*:.*\\.xsl))", Pattern.MULTILINE | Pattern.CASE_INSENSITIVE)
       .matcher(input);
     while (m.find()) {
       allMatches.add(m.group());
     }
 
-    getProject()
-      .setProperty("dita.ot.instrument", String.join("\n", allMatches));
+    getProject().setProperty("dita.ot.instrument", String.join("\n", allMatches));
   }
 }

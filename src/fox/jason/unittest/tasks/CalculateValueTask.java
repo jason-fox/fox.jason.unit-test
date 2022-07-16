@@ -12,6 +12,7 @@ import org.apache.tools.ant.Task;
 //  This removes a dependency on the Ant Contrib <math> task.
 
 public class CalculateValueTask extends Task {
+
   /**
    * Field operand.
    */
@@ -97,29 +98,18 @@ public class CalculateValueTask extends Task {
       throw new BuildException("You must supply a second operand");
     }
     if (operation == null) {
-      throw new BuildException(
-        "Mathematical operation to invoke - either subtract or percentage"
-      );
+      throw new BuildException("Mathematical operation to invoke - either subtract or percentage");
     }
     if (property == null) {
-      throw new BuildException(
-        "You must supply a property to set with the result"
-      );
+      throw new BuildException("You must supply a property to set with the result");
     }
 
     if ("-".equals(operation)) {
-      getProject().setProperty(
-        property,
-        String.valueOf(Integer.parseInt(operand1) - Integer.parseInt(operand2))
-      );
+      getProject().setProperty(property, String.valueOf(Integer.parseInt(operand1) - Integer.parseInt(operand2)));
     } else if ("%".equals(operation)) {
       // Percentage, not modulus.
-      getProject().setProperty(
-        property,
-        String.valueOf(
-          (Integer.parseInt(operand1) * 100) / Integer.parseInt(operand2)
-        )
-      );
+      getProject()
+        .setProperty(property, String.valueOf((Integer.parseInt(operand1) * 100) / Integer.parseInt(operand2)));
     }
   }
 }

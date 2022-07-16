@@ -6,17 +6,17 @@
     <p>
     Incorrect grammar should not appear in the running text.
     </p>
-     <section id="good">
-      <title>Good text</title>
-      <p>
-         It is the case to some extent that something something...
-      </p>
+	<section id="good">
+     <title>Good text</title>
+     <p>
+        It is the case to some extent that something something...
+     </p>
     </section>
     <section id="bad">
-      <title>Bad text</title>
-      <p>
-        It is the case to some extend that something something...
-      </p>
+     <title>Bad text</title>
+     <p>
+       It is the case to some extend that something something...
+     </p>
     </section>
   </body>
 </topic>

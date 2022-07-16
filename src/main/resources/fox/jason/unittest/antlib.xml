@@ -21,8 +21,8 @@
 		Macro to throw an error message if the given files do not match
 
 		@param expectation - Path to the file which holds the expected behaviour
-		@param os          - Only make the comparison if the current operating system 
-		                     is of a given type 
+		@param os		- Only make the comparison if the current operating system 
+						 is of a given type 
 		@param result - Path to the file which holds the actual behaviour from the test run.
 		@suffix - File suffix for the result
 	-->
@@ -95,8 +95,8 @@
 		Macro to throw an error message if the text is not found
 
 		@param actual 	   - The text actually output by the test
-		@param os          - Only make the comparison if the current operating system 
-		                     is of a given type 
+		@param os		- Only make the comparison if the current operating system 
+						 is of a given type 
 		@param expected    - The expected fragment of text
 	-->
 	<macrodef name="contains-text">
@@ -136,7 +136,7 @@
 
 		@param ditamap - The .ditamap file specifying which topics and other resources to use to create a document
 		@param expectedresult The expected result when invoking the transform 
-		@param maxwait        The maximum time to create a document
+		@param maxwait	   The maximum time to create a document
 		@param propertyfile   The name of a file holding additional properties
 		@param transtype - The transtype to use when creating the build 
 	-->
@@ -164,7 +164,7 @@
 
 		@param ditamap    - The .ditamap file specifying which topics and other resources to use to create a document
 		@param expectedresult The expected result when invoking the transform 
-		@param maxwait        The maximum time to create a document
+		@param maxwait	   The maximum time to create a document
 		@param propertyfile   The name of a file holding additional properties
 		@param transtype  - The transtype to when creating the document.
 	-->
@@ -193,7 +193,7 @@
 
 		@param ditamap    - The .ditamap file specifying which topics and other resources to use to create a document
 		@param expectedresult The expected result when invoking the transform 
-		@param maxwait        The maximum time to create a document
+		@param maxwait	   The maximum time to create a document
 		@param propertyfile   The name of a file holding additional properties
 		@param transtype  - The transtype to when creating the document.
 	-->

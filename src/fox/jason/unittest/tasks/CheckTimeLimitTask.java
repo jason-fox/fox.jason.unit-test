@@ -12,6 +12,7 @@ import org.apache.tools.ant.taskdefs.Exit;
 // Set a flag if the time limit has been exceeded.
 
 public class CheckTimeLimitTask extends Task {
+
   /**
    * Field body.
    */

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  This file is part of the DITA-OT Unit Test Plug-in project.
+  See the accompanying LICENSE file for applicable licenses.
+-->
 <xsl:stylesheet
   version="2.0"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -8,10 +12,9 @@
   xmlns:__NS1="http://www.w3.org/2000/xmlns"
   exclude-result-prefixes="xsl fo __NS1"
 >
-    <xsl:template match="/fo:root">
-        <xsl:text>&#xA;&#x9;</xsl:text>
-        <xsl:copy-of select="(//fo:flow)[last()]"/>
-        <xsl:text>&#xA;</xsl:text>
-    </xsl:template>
-    
+  <xsl:template match="/fo:root">
+    <xsl:text>&#xA;&#x9;</xsl:text>
+    <xsl:copy-of select="(//fo:flow)[last()]"/>
+    <xsl:text>&#xA;</xsl:text>
+  </xsl:template>
 </xsl:stylesheet>

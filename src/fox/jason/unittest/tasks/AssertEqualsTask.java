@@ -12,6 +12,7 @@ import org.apache.tools.ant.taskdefs.Exit;
 //  Custom  task to invoke a conditional <fail>.
 
 public class AssertEqualsTask extends Task {
+
   /**
    * Field body.
    */
@@ -88,14 +89,10 @@ public class AssertEqualsTask extends Task {
     // @param body - detail of the error message
     //  @param message - short text description of the error
     if (arg1 == null) {
-      throw new BuildException(
-        "You must supply a first argument for comparison"
-      );
+      throw new BuildException("You must supply a first argument for comparison");
     }
     if (arg2 == null) {
-      throw new BuildException(
-        "You must supply a second argument for comparison"
-      );
+      throw new BuildException("You must supply a second argument for comparison");
     }
 
     boolean os = "true".equals(getProject().getProperty("test.os.matches"));

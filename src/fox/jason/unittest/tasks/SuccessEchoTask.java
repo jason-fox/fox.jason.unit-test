@@ -30,9 +30,7 @@ public class SuccessEchoTask extends Task {
     boolean colorize = !"false".equals(getProject().getProperty("cli.color"));
     boolean testCopy = "true".equals(getProject().getProperty("test.copy"));
 
-    String input = testCopy
-      ? "[WARN] Updated all test expectations"
-      : "[SUCCESS] All tests have passed";
+    String input = testCopy ? "[WARN] Updated all test expectations" : "[SUCCESS] All tests have passed";
     String ansiColor = testCopy ? "[33m" : "[32m";
 
     if (colorize) {

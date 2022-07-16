@@ -4,19 +4,19 @@
   <title>incorrect-spelling</title>
   <body>
     <p>
-     Incorrect spellings (as found in the blacklisting dictionary) should not appear in the running text
+	Incorrect spellings (as found in the blacklisting dictionary) should not appear in the running text
     </p>
-     <section id="good">
-      <title>Good text</title>
-      <p>
-        Separate accommodation can be found wihtin the main building.
-      </p>
+	<section id="good">
+     <title>Good text</title>
+     <p>
+       Separate accommodation can be found wihtin the main building.
+     </p>
     </section>
     <section id="bad">
-      <title>Bad text</title>
-      <p>
-         Seperate acommodation can be found wihtin the main building..
-      </p>
+     <title>Bad text</title>
+     <p>
+        Seperate acommodation can be found wihtin the main building..
+     </p>
     </section>
   </body>
 </topic>
