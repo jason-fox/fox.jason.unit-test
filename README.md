@@ -1,7 +1,7 @@
 # Unit Test Framework for DITA-OT [<img src="https://jason-fox.github.io/fox.jason.unit-test/unit.png" align="right" width="300">](https://unit-test-framework-for-dita-ot.rtfd.io)
 
 [![license](https://img.shields.io/github/license/jason-fox/fox.jason.unit-test.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![DITA-OT 3.7](https://img.shields.io/badge/DITA--OT-3.7-blue.svg)](http://www.dita-ot.org/3.7)
+[![DITA-OT 4.0](https://img.shields.io/badge/DITA--OT-4.0-green.svg)](http://www.dita-ot.org/4.0)
 [![CI](https://github.com/jason-fox/fox.jason.unit-test/workflows/CI/badge.svg)](https://github.com/jason-fox/fox.jason.unit-test/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/jason-fox/fox.jason.unit-test/badge.svg?branch=master)](https://coveralls.io/github/jason-fox/fox.jason.unit-test?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/unit-test-framework-for-dita-ot/badge/?version=latest)](https://unit-test-framework-for-dita-ot.readthedocs.io/en/latest/?badge=latest)
@@ -71,7 +71,7 @@ consists of seven DITA-OT transforms and an ANT library:
 
 ## Install
 
-The unit test framework plug-in has been tested against [DITA-OT 3.x](http://www.dita-ot.org/download). It is no longer
+The unit test framework plug-in has been tested against [DITA-OT 4.x](http://www.dita-ot.org/download). It is no longer
 compatible with DITA-OT 2.x. and it is recommended that you upgrade to the latest version. The unit test framework
 plug-in relies on the use of [AntUnit](http://ant.apache.org/antlibs/antunit/) 1.4 to run tests and ANT jUnit to create
 a test report. ANT 1.8 or higher is required, although a later ANT version (1.9 or 1.10) is recommended.
@@ -83,9 +83,9 @@ a test report. ANT 1.8 or higher is required, although a later ANT version (1.9 
 The DITA-OT Unit Test Framework is a plug-in for the DITA Open Toolkit.
 
 -   Full installation instructions for downloading DITA-OT can be found
-    [here](https://www.dita-ot.org/3.7/topics/installing-client.html).
+    [here](https://www.dita-ot.org/4.0/topics/installing-client.html).
 
-    1.  Download the `dita-ot-3.7.zip` package from the project website at
+    1.  Download the `dita-ot-4.0.zip` package from the project website at
         [dita-ot.org/download](https://www.dita-ot.org/download)
     2.  Extract the contents of the package to the directory where you want to install DITA-OT.
     3.  **Optional**: Add the absolute path for the `bin` directory to the _PATH_ system variable.
@@ -93,9 +93,9 @@ The DITA-OT Unit Test Framework is a plug-in for the DITA Open Toolkit.
     This defines the necessary environment variable to run the `dita` command from the command line.
 
 ```console
-curl -LO https://github.com/dita-ot/dita-ot/releases/download/3.7/dita-ot-3.7.zip
-unzip -q dita-ot-3.7.zip
-rm dita-ot-3.7.zip
+curl -LO https://github.com/dita-ot/dita-ot/releases/download/4.0/dita-ot-4.0.zip
+unzip -q dita-ot-4.0.zip
+rm dita-ot-4.0.zip
 ```
 
 ### Installing the Plug-in
