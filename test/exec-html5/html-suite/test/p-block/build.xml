@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="unit-test">
+	<import file="../bootstrap.xml"/>
+	<description>
+		Expect that HTML paragraph text is displayed correctly
+	</description>
+	<target name="unit-test">
+		<exec-html5/>
+		<get-html-article from="topics/p.html"/>
+		<compare-output suffix=".html"/>
+	</target>
+	<target name="meta-data">
+		<element id="p">pre class=" codeblock "</element>
+	</target>
+</project>

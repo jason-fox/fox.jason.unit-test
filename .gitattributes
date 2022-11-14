@@ -1,0 +1,7 @@
+test/** linguist-vendored
+sample/** linguist-documentation
+
+build_dita2test-coverage_template.xml linguist-language=Ant-Build-System
+build_dita2unit-test_template.xml linguist-language=Ant-Build-System
+run_instrument.xml linguist-language=Ant-Build-System
+resource/antlib.xml linguist-language=Ant-Build-System

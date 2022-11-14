@@ -1,0 +1,35 @@
+**/out/**
+**/temp/**
+**/tmp/**
+build_dita2test-coverage.xml
+build_dita2unit-test.xml
+
+target/
+classes/
+lib/ant-*.jar
+lib/ant-launcher-*.jar
+.scannerwork/
+
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+*.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
