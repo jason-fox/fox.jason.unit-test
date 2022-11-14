@@ -527,7 +527,7 @@
 
 	<taskdef
     resource="fox/jason/unittest/antlib.xml"
-    classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/unittest-1.2.jar"
+    classpath="${dita.dir}/plugins/fox.jason.unit-test/lib/unittest-1.3.jar"
   />
 	
 </antlib>

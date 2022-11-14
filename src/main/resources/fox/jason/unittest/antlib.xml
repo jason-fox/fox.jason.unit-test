@@ -239,12 +239,43 @@
 		</sequential>
 	</macrodef>
 
+	<!-- 
+		Extract the <body>from the input HTML.
+	
+		@param dir - the source directory
+		@param from - the source file to extract a fragment from
+		@param to - the file to write to
+	-->
+	<macrodef name="get-html-body">
+		<attribute default="${output.dir}/html" name="dir"/>
+		<attribute name="from"/>
+		<attribute default="${output.dir}/fragment.html" name="to"/>
+		<sequential>
+			<local name="htmlSource"/>
+			<local name="fragment"/>
+			<loadfile failonerror="true" property="htmlSource" srcfile="@{dir}/@{from}"/>
+			<find-body/>
+
+			<!-- strip out comments and save comments only to a separate file -->
+			<echo file="@{to}" message="${fragment}"/>	
+		</sequential>
+	</macrodef>
+
 	<!--
 		Extract the string between <article> tags.
 	-->
 	<taskdef
     classname="fox.jason.unittest.tasks.FindFragmentTask"
     name="find-fragment"
+    onerror="ignore"
+  />
+
+  	<!--
+		Extract the string between <Body> tags.
+	-->
+	<taskdef
+    classname="fox.jason.unittest.tasks.FindBodyTask"
+    name="find-body"
     onerror="ignore"
   />
 
