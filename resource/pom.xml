@@ -10,27 +10,27 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <build>
-    <plugins>
-	 <plugin>
-	   <groupId>org.eluder.coveralls</groupId>
-	   <artifactId>coveralls-maven-plugin</artifactId>
-	   <version>4.3.0</version>
-	   <dependencies>
-		<dependency>
-		  <groupId>javax.xml.bind</groupId>
-		  <artifactId>jaxb-api</artifactId>
-		  <version>2.2.3</version>
-		</dependency>
-	   </dependencies>
-	   <configuration>
-		<sourceDirectories>
-		  <sourceDirectory>.</sourceDirectory>
-		</sourceDirectories>
-		<sourceEncoding>UTF-8</sourceEncoding>
-		<coberturaReports>./coverage.xml</coberturaReports>
-		<!--dryRun>true</dryRun-->
-	   </configuration>
-	 </plugin>
+   <plugins>
+		 <plugin>
+	    <groupId>io.jsonwebtoken.coveralls</groupId>
+	    <artifactId>coveralls-maven-plugin</artifactId>
+	    <version>4.4.1</version>
+		  <dependencies>
+				<dependency>
+				  <groupId>javax.xml.bind</groupId>
+				  <artifactId>jaxb-api</artifactId>
+				  <version>2.2.3</version>
+				</dependency>
+		  </dependencies>
+		  <configuration>
+				<sourceDirectories>
+				  <sourceDirectory>.</sourceDirectory>
+				</sourceDirectories>
+				<sourceEncoding>UTF-8</sourceEncoding>
+				<coberturaReports>./coverage.xml</coberturaReports>
+				<!--dryRun>true</dryRun-->
+		   </configuration>
+		 </plugin>
 	 <plugin>
 	   <groupId>org.apache.maven.plugins</groupId>
 	   <artifactId>maven-surefire-plugin</artifactId>
