@@ -232,12 +232,18 @@ pre code {
           <xsl:if test="not($selfClosed)">
             <tr>
               <xsl:attribute name="class">
-                <xsl:if test="@hits = 0">Error</xsl:if>
-                <xsl:if test="not(@hits = 0)">Success</xsl:if>
-                <xsl:if test="$xslfile = $previousfile">Merge</xsl:if>
+                <xsl:if test="@hits = 0">
+                   <xsl:text>Error </xsl:text>
+                 </xsl:if>
+                <xsl:if test="not(@hits = 0)">
+                  <xsl:text>Success </xsl:text>
+                </xsl:if>
+                <xsl:if test="$xslfile = $previousfile">
+                  <xsl:text>Merge </xsl:text>
+                </xsl:if>
               </xsl:attribute>
               <td>
-                <xsl:attribute name="class">None</xsl:attribute>
+                <xsl:attribute name="class" select="'None'"/>
                 <xsl:if test="not($xslfile = $previousfile)">
                   <xsl:value-of select="$xslfile"/>
                 </xsl:if>
@@ -256,7 +262,7 @@ pre code {
                     </xsl:if>
                     <xsl:value-of select="@element"/>
                     <xsl:if test="@open and not($attributes='')">
-                      <xsl:text/>
+                      <xsl:text> </xsl:text>
                     </xsl:if>
                     <xsl:value-of select="$attributes"/>
                     <xsl:if test="$selfClosing">
