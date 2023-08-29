@@ -3,7 +3,7 @@
 	This file is part of the DITA-OT Unit Test Plug-in project.
 	See the accompanying LICENSE file for applicable licenses.
 -->
-<plugin id="fox.jason.unit-test" version="2.2.0">
+<plugin id="fox.jason.unit-test" version="2.2.1">
 	
 	<transtype desc="Runs an antro ANT profiling report" name="antro">
 		<param
