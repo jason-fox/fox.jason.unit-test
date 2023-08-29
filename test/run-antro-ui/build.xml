@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="unit-test">
+	<import file="../bootstrap.xml"/>
+	<description>
+		Expect that an invocation of antro-ui will succeed
+	</description>
+	<target name="unit-test">
+		<exec-transtype transtype="antro-ui" ditamap="${basedir}"/>
+		<contains-text expected="Invoking Antro UI"/>
+	</target>
+</project>
