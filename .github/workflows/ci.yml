@@ -33,7 +33,7 @@ jobs:
       - name: Run DITA-OT Unit Test
         uses: jason-fox/dita-unit-test-action@master
         with:
-          dita-ot-version: '4.0'
+          dita-ot-version: '4.2'
           plugin: 'fox.jason.unit-test'
           prerequisites: |
             https://github.com/jason-fox/com.here.validate.svrl/archive/master.zip
