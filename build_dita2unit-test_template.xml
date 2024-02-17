@@ -87,7 +87,10 @@
 	<!--
 		Target to create a unit-test fixture for each suite.
 	-->
-	<target depends="unit-test.log.init" name="generate-fixtures">
+	<target 
+		depends="unit-test.log.init" 
+		name="generate-fixtures"
+		description="Create Unit Test Fixtures" >
 		<!-- Now iterate across each test suite and generate the fixtures -->
 		<for param="test-suite.dir" trim="true">
 			<path>
@@ -126,7 +129,7 @@
 	<!--
 		Iterate across each test suite in turn and run the unit tests using ant-unit.
 	-->
-	<target name="unit-test">
+	<target name="unit-test" description="Run a unit test suite">
 		<property name="test.copy.dir" value="${args.input}"/>
 		<property name="test.copy" value="false"/>
 		<condition
@@ -182,7 +185,7 @@
 	<!--
 		Creates a formatted HTML report using the optional JUnitReport task.
 	-->
-	<target name="unit-test.report">
+	<target name="unit-test.report" description="Create test results HTML">
 		<junitreport
       taskname="test-report"
       todir="${dita.temp.dir}"

@@ -34,7 +34,10 @@
 		Generate coverage report. Take each element of the listing file
 		and see if it can be found in the outputs
 	-->
-	<target if:true="test.coverage.report" name="coverage.report">
+	<target 
+		if:true="test.coverage.report" 
+		name="coverage.report"
+		description="Generate a coverage report">
 		<!-- The default report is an instrumented XSLT report -->
 		<property name="coverage.message" value="Running an XSL coverage report"/>
 		<property name="coverage.includes" value="**/out/instrument.txt"/>
@@ -145,7 +148,10 @@
 	<!--
 		Generate an Antro profiler report. Run DITA-OT using the test.transtype
 	-->
-	<target depends="unit-test.log.init" name="antro">
+	<target 
+		depends="unit-test.log.init" 
+		name="antro"
+		description="Generate an Antro profiler report">
 		<dita-ot-echo id="UNIT002I">
 			<param name="1" value="Generating an Antro profiling report"/>
 		</dita-ot-echo>
@@ -219,7 +225,7 @@
 	<!--
 		Instrumentation of a DITA-OT plugin
 	-->
-	<target name="instrument">
+	<target name="instrument" description="Instrument a DITA-OT Plugin">
 		<dita-ot-fail id="UNIT006F">
 			<condition>
 				<available file="${args.input}/test/template-coverage.xml" type="file"/>
@@ -329,7 +335,7 @@
 	<!--
 		Deinstrumentation of a DITA-OT plugin
 	-->
-	<target name="deinstrument">
+	<target name="deinstrument" description="Deinstrument a DITA-OT Plugin">
 		<dita-ot-echo id="UNIT002I">
 			<param name="1" value="Reverting instrumentation of XSL Templates"/>
 		</dita-ot-echo>
