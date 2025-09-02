@@ -75,6 +75,21 @@ public class AssertEqualsTask extends Task {
    */
   public void setArg2(String arg2) {
     this.arg2 = arg2;
+  } 
+
+
+  private boolean getUseColor() {
+    final String os = System.getProperty("os.name");
+    if (os != null && os.startsWith("Windows")) {
+      return false;
+    } else if (System.getenv("NO_COLOR") != null) {
+      return false;
+    } else if ("dumb".equals(System.getenv("TERM"))) {
+      return false;
+    } else if (System.console() == null) {
+      return false;
+    }
+    return !"false".equals(getProject().getProperty("cli.color"));
   }
 
   /**
@@ -99,9 +114,8 @@ public class AssertEqualsTask extends Task {
 
     if (os && !arg1.equals(arg2)) {
       String escapeCode = Character.toString((char) 27);
-      boolean colorize = "true".equals(getProject().getProperty("cli.color"));
 
-      if (colorize) {
+      if (getUseColor()) {
         message = escapeCode + "[31m" + message + escapeCode + "[0m";
       }
       getProject().log("", 1);

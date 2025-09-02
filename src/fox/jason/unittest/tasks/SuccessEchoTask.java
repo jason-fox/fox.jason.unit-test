@@ -19,6 +19,20 @@ public class SuccessEchoTask extends Task {
     super();
   }
 
+  private boolean getUseColor() {
+    final String os = System.getProperty("os.name");
+    if (os != null && os.startsWith("Windows")) {
+      return false;
+    } else if (System.getenv("NO_COLOR") != null) {
+      return false;
+    } else if ("dumb".equals(System.getenv("TERM"))) {
+      return false;
+    } else if (System.console() == null) {
+      return false;
+    }
+    return !"false".equals(getProject().getProperty("cli.color"));
+  }
+
   /**
    * Method execute.
    *
@@ -27,13 +41,12 @@ public class SuccessEchoTask extends Task {
   @Override
   public void execute() {
     String escapeCode = Character.toString((char) 27);
-    boolean colorize = !"false".equals(getProject().getProperty("cli.color"));
     boolean testCopy = "true".equals(getProject().getProperty("test.copy"));
 
     String input = testCopy ? "[WARN] Updated all test expectations" : "[SUCCESS] All tests have passed";
     String ansiColor = testCopy ? "[33m" : "[32m";
 
-    if (colorize) {
+    if (getUseColor()) {
       input = escapeCode + ansiColor + input + escapeCode + "[0m";
     }
 
