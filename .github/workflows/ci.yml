@@ -41,7 +41,7 @@ jobs:
           setup-script: 'test/setup.sh'
         #env:
         #  COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results
